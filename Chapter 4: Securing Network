@@ -1,0 +1,425 @@
+	1. Exploring Advanced Security Devices
+		a. Understanding IDSs and IPSs
+			§ IDS monitor a network and send alerts when they detect suspicious events on a system or network.
+			§ IPS react to attacks in progress and prevent them from reaching systems and networks.
+			§ IDS and IPS both capture the traffic and analyze it to detect potential attacks (using similar detection methods) or anomalies.
+			i. HIDS (Host-based Intrusion Detection System)
+				□ It is an additional software installed on a system like a workstation or server.
+				□ Many HIDS have expanded to monitor application activity on the system. e.g. you can install HIDS on different internet facing servers. In addition to monitoring traffic reaching the servers, the HIDS can also monitor the server applications.
+				□ HIDS can also detect malicious software(malware) that traditional antivirus might miss, hence many organizations install HIDS on every workstation as an extra layer of security.
+				□ Some organization, may install HIDS when there's a perceived need. e.g. a specific server with proprietary data is at increased risk of attack.
+			ii. NIDS (Network-based Intrusion Detection System)
+				□ It monitors activity on network.
+				□ Administrators installs NIDS sensors or collectors on network devices like routers and firewalls. These sensors gather information and report to a central monitoring server hosting a NIDS console.
+				□ NIDS is not able to detect anomalies on individual systems unless the anomaly causes significant difference in network traffic.
+				□ NIDS can only monitor and assess the threats on the network from traffic sent in plaintext or non-encrypted traffic.
+				□ 
+						
+				□ In the figure, sensors are located before the firewall, after the firewall, and on routers. These sensors collect and monitor network traffic on subnets within the network and report to the NIDS console. The NIDS provides overall monitoring and analysis and can detect attacks on the network.
+				□ Figure also shows a tap or port mirror on the internal switch. Most switches support port mirroring, allowing administrators to configure the switch to send all traffic received by the switch to a single port. After configuring a port mirror, you can use it as a tap to send all switch data to a sensor or collector, and forward this to a NIDS. Similarly, it’s possible to configure taps on routers to capture all traffic sent through the switch and send it to the IDS.
+				
+			iii. Sensor and Collector Placement
+				□ Depending on what you want to measure, you should place your sensors.
+				□ Sensors on the internet side of the firewall will sees all the traffic. However, sensor on the internal side of the firewall will only traffic that passes through the firewall. i.e. firewall will filter some attacks and internal sensor won't see them.
+				□ NIDS can't monitor encrypted traffic and cannot monitor traffic on individual hosts.
+			iv. Detection Methods
+				1) Signature-Based Detection
+					® Signature-based IDSs use a database of known vulnerabilities or attack patterns. e.g. SYN flood attack in which one host keeps flooding another entity with SYN packets but never completes the handshake.
+					® IDS can detect these patterns when signature database includes the attack definition. This process is very similar to antivirus. You need to update both IDS signature and antivirus definitions from the vendor on a regular basis to protect against current threats
+					
+				2) Heuristic/Behavioral Detection (Anomaly-based)
+					® Heuristic/behavioral-based detection starts by identifying normal operation or normal behavior of the network.
+					® The IDS provides continuous monitoring by constantly comparing current network behavior against the baseline. In case of abnormality, it gives an alert indicating potential attack.
+					® It is similar to heuristic based antivirus.
+					® It detects abnormalities that is beyond capability of signature-based detection.
+					
+				3) SYN Flood Attack (Sidebar)
+					® It is a common denial-of-service (DoS) attack.
+					® In this attack, one host keeps flooding another entity with SYN packets but never completes the handshake.
+					® Each uncompleted session consumes resources on the server, and it attack continues, it can crash the server. some servers blocks additional(even legitimate) connections once reserved resources for the connections are exhausted.
+					® IDSs and IPSs can detect a SYN flood attack and IPSs can prevent the attack.
+					
+				□ This can be effective in discovering zero-day exploits(vulnerability that is either unknown to vendor or known but vendor has not released a patch).
+				□ Any time administrator makes any significant changes to a system or network that cause the normal behavior to change, they should recreate the baseline otherwise, the IDS will constantly alert on what is now normal behavior.
+				
+			v. Data Sources and Trends
+				□ Any IDS will use various raw data sources(like firewall logs, system logs and application logs) to collect information on activity and to insight on trends.
+				□ These trends can detect a pattern of attacks and provide insight into how to better protect a network.
+				□ Many IDSs monitor logs in real time and on every log entry, IDS examine if it is an item of interest.
+				□ Other IDS will periodically poll relevant logs looking for items of interest.
+				
+			vi. Reporting Based on Rules
+				□ IDSs report on events interest based on rules configured within the IDS which varies depending on the organization to organization.
+				□ All events aren't attacks or actual issues, hence IDS sends alerts or alarms to administrator, which in turn administrator will investigate further.
+				□ Some systems considers alert and alarm as different things, giving them different level of severity (alarm for more sever activity and alert for minor issues).
+				□ Actual reporting mechanism varies from system to system.
+				
+			vii. False Positives Versus False Negatives
+				□ Even though IDS uses advanced analytics to examine traffic, they are susceptible to both false positive and false negative.
+				□ False positive - when an attacker is actively attacking the network but system doesn't detect it.
+				□ False Negative - it is an alert or alarm on benign, harmless event.
+				□ Both situations are undesirable but still impossible to eliminate as most IDSs trigger an alert or alarm when an event exceeds a set threshold.
+				□ There is no perfect number for the threshold. Administrators adjust it in different networks based on the network's activity level and their personal preferences.
+				□ e.g. in SYN flood attack, if threshold is too low like 5 SYN packet, IDS will constantly send alert requiring additional workforce to investigate each alert. Also if threshold is too large like 1 million SYN packets, attacker might get away with it. Administrators can set threshold like 1-1000 packets depending on the network traffic.
+				□ It is important to set the threshold high enough to reduce the number of false positives but low enough to alert on any actual attacks.
+				
+		b. IPS Versus IDS—Inline Versus Passive
+			§ IPSs are an extension of IDSs.
+			§ Like HIDS and NIDS, you can have HIPS and NIPS, but network-based IPS (NIPS) is more common.
+			§ Unlike IDS(detect and react by sending alert nor prevention), IPS can detect, react and prevent attacks.
+			§ IPS is inline with the traffic i.e. all traffic passes through the IPS and the IPS can block malicious traffic and IPS is placed inline with traffic. This is also called as in-band.
+			§ IDS is out-of-bond i.e. it monitors the traffic but traffic doesn't go through the IDS. This is also known as Passive.
+			§ IPS can inspect packets within data streams and block malicious packets before they enter the network.
+			§ In contrast to IPS, NIDS has sensors that monitor and report the traffic. An active NIDS can take steps to block an attack, but only after the attack has started.
+			§ Inline configuration of the IPS allows an IPS to prevent the attacks from reaching the internal network.
+			§ IPS is a preventive control. It can also be used internally to protect private networks.
+			
+		c. SSL/TLS Accelerators
+			§ SSL/TLS accelerators refer to hardware devices focused on handling Transport Layer Security(TLS) traffic.
+			§ As TLS provides encryption to different protocols including HTTPS, many steps on HTTPS like establishing the session, negotiating the best security supported by both the client and server, sharing encryption keys, and encrypting session data needs a lot of resources. By offloading this to another hardware device, it frees up the primary computer's resources like CPU and RAM.
+			§ It is generally placed near the related device. e.g. if used to off-load HTTPS sessions for server, then close to web server.
+			
+		d. SSL Decryptors
+			§ SSL decryptor are used by some organizations to combat many threats like detecting encrypted malicious data coming in.
+			§ SSL decryptor is placed in DMZ and redirected all the traffic through it. Unencrypted data goes the device without any modification. However, any attempts to establish an encrypted session prompt the SSL decryptor to create a separate SSL or TLS session.
+			§ e.g. When Homer innocently goes to a malicious web site, the traffic goes though the SSL decryptor. The SSL decryptor establishes an HTTPS session between it and Homer’s computer. It also establishes an HTTPS session between it and the web site. All data-in-transit is encrypted. However, the SSL decryptor can view the unencrypted data and inspect it.
+			§ SSL decryptors are often used with NIPS as NIPS is inline but malicious traffic can get through if it's encrypted.
+			
+		e. SDN (Software Defined Network)
+			§ It uses virtualization technologies to route traffic instead of using hardware routers and switches.
+			§ SDN separates the data planes and the control planes within a network.
+			§ SDN separates the logic used to forward or block the traffic(data plane) and the logic used to identify the path to take(control plane).
+			§ SDN implements the data plane with software and virtualization technologies, allowing an organization to move away from proprietary hardware.
+			§ SDN can also use routing protocols like OSPF(Open Shortest Path First) and BGP(Border Gateway Protocol) but without the hardware.
+			§ Attribute-based access control (ABAC) is commonly used in SDN. A huge benefit of these policies is that they typically use plain language statement instead of complex rules within an ACL.
+			
+		f. Honeypots
+			§ Honeypot diverts the attacker away from the live network.
+			§ They generally have minimal(as with no protection would look suspicious) protection that an attacker can easily bypass.
+			§ Security personnel often use honeypots as a tool to gather intelligence on the attacker or helps security professionals can observe the attack and learn about method or some zero-day vulnerability.
+			§ Honeypots never hold any data that is valuable to the organization. Data may seem valuable to an attacker but its disclosure is harmless.
+			§ Honeypots have 2 goals:
+				□ Divert attackers from live network.
+				□ Allow observation of an attacker.
+			
+		g. Honeynets
+			§ It is a group of honeypots within a separate network or zone but accessible from an organization's primary network.
+			§ Security professionals often create honeynets using multiple virtual servers contained within a single physical server which mimic the functionality of a live network.
+			§ e.g. you can use a single powerful server with a significant amount of RAM and processing power. This server could host multiple virtual servers, where each virtual server is running an operating system and applications. A physical server hosting six virtual servers will appear as seven systems on a subnet. An attacker looking in will not be able to easily determine if the servers are physical or virtual.
+			§ The purpose of this virtual network is to attract the attention of an attacker, just as a single honeypot tries to attract the attention of an attacker. If the attacker is in the honeynet, the live network isn’t being attacked, and administrators can observe the attacker’s actions
+			
+		h. IEEE 802.1x Security
+			§ An 802.1x server provides port-based authentication, ensuring that only authorized clients can connect to a network and prevents rogue devices from connecting.
+			§ It requires users or devices to authenticate(by username password or by certificates) when they connect to wireless or wired port.
+			§ It secures authentication process prior to a client gaining access to a network.
+			§ It's possible to combine 802.1x server with other network elements like VLAN. e.g. you can configure the 802.1x server to grant full access to authorized users, but redirect unauthorized clients to a guest area of the network via VLAN
+			§ You can implement 802.1x as a Remote Authentication Dial-In User Service (RADIUS) or  Diameter server. This helps authenticate VPN clients before they connect.
+			
+	2. Securing Wireless Networks
+		a. Reviewing Wireless Basics
+			A wireless access point connects wireless clients to a wired network, however many AP also have routing capabilities.
+			AP also includes extra services and capabilities like routing, network address translation (NAT), dynamic Host configuration protocol (DHCP) etc.
+			All wireless routers are APs
+			Not all APs are wireless routers
+			i. Fat Versus Thin Access Points
+				□ Fat AP, also known as stand-alone, intelligent, or autonomous AP includes everything needed to connect wireless clients to a wireless network. It typically includes features like routing component, NAT, ACL,DHCP etc.
+				□ A home wireless network mostly uses fat AP 
+				□ A fat AP must be configured separately from each other, which isn't a problem if you're only configuring a single AP.
+				□ A thin AP is a controller-based AP, meaning that is not a stand-alone AP, but rather an AP managed by a wireless controller and are used in big organizations where multiple APs are required and using this is easier for administrators to configure and manage. 
+				
+			ii. Band Selection and Channel Widths
+				□ Wireless networks use 2 primary radio bands: 2.4 GHz and 5 GHz.
+				□ IEEE defines many standards including wireless network protocols defining channel widths.
+				□ Bigger channel can be a combination of two smaller channels e.g. 40 MHz is 2 20 MHz channels.
+				□ Wider channels allow more data transfer but decreases the distance of radio transmissions. Also, wider channels are more likely to overlap with other devices causing interference.
+				□ 2.4 GHz band has more probability of interference as more technologies operate in this band.
+				
+			iii. Access Point SSID
+				□ Service set identifier (SSID) is the name of the wireless network.
+				□ Some Aps come with default SSIDs, though many newer vendor force users to set SSID while installing AP for the first time.
+				□ From security perspective, one should always change default SSID as it avoids telling hacker the details about AP in use and any vulnerability one might exploit.
+				
+			iv. Disable SSID Broadcasting or Not
+				□ Disabling the SSID makes it little more difficult for attackers to find your network, but not so much.
+				□ An attacker with a wireless protocol analyzer can listen to probe responses from AP which contains the SSID and detect the SSID.
+				
+			v. Enable MAC Filtering
+				□ It is a form of network access control.
+				□ MAC filtering can restrict the access to a wireless network to specific clients.
+				□ However, an attacker can use a sniffer to discover allowed MAC addresses and circumvent this form of network access control.
+				□ It is relatively easy for an attacker to spoof a MAC address.
+				
+			vi. Antenna Types and Placement
+				□ Two types of antennas, omnidirectional(transmits in all direction and has lower strength) and directional (transmits in single direction and has higher strength)
+				□ Administrators often perform a site inspection while planning and deploying and also periodically after deployment to identify potential issues or signal strength.
+				□ Depending on problem, administrator can change placement of AP or its antenna or add additional AP.
+				
+			vii. Antenna Power and Signal Strength
+				□ You can limit the range of an AP to a room or building by reducing the AP's power level. This prevents people from connecting because they will be out of the AP's range.
+				
+		b. Network Architecture Zones
+			§ Wireless
+				□ Can be used by both employees and guests.
+				□ For employees provide a bridge to a wired network allowing them network resources just as if they were connected from a wired PC.
+			§ Guest
+				□ It's typically a wireless network to provide guest with internet access without network resources just for checking mail or access web sites.
+			§ Ad hoc. (as needed network)
+				□ In this wireless devices connect to each other without an AP.
+				□ e.g. two wireless enabled laptops can connect by making ad hoc network without using infrastructure mode.
+				
+		c. Wireless Cryptographic Protocols
+			As wireless transmission happens over air, anyone with wireless transceiver can intercept the transmissions and hence it is important to have strong security protocol.
+			
+			i. WEP (Wired Equivalent Privacy)
+				□ Suffers from replay attack. And can use thousands of packets to crack IV  crack wireless network
+				□ Used RC4 stream ciphers and IV
+			ii. WPA (Wi-fi  Protected Access)
+				□ It was an interim replacement for Wired Equivalent Privacy (WEP) 
+				□ WEP has known vulnerabilities, WPA provided immediate solution to the WEP weaknesses without requiring users to upgrade their hardware.
+				□ WPA wasn't solid enough to last for an extended period, so stronger WPA2 came into existence.
+				□ WPA is susceptible to password-cracking attacks especially when AP has weak passphrase. 
+				□ Attackers capture authentication traffic with protocol analyzer and then uses an offline brute force attack to discover the passphrase. Attackers often use a disassociation attack to force the user to reauthenticate.
+				
+			iii. WPA2 (Wi-Fi Protected Access II)
+				□ It is the permanent replacement for WPA, it uses stronger cryptography than WPA.
+				□ The WI-FI alliance requires all devices carrying its WI-GI CERTIFIED logo to meet WPA2 standards, including use of Counter Mode with Cipher Block Chaining Message Authentication Code Protocol (CCMP) 
+				□ Although it provides significant security improvements, some enterprises need stronger security.
+				□ Another step can be taken is to enable authentication with Enterprise mode
+				
+			iv. TKIP Versus CCMP
+				□ Temporal Key Integrity Protocol(TKIP) is an older encryption protocol used with WPA.
+				□ CCMP is newer encryption protocol used with WPA2.
+				□ WPA provided an immediate replacement for WEP originally used with TKIP, which was compatible with older hardware.
+				□ Newer hardware supports WPA2 so usage of WPA is waning except is seen in legacy hardware.
+				□ Later implementations of WPA supports Advances Encryption Standard (AES).
+				□ As many people are successful in cracking WPA with TKIP, it's best to upgrade WPA to WPA2, or at least upgrade TKIP to use AES.
+				□ WPA2 supports CCMP which is based on AES and is much stronger than WPA using TKIP.
+				
+			v. PSK, Enterprise, and Open Modes
+				□ Pre-Shared Key(PSK) mode (WPA-PSK and WPA2-PSK) uses pre-shared key and does not provide individual authentication.
+				□ Open mode doesn't use any security and allows all users to access AP.
+				□ Enterprise mode is more secure than Personal Mode and it provides strong authentication.
+				□ Enterprise mode uses an 802.1x server (implemented as RADIUS server) to add authentication.
+				
+		d. Authentication Protocols
+			§ Many wireless authentication protocols are based on Extensible Authentication Protocol (EAP), an authentication framework that provides general guidance for authentication methods.
+			§ While they are often used in wireless networks, they can also be used anywhere an 802.1x server is implemented.
+			§ Some methods are:
+				□ EAP
+					® Provides method for 2 systems to create a secure encryption key, Pairwise Master Key (PMK).
+					® System then use this key to encrypt all data transmitted between the devices.
+					® Both TKIP and AES-based CCMP use this key though CCMP is much more secure.
+				□ EAP- Flexible Authentication via Secure Tunneling (EAP-FAST)
+					® It is designed by CISCO and is replacement for Lightweight EAP (LEAP).
+					® It uses certificates but they are optional.
+				□ Protected EAP (PEAP)
+					® Provides extra layer of protection for EAP.
+					® It encapsulates and encrypts EAP conversation in Transport Layer Security (TLS) tunnel.
+					® It is commonly implemented with Microsoft Challenge Handshake Authentication Protocol version 2  (MS-CHAPv2)
+					® PEAP requires a certificate on the server but not on the clients.
+				□ EAP-Tunneled TLS (EAP-TTLS)
+					® It is an extension of PEAP, allowing systems to use some older authentication methods like Password Authentication Protocol (PAP) within TLS tunnel
+					® EAP-TTLS requires a certificate on the 802.1x server but not on the clients.
+				□ EAP-TLS
+					® One of the most secure EAP standards and is widely implemented.
+					® Primary difference between PEAP and EAP-TLS is that it requires certificates on the 802.1x server and on each of the wireless clients.
+				□ RADIUS Federation
+					® It is possible to create a federation(used for single sign-on) using 802.1x and RADIUS servers.
+					
+		e. Captive Portals
+			§ A captive portal is a technical solution that forces clients using web browsers to complete a specific process before it allows them network access.
+			§ Organizations commonly use it as a hot spot that requires users to log on or agree to specific terms before they can access internet.
+			§ Free internet access - in places like hospitals, cafes that requires users to abide by certain acceptable user policy.
+			§ Paid Internet access - place like in hotels, resorts, airlines for pay-as-you-go internet access, when users are required to log in and enter card details etc.
+			§ Alternative to IEEE 802.1x - adding 802.1x server can be expensive and is sometimes not feasible option, so organizations can use captive portal as an alternative to authenticate users before giving them access.
+			
+	3. Understanding Wireless Attacks
+		a. Disassociation Attacks
+			§ Disassociation attack effectively removes a wireless client from a wireless network, forcing it to reauthenticate.
+			§ In disassociation attack, an attacker send a disassociation frame to the AP with spoofed MAC address of the victim. The AP receives the frame and shuts down the connection. The victim is now disconnected and must reauthenticate to connect.
+			
+		b. WPS and WPS Attacks
+			§ Wi-Fi Protected Setup (WPS) allows users to configure wireless devices without typing in the passphrase. Instead, users can configure devices by  pressing or by entering a short eight-digit PIN.
+			§ WPS is susceptible to brute force attacks.
+			§ A WPS attack keeps trying different PINs until it succeeds. Once, it discovers the PIN, it can then discover the passphrase in both WPA and WPA2 wireless networks.
+			§ Hence, it is recommended to keep WPS off.
+			
+		c. Rogue AP
+			§ A rogue access point is an AP places within a network without official authorization by an employee bypassing security or by an attacker
+			§ Attacker may connect rogue AP to network devices in wireless closet with lack of security. This AP acts as sniffer to capture traffic passing through wired network device and then broadcast the traffic using wireless capabilities.
+			§ If you discover the unauthorized AP, you should disconnect it as quickly as possible to isolate it so that it cannot capture anymore network traffic.
+			§ A secure AP blocks unauthorized users while a rogue AP gives access to unauthorized users.
+			
+		d. Evil Twin
+			§ Evil twin is a rogue access point with the same SSID as a legitimate access point.
+			§ An attacker can setup an AP using the same SSID as the public Wi-Fi network, and many unsuspecting users will connect to this evil twin.
+			§ Once user connects to an evil twin, all the wireless traffic goes through the evil twin instead of legitimate AP.
+			§ Often attacker present bogus logon page to get username and passwords, and can also analyze the traffic for more sensitive information.
+			§ It is an very easy to setup attack, even with a laptop as access card can act as AP
+			§ Regular Site surveys help to combat this attack by identifying the physical location based on signal strength.
+			
+		e. Jamming Attacks
+			§ Attackers can transmit noise or another signal on the same frequency used by a wireless network. This interferes with the wireless transmissions and can seriously degrade performance.
+			§ This type of denial of service attack is called jamming and it prevents all users from connecting to a wireless network.
+			§ In some cases, you can increase the power levels of the AP to overcome the attack.
+			§ Another method is to use different wireless channels, though it may be useful for home network to reduce interference, in attack, attacker can also just change the channel again.
+			
+		f. IV Attacks
+			§ A wireless initialization vector attacks attempts to discover the pre-shared key from IV.
+			§ The IV is simply a number, some wireless protocols use an IV by combining it with the pre-shared key to encrypt data-in-transit.
+			§ The attacks is successful when an encryption uses same IV. As WEP uses only 24-bit number for the IV, this small IV results in wireless networks reusing keys.
+			§ Many IV attacks uses packet injection techniques to add additional packets into the data stream so that IV will be reused in less time.
+			
+		g. NFC Attacks
+			§ In Near Filed Communication (NFC) attack, an attacker uses an NFC reader to capture data from another NFC device.
+			§ One method is eavesdropping, the NFC reader uses an antenna to boost its range, and intercept the data transfer between two other devices.
+			
+		h. Bluetooth Attacks
+			§ Bluejacking - unauthorized sending of text messages to a nearby bluetooth device.
+			§ Bluesnarfing - unauthorized access to or theft of information from a bluetooth device
+			§ Bluebugging  - it is like bluesnarfing but additional to it, an attacker can installs the backdoor .
+			§ Ensuring devices cannot be paired without manual user intervention prevents these attacks.
+			
+		i. Wireless Replay Attacks
+			§ An attacker captures data sent between two entities, modifies it and then attempts to impersonate one of the parties by replaying the data.
+			§ WPA2 using CCMP and AES is not vulnerable to replay attacks.
+			§ WPA using TKIP is vulnerable to this attack.
+			
+		j. RFID Attacks
+			§ Radio-frequency identification (RFID) systems include an RFID reader and RFID tags places on objects which are used to track and manage various things including animals.
+			§ Some of the common RFID attacks are:
+			§ Sniffing or eavesdropping - an attacker should know the frequency used by RFID system and have a receiver that can be tunes to that frequency. Attacker also needs to know the protocols to interpret the data.
+			§ Replay - successful eavesdropping attacks allow attacker to perform replay attack.
+			§ DoS - if attacker knows the frequency used by RFID system, it is possible to launch jamming or interference attack, flooding the frequency with noise.
+			
+		k. Misconfigured Access Points
+			§ One of the primary reasons that wireless attacks are successful is because Aps are misconfigures.
+			§ e.g. if AP not using WPA2 with AES and CCMP, it is susceptible to attack. Similarly if WPS is enabled on AP, an attack can discover the PIN in a few hours simply by guessing and later can change the passphrase.
+			
+	4. Using VPNs for Remote Access
+		Like SSH and RDP, VPN is another method  used for remote access. VPNs allow users to access private networks via public network. 
+access over public network is the core security concern with VPNs. Different Tunneling protocols encapsulate and encrypt traffic to protect data from unauthorized disclosure. The tunnel prevents anyone from reading the data transferred through it.
+		
+		a. VPNs and VPN Concentrators
+			§ It's possible to create a VPN by enabling services on a server.  e.g. if you have a windows server, you can enable the direct access VPN role and configure the Routing and Remote Access Console. Only condition is server should have 2 NICs.
+			§ Larger organizations often use a VPN concentrator, which is a dedicated device used for VPNs. A VPN concentrator includes all the services needed to create a VPN, including strong encryption and authentication techniques and it supports many clients.
+			§ VPN concentrators are generally placed in DMZ. Firewall between the internet and the DMZ would forward VPN traffic to VPN concentrator. The concentrator would route all private VPN traffic to firewall between DMZ and internet.
+		§ Site-to site VPN - between 2 different sites. Data between VPN concentrators on internet is encrypted and VPN concentrator on other side decrypts it  and send it in clear to the receiver in network
+		§ Host-to-Site VPN -  between a host and a site. Data between VPN concentrator on site side and VPN s/w on host side on internet is encrypted and VPN concentrator on other side decrypts it  and send it in clear to the receiver in network
+		§ Host-to-Host VPN -  between 2 hosts, don't need additional h/w, only need VPN s/w.
+			
+		b. Remote Access VPN or Host-to-site VPN
+			§ 
+					
+			§ In above figure, VPN client first connects to internal using a broadband connection to ISP. After connecting to internet, VPN client can initiate the VPN connection.
+			§ The VPN server is in DMZ and reachable through public IP address making it accessible from any other host on the internet. A common method to use an internal Remote Authentication Dial-in User Service (RADIUS) server. When user logs on, the VPN server sends user's credential to RADIUS server.
+			§ While RADIUS might have database of users and passwords, it's more common for it to pass credentials on to another server to validate them like LDAP.
+			
+			i. IPsec as a Tunneling Protocol
+				□ IPsec supports Tunnel Mode and Transport mode.
+				□ Tunnel mode encrypts the entire IP packet used in internal network and is the mode used with VPNs transmitted over the internet. As whole IP packet is encrypted, internal IP address won't be visible to anyone who intercepts the traffic as only IP of VPN server and client IP is visible.
+				□ Transport mode only encrypts the payload and is commonly used in private networks but not with VPNs. if traffic is transmitted and used only within a private network, there isn't a need to hide IP addresses by encrypting them.
+				□ IPsec provides security in 2 ways:
+					® Authentication
+						◊ IPsec includes an Authentication Header (AH) to allow each of the hosts in the IPsec conversation to authenticate with each other before exchanging the data. AH provides authentication and integrity. AH uses protocol number 51.
+					® Encryption 
+						◊ IPsec includes Encapsulating Security Payload (ESP) to encrypt the data and provide confidentiality. ESP includes AH so it provides confidentiality, authentication and integrity. ESP uses protocol number 50.
+				□ IPsec uses Internet Key exchange (IKE) over port 500 to authenticate clients in the IPsec conversation. IKE create security associations (SAs) for the VPN and uses these to set up secure channel between client and VPN server.
+				
+			ii. TLS as a Tunneling Protocol
+				□ Some tunneling protocols use Transport Layer Security (TLS) to secure the VPN channel. e.g. Secure Socket Tunneling Protocol (SSTP) encrypts VPN traffic using TLS over port 443. also, OpenVPN and OpenCOnnect open source applications also use SSL/TLS to create a secure channel.
+				□ Using port 443 provides a lot of flexibility as it doesn't require opening any additional ports. It is useful alternative when VPN tunnel must go through a device using NAT, and IPsec is not feasible.
+				
+			iii. Split Tunnel Versus Full Tunnel
+				□ Split tunnel -  in split tunnel mode an administrator determines what traffic should use the encrypted tunnel. e.g. it is possible to configure the tunnel to only encrypt traffic going to private IP addresses used within the private network. If someone does the internet search, it won't go through VPN in that case, instead directly via their ISP.
+				□ Full tunnel - in full tunnel, all traffic goes through the encrypted tunnel while the user is connected to VPN. If private network routed internet traffic through UTM device, person's traffic would go through UTM device and VPN server would encrypt it and send it back to that person via encrypted channel.
+				□ As UTM performs many functions like URL filtering, malware inspection, and content filtering, many organizations use this option of full tunnel.
+				□ A disadvantage of full tunnel is that it can be slow as not only internet traffic taking an indirect path but also it is being encrypted and decrypted couple of times.
+				
+			iv. Site-to-Site VPNs
+				□ A site-to-site VPN includes two VPN servers that act as gateways for 2 networks separated geographically.
+				□ 
+					
+				□ e.g. in above figure, an organization can have two locations. It can have 2 VPN servers to act as gateways to connect the networks at the 2 locations together.
+				□ A benefit of site-to-site model is that it connects both networks without requiring additional steps on the part on the user. 
+				□ Users in the remote office can connect to servers in the headquarters as easily as if the servers were in the remote office. It would be slower but it's transparent to end users.
+				□ In contrast, in traditional remote access VPN(host-to-gateway model), the end user makes the direct connection to VPN server and is much aware of the process.
+				
+			v. Always-On VPN
+				□ Always-on VPN s can be used with both site-to-site VPNs and remote access VPNs.
+				□ When used with site-to-site VPN, the gateways maintain the VPN connection. In contrast, some site-to-site VPNs use an on-demand connection (the VPN connection is only established when a user connects to a  remote system).
+				□ Several vendors have always-on VPNs for remote access VPNs. They attempt to create the VPN connection as soon as the user's devices connects to the internet. e.g. as soon as user turns on his PC, or on mobile devices, when user enters coffee shop and connects to free internet.
+				
+		c. Network Access Control (NAC)
+			§ Network Access Control (NAC) methods provide continuous security monitoring by inspecting computers and preventing them accessing the network if they don't pass the inspection.
+			§ NAC provides measure to control computers employees use at home or on the road.
+			§ It ensures that clients meet predetermined characteristic prior to accessing the network.
+			§ NAC systems often use Health  as a metaphor, indicating that a client meets these predetermined characteristics. NAC can quarantine or isolate the unhealthy clients who don't meet the predefined NAC conditions.
+			
+			i. Host Health Checks
+				□ Common health conditions checked by NAC are:
+					® Up-to-date antivirus software, including updated signature definitions
+					® Up-to-date operating systems, including current patches and fixes
+					® Firewall enabled on the client
+				□ NAC uses authentication agents/ health agents, which are applications/services that check different conditions on the computer ad document the status in a statement of health. When client connects to a NAC-controlled network, the agents reports the health status of the NAC client.
+				□ 
+							
+				□ In above figure, when a VPN client accesses the network, the VPN server queries the ANC health server to determine required health conditions. The VPN server also queries the client for a statement of health. If the client meets all health requirements, the NAC system allows the client to access the network.
+				□ However, if client doesn't meet requirements then VPN server redirects client to a remediation network which has resources the client can use to get healthy like currents software patch, antivirus etc.
+				□ NAC can also be used for internal clients of network to check if all clients are up-to-date. 
+				□ For guest clients, NAC inspects the clients, and if they don't meet health conditions, they be granted internet access through the network but remain isolated.
+				
+			ii. Permanent Versus Dissolvable
+				□ Agents on clients be either permanent/persistent or dissolvable/agentless.
+				□ A permanent agent is installed on the client and stays on the client and is used when client attempts to log on remotely, this is most common implementation of corporate-owned devices.
+				□ A dissolvable agent is downloaded and run on the client when client logs on remotely. It collects the information it needs and sends it to NAC system . Dissolvable agents remove themselves immediately after they report back to the NAC or after the remote session ends. These are often uses on employee owned devices.
+				
+		d. Identity and Access Services
+			§ An important step when implementing a VPN is to ensure only authorized entities can access it, and authorization starts with authentication. Following are the few protocols used with remote access authentication.
+			
+			i. PAP (Password Authentication Protocol)
+				□ PAP is used with Point-to-Point Protocol (PPP) to authenticate clients.
+				□ The most significant weakness of PAP is that it sends passwords over network in cleartext. No encryption used.
+				□ PPP was primarily used in dial-up connections.
+				□ Today, PPP is only used as last resort or it is used with another protocol that provides encryption.
+				
+			ii. CHAP (Challenge Handshake Authentication Protocol)
+				□ CHAP also uses PPP and authenticates remote users, but it is more secure than PAP as CHAP passwords are not sent over the network in cleartext.
+				□ The client and server both know a shared secret(similar to password) used in authentication process. Instead of sending it in cleartext, client hashes it after combining it with a nonce (number once used) provided by server. This handshake process is used when the client initially tries to connect to the server, and at different times during the connection.
+				□ Encrypted challenge sent over network
+				□ 3-way handshake
+					® After link is established, server sends a challenge message
+					® Client responds with a password hash calculated from the challenge and the password
+					® Server compares received hash with stored hash
+				□ Challenge-response continues
+				
+			iii. MS-CHAP and MS-CHAPv2
+				□ Microsoft introduced MS-CHAP as an improvement over CHAP for Microsoft clients as old as windows 95. later, Microsoft improved MS-CHAP with MS-CHAPv2.
+				□ Unlike MS-CHAP, MS-CHAPv2 performs mutual authentication in client server setup i.e. not only client authenticates to server but the server also authenticates to the client.
+				□ Both are vulnerable as they used DES for encryption.
+				
+			iv. RADIUS (Remote Dial-in User Service)
+				□ RADIUS is a centralized authentication service.
+				□ Instead of each VPN server needing a separate database to identify who can authenticate, the VPN forward the authentication requests to a central RADIUS server.
+				□ RADIUS can also be used as an 802.1x server with WPA2 enterprise mode.
+				□ If each VPN server has separate database with client's username and password, when user is prompted to change password, each of these databases must be updated. This can labor intensive and can result in needless errors.
+However, company can use centralized RADIUS server. Each VPN server is configured with shared secret and RADIUS server is configured with matching shared secret for each VPN servers.
+				□ This centralized RADIUS server could hold a centralized database of user accounts. However, it is more common for the RADIUS server to access an LDAP server that holds the accounts. For example, in a Microsoft domain, the RADIUS server would pass the credentials to a domain controller. A significant benefit is that there is only one account for the user.
+				□ RADIUS uses UDP, while DIAMETER uses TCP
+				□ RADIUS only encrypts password, while DIAMETER encrypts entire authentication process.
+				
+			v. TACACS+ (Terminal Access Controller Access-Control System Plus)
+				□ TACACS+ is Cisco alternative to RADIUS. Unlike RADIUS, TACACS+ encrypts entire authentication process. Also, TACACS+ uses multiple challenges and responses between the client and the server.
+				□ Although TACACS+ is proprietary to Cisco, it can interact with Kerberos. This allows a Cisco VPN concentrator to interact in a Microsoft Active Directory environment. As a reminder, Microsoft Active Directory uses Kerberos for authentication.
+				□ Organizations also use TACACS+ as an authentication service for network devices. In other words, you can use it to authenticate users before they are able to access a configuration page for a router or a switch. The network devices must be TACACS+ enabled, and a TACACS+ server provides the authentication services.
+				
+			vi. Diameter
+				□ It is an extension of RADIUS and many organizations have switched to it.
+				□ It adds several other commands beyond the capabilities of RADIUS along with new commands that can be used with EAP.
+				
+			vii. AAA Protocols
+				□ AAA protocol provides authentication, authorization and accounting.
+				□ RADIUS, TACACS+ and Diameter are considered as AAA protocols because they provide all three services.
+they authenticate users who attempt remote access, determine if users are authorized for remote access by checking database, and then record user's activities.
+				□ TACACS+ uses multiple challenges and responses during a session.
+				□ Kerberos sometimes referred as AAA protocol, but it doesn't provide any accounting services.

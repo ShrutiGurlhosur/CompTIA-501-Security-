@@ -1,0 +1,270 @@
+	1. Determining the Threat Actors
+		a. Script Kiddie
+			§ Is an attacker who uses existing computer scripts or code to launch attacks
+			§ Typically have very little expertise, sophistication, and funding
+		b. Hacktivist
+			§ Hacktivist launches attacks as part of an activity movement or to further the cause
+		c. Insider
+			§ Anyone who has legitimate access to an organization's internal resources, like an employee of a company.
+		d. APT (Advanced Persistent Threats)
+			§ These are sponsored by governments and they launch sophisticated, targeted attacks
+		e. Organized Crime
+			§ Typically motivated by greed and money but often use sophisticated techniques.
+			
+			§ DoS Attack
+				□ It's an attack from a single source to disrupt the services provided by another system
+			§ DDoS attack
+				□ This includes multiple computers attacking a single target.
+				□ DDoS attacks typically include sustained, abnormally high network traffic.
+				
+	2. Determining Malware Types
+		□ Malware includes wide range of software that has malicious intent.
+		□ Following are the different types of malwares.
+		
+		a. Viruses
+			§ Virus is malicious code that attached itself to a host applications
+			§ Host app must be executed to run and the malicious code executes when host app is executed
+			§ Virus tries to replicate by finding other host applications to infect with the malicious virus. At some point, virus activates and delivers its payload(damaging like deleting files or harmless like showing some message in screen).
+			§ Types of viruses :
+				□ Boot sector 
+					® Stored in first sector of the hard drive and loaded into memory upon boot up. 
+					® Boot up system from external device like usb or hard drive and remove the virus
+				□ Macro
+					® Allow to get embedded into other documents like excel sheet
+				□ Program
+					® Infect executables or apps
+				□ Multipartite
+					® Combination of boot sector and program virus
+					® Hence allows to stay for longer period of time as at a time only half part of this virus is removed while other part stays intact.
+				□ Encrypted
+					® Hides itself by encrypting itself
+				□ Polymorphic
+					® Advanced version of encrypted virus and changes its code every time to avoid detection.
+				□ Metamorphic
+					® Able to rewrite itself
+				□ Stealth
+					® Use various techniques to avoid detection
+				□ Armored
+					® Have a layer of protection to confuse a program or person analyzing it.
+				□ Hoax
+					® Not s virus and try to trick user to actually do into something harmful
+			§ Updated AV and OS can help
+		b. Worms
+			§ A worm is self-replicating malware that travels through a network without the assistance of the host applications or user interaction.
+			§ Main problem with them is they consume lots of bandwidth.
+			§ Firewall and IDS/IPS can mitigate
+			§ Doesn't help much once inside system.
+		c. Logic Bombs
+			§ A logic bomb is a strong code embedded into an application or script that will execute in response to an event like date, time, or user action of launching something specific.
+			§ As it is very hard to identify prior to its explosion, one has to implement formal change control like change management, electronic monitoring, host based IDS, and constant auditing.
+		d. Backdoors
+			§ A backdoor provides another way of accessing the system, bypassing the authentication methods.
+			§ Many types of malwares create backdoors, allowing attackers to access systems from remote locations.
+			§ Effective management policies help prevent employees from creating backdoors after they are fired.
+		e. Trojans
+			§ A Trojan, also called Trojan horse, looks like something beneficial, but it's actually something malicious.
+			§ Can install backdoors or come into system through backdoors
+			§ Many Trojans are delivered via drive-by downloads.
+			§ They can also infect system from fake antivirus software, pirated software, pirated software, games, or infected USB drives.
+		f. RAT
+			§ A Remote Access Trojan, allows attackers to take control of systems from remote locations.
+			§ Often delivered via drive-by downloads, once installed, an attacker can access the system any time
+			§ Some RATs automatically collect and log keystrokes, usernames and passwords, incoming and outgoing mails, chat sessions, browser history or screenshots, and send data automatically to attacker
+			§ Based on the credentials gained form RAT, attacker can exploit the network or additional devices available on the network with additional malware
+			§ Don't run unknown software, update OS, AV and maintain backups
+		g. Ransomware
+			§ A Specific type of Trojan is Ransomware.
+			§ Attackers encrypt the user's data or take control of the computer and lock out the user, and then they demand the ransom to regain the access to the system.
+			§ Generally delivered via drive-by downloads or embedded in other software delivered via email.
+			§ Ransomware that encrypts the user's data except OS(as they want to continue to show msg) is also called Crypto-Malware.
+			§ Some ransomware has added in a new blackmail technique called doxing. If user don't pay ransom, the attacker threatens to publish the data along with victim's credentials.
+			§ Malware that uses doxing is also called doxingware.
+			§  backup data to not lose anything
+			§ Update AV and OS.
+		h. Keylogger
+			§ A keylogger attempts to capture a user's keystrokes, keystrokes stored in file, and are either sent to an attacker automatically, or the attacker may manually retrieve the file.
+			§ It is typically a software but can  also be a hardware like USB keylogger
+			§ Usually installed with malware
+			§ Block unauthorized communication, run a keylogger scanner.
+		i. Spyware
+			§ A spyware is a software installed in user's system without their awareness or consent
+			§ It's purpose is to monitor the user's computer and the user's activity. Can take some level of control over user's computer to learn information and sends this to third party.
+			§ Often includes Keylogger
+			§ Can try to install backdoor
+		j. Adware
+		
+			§ It is very similar to spyware in working but it's initial intent was to learn user's habits for the purpose of the targeted advertising.
+			§ The term adware also applies to software that is free but includes advertisements. The user understands that the software will show advertisements and has the option to purchase a version of the software that does not include the ads.
+			§ Removal tools can also be tricks to show more ads
+			§ Difficult to remove
+			
+		k. Bots and Botnets
+			§ Generally, Bots are software robots. A Botnet includes multiple computers that acts as bots(or zombies) and functions together in a network, often for malicious purposes.
+			§ Bot herders(managers) attempt to infect as many as computers possible to include them in the botnet and often managed via one or more servers running command-and-control.
+			§ The infected computers periodically check in with the command-and-control servers, receive direction, and then go to work. User often is unaware of this
+			§ Bot herders have been using Mirai to create large botnets. Mirai affects linux systems, and IoT devices based on linux.
+			§ Botnets herders sometimes maintain complete control over their botnets. Other times, they rent access out to others to use as desired. Some of the instructions given are,
+				□ Send spam
+				□ Launch DDoS attack
+				□ Download additional malware, adware, or spyware like keylogger.
+			§ e.g. ZeuS botnet
+			§ Stopping botnet
+				□ Prevent initial infection by AV and OS updates
+				□ Identify existing infection with on-demand scans and network monitoring
+				□ Prevent command and control by using block at firewall, identify workstation with a host based firewall or host-based IPS.
+		l. Rootkits
+			§ A Rootkit is group of programs that hides the fact system has been infected or compromised by malicious code.
+			§ In addition to modifying the internal OS processes, rootkits often modify systems files like Registry, can also modify user's access (removing someone's access). Also sometimes they get combined with another malwares, and as they have system level privileges, it makes sure you can't delete malware.
+			§ Rootkits have system-level or kernel-level access. 
+			§ They use hooked processes or hooking technique to intercept calls to OS. e.g. antivirus makes OS call that could detect malware, but the rootkit prevents call and hence they are not identifiable sometimes by antivirus. However, detectable if antivirus can often detect hooked processes by examining contents of system's RAM.
+			§ Another method used to detect rootkits is to boot into safe mode, or have system scanned before it boots.
+			§ Need special rootkit removal tool
+			§ Removal of root kit is hard and the best plan is to reimage the machine.
+	3. Recognizing Common Attacks
+		a. Social Engineering
+			§ It's the practice of using tactics to gain information.
+			§ Often low-tech and encourages individuals to do something they wouldn't normally do, cause to reveal some piece of information, lie user credentials.
+			§ Methods include using flattery and conning, assuming a position of authority, encouraging someone to perform risky action, encourage someone to reveal sensitive information, impersonating someone, tailgating.
+			i. Impersonation
+				§ One of the most used technique
+				§ Goal is to convince an authorized user to provide some information 
+			ii. Shoulder Surfing
+				§ Shoulder surfing is simply looking over the shoulder of someone to gain information.
+				§ The goal is to gain unauthorized information by casual observation, and it's likely to occur within an office environment.
+				§ Attacker can be physically present or via camera.
+				§ Screen filters help present shoulder surfing by obscuring the view for people unless they are directly in front of the monitor.
+				§ Use screen filters.
+			iii. Tricking Users with Hoaxes
+				§ A hoax message, often circulated through email, that tells of implementing doom from a virus or other security threat that simply doesn't exist. Users may be encouraged to delete some important files.
+			iv. Tailgating and Mantraps
+				§ Tailgating is the practice of one person following closely behind another without showing credential. e.g. through door without security badge, go behind someone who has, effectively breaching the security.
+				§ Mantrap can be a turnstile like those used in subways or bus stations.
+			v. Dumpster Diving
+				§ Dumpster diving is the practice of searching through trash or recycling containers to gain information from discarded documents.
+				§ Documentation with any type of Personally Identifiable Information (PII) or Personal Health Information (PHI) should be shredded or burned.
+			vi. Watering Hole Attacks
+				§ A watering hole attack attempts to discover which website a group of people are likely to visit and then infect those website with malware that can infect the visitors.
+				§ Goal is to infect website that users trust already e.g. government website, FBI,RBI etc.
+		b. Attacks via Email and phones
+			i. Spam
+				§ Spam is unwanted or unsolicited email
+				§ Spammers often exploit a company’s Open Mail Relays to send their messages.
+				§ Verify that your SMTP servers aren’t configured as open mail relays or SMTP open relays.
+				§ Sometimes, legitimate companies to opt in to their emails lists and then send them email about their products. When users agree to opt in to a list, they agree to receive email but also company can share your email address with others
+				§ Legitimate companies might send you more emails than wanted but they don't malicious spam
+				§ Criminals use variety of methods to collect email addresses. They buy from other criminals, they can trick with opt-out link just to confirm your email address
+				§ Malspam = malicious spam
+			ii. Phishing
+				§ Convince to give up some confidential information.
+				§ Phishing is the practice of sending email to users with the purpose of tricking them into revealing personal information or clicking on a link. Often sends user a malicious website that appears to the user as a legitimate site.
+				§ Links within email can also lead unsuspecting users to install malware.
+				§ Phishing can be done for some of following reasons
+					® To get your friends' information
+					® To install malware
+					® To validate email address
+					® To get money
+					
+			iii. Spear Phishing
+				§ Narrow group of phishing.
+				§ Spear phishing is a targeted from of phishing.
+				§ e.g. attacks may target employees within a company or customer of a company.
+				§ Digital signatures can be used to help prevent it. e.g. impersonating as CEO of company to target employees
+			iv. Whaling
+				§ It is a form of phishing that attempts to target high-level executives.
+				§ Generally sent email with impersonating from Justice department, IRS etc.
+			v. Vishing
+				§ Phishing done over VoIP is vishing
+				§ Use of VoIP helps hide attackers to spoof  caller ID, making it appear as though call came from familiar location etc.
+				§ Some attacks are fully automated, and some are automated initially but attacker takes over at some point and get personal information from victim
+		c. One click lets them in
+			§ It only takes one click from an uneducated user to give attacker almost unlimited access to an organization's network
+	4. Blocking Malware And Other Attacks
+		a. Protecting Systems from Malware
+			§ Most common security controls used to protect against malware:
+				§ Spam filter on mail gateways
+				§ Anti-malware software on mail gateways
+				§ All systems including servers have anti-malware software installed
+				§ Boundaries or firewalls and UTMs
+			i. Antivirus and Anti-Malware Software
+				§ Most antivirus software detect, blocks, and removes several different malwares. Sometimes quarantines them, in order to study and notify the user.
+				§ Antivirus software detects viruses using either 
+					® Signature based detection
+						◊ Detection based on previously known signature/definition.
+						◊ Software must be up to date to update new malware signatures
+						◊ Still can be attacked as there is gap between detection and updating signature 
+						◊ Update can be done manually as well as whole process can be automated.
+					® Heuristic based detection
+						◊ This attempts to detect viruses that were previously unknown and don't have signatures. This includes zero-day exploits.
+						◊ It runs questionable code in sandbox
+				§ Checking File Integrity
+					® Some antivirus use file integrity checkers to detect modifies system files based on hashes.
+					® Microsoft File Checksum Integrity Verifier (fciv.exe) tool can verify the integrity of all files.
+					® It is useful in rootkits detection to check if registry file has changed
+			ii. Data Execution Prevention (DEP)
+				§ It is security feature that prevents code from executing in memory regions marked as non-executable .
+				§ DEP is enforced by both hardware and software. 
+				§ Advanced Micro Devices (AMD) implement DEP using the no-execute page-protection (NX) feature.
+				§ Intel implements DEP using the Execute Disable Bit (XD) feature. Both are enabled in the Basic Input/Output System (BIOS) or Unified Extensible Firmware Interface (UEFI). Within Windows, DEP is enabled in the System Properties – Performance Settings.
+				§ If DEP is not enabled in the BIOS or UEFI, but you try to install Windows, you will typically see an error message such as “Your PC’s CPU isn’t compatible with Windows.” The solution is to enable DEP in BIOS or the UEFI.
+				
+			iii. Advanced Malware Tools (AMP)
+				§ Cisco’s Advanced Malware Protection (AMP) combines multiple technologies to protect a network before an attack, during an attack, and after an attack.
+				§ During an attack, AMP uses a variety of techniques to detect and block emerging threats before they infiltrate a network, or contain and remediate malware that gets into a network. AMP uses continuous analysis to detect suspicious file and network activity within a network, which helps it detect malware operating within the network
+				§ Security administrators view logs and alerts to analyze and interpret the output from advanced malware tools such as AMP. For example, administrators might see an alert indicating that encrypted data is being sent out of the network. This is a serious red flag and indicates malware is collecting data and sending it to an attacker.
+				
+			iv. Spam filters
+				§ Organizations often use multipronged/ multilayer approach to block spam. e.g. many UTM systems include spam filters to detect and block spam. The output of the UTM goes to an email server. Email servers also have methods of detecting and blocking spam. The email server sends all email to the users, except for what it detects as spam. User systems also have antispam filters, or junk mail options, as a final check.
+				§ Spam filters typically allow you to identify email addresses as safe, or to be blocked. You can add these as individual addresses or entire domains
+				
+	5. Educating Users
+		a. New viruses
+			§ when vendors discover a vulnerability that attackers can exploit, they release patches and updates to remove the vulnerability. Administrators then need to evaluate, test, and implement the patches or upgrades to servers. Similarly, home users should keep their systems and applications up to date.
+		b. Phishing attacks
+			§ The best way to prevent successful attacks is to educate people about what the criminals are doing now.
+			
+		c. Zero-day Exploits
+			§ Operating system vendors write and release patches once they know about them, but until the vendors know about them, the vulnerability remains.
+			§ Users might adopt the idea that up-to-date antivirus software will protect them from all malware. This simply isn’t true. No matter how great an antivirus company is at identifying new malware, there is always going to be a lag between the time when criminals release the malware and the antivirus company releases new signatures to discover it. 
+
+
+		§ Don’t click on links within emails from unknown sources (no matter how curious you might be).
+		§ Don’t open attachments from unknown sources. Malware can be embedded into many different files, such as Portable Document Format (PDF) files, Word documents, Zipped (compressed) files, and more.
+		§ Be wary of free downloads from the Internet. (Trojans entice you with something free, but they include malware.)
+		§ Limit information you post on social media sites. (Criminals use this to answer password reset questions.)
+		§ Back up your data regularly (unless you’re willing to see it disappear forever).
+		§ Keep your computer up to date with current patches (but beware of zero-day exploits).
+		§ Keep antivirus software up to date (but don’t depend on it to catch everything).
+		
+	1. Why social Engineering works
+		§ Many of the reasons that social engineers are effective are because they use psychology-based techniques to overcome users’ objections. Scarcity and urgency are two techniques that encourage immediate action.
+		§ Best thing is to call them back after confirming their number and credentials.
+		a. Authority
+			§ Using authority is most effective with impersonation, whaling, and vishing attacks:
+			i. Impersonation
+				§ Some social engineers impersonate others to get people to do something.
+			ii. Whaling
+				§ Executives respect authorities such as legal entities.
+			iii. Vishing
+				§ Some attackers use the phone to impersonate authority figures.
+				
+		b. Intimidation
+			§ In some cases, the attacker attempts to intimidate the victim into taking action. Intimidation might be through bullying tactics, and it is often combined with impersonating someone else. Using intimidation is most effective with impersonation and vishing attacks.
+			
+		c. Consensus
+			§ People are often more willing to like something that other people like. Some attackers take advantage of this by creating web sites with fake testimonials that promote a product
+			§ Using consensus, sometimes called social proof, is most effective with Trojans and hoaxes
+			
+		d. Scarcity
+			§ People are often encouraged to take action when they think there is a limited quantity
+			
+		e. Urgency
+			§ Some attacks use urgency as a technique to encourage people to take action now.
+			
+		f. Familiarity
+			§ If you like someone, you are more likely to do what the person asks. This is why so many big companies hire well-liked celebrities. And, it’s also why they fire them when they become embroiled in a scandal that affects their credibility.
+			§ People are more likely to accept someone looking over their shoulder when they are familiar with the other person, or they like them
+			§ People are much more likely to allow someone to tailgate behind them if they know the person or like the person
+			
+		g. Trust
+			§ In addition to familiarity, some social engineers attempt to build a trusting relationship between them and the victim
+			§ Vishing attacks often use this method.

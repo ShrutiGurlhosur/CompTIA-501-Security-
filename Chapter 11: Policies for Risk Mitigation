@@ -1,0 +1,347 @@
+	1. Exploring Security Policies
+		§ Security policies are written documents that lay out a security plan within a company
+		§ They are one way of many administrative controls used to reduce and manage risk
+		§ e.g. Standard Operating Procedures (SOPs) to support security policies.
+		a. Personnel Management Policies
+			§ Personnel creates plans and procedures to implement security policies.
+			i. Acceptable Use Policy (AUP)
+				§ Defines proper system usage or the rules of behavior for employees when using information technology systems
+				§ Usually describes purpose pf systems, networks, how user can access them and the responsibilities of users when they access the systems.
+				§ AUP might include privacy statements informing users what computer activities they can consider private.
+				§ Often includes definitions and examples of unacceptable use.
+				§ It is critical for users to read and then sign the document indicating they understand the AUP
+				
+			ii. Mandatory Vacations
+				§ Help detect when employees are involved in malicious activity like fraud
+				§ For any fraud of any substantial size to succeed, an employee would need to be constantly present in order to manipulates records
+				§ Don’t prevent fraud on its own, has to be implemented like defense in depth.
+				
+			iii. Separation of duties
+				§ Prevents single person or entity from being able to complete all the functions of a critical or sensitive process.
+				§ Designed to prevent fraud, theft, and errors
+				§ e.g. one person prints the check, while other person signs it
+				
+			iv. Job Rotation
+				§ Employees rotate through different jobs to learn the processes and procedures in each job
+				§ Help prevent or expose dangerous shortcuts or fraudulent activity
+				§ It works well with separation of duties
+				§ Ensures employees can't continue with fraudulent activity indefinitely
+				
+			v. Clean Desk Policy
+				§ Directs users to keep their areas organized and free of papers
+				§ Goal is to reduce threats of security incidents by ensuring the protection of sensitive data. It helps prevent possibility of data theft or inadvertent disclosure of information
+				
+			vi. Background Check
+				§ A background check checks into a potential employee's history with the intention of discovering anything about the person that might make him a less-than- ideal fit for job
+				§ It varies depending on the job profile and responsibilities.
+				§ Generally looks for criminal activity or history, or credit history in case of financial institutions.
+				
+			vii. NDA Non-Disclosure Agreement
+				§ It is used between two entities to ensure that proprietary data is not disclosed to unauthorized entities
+				§ Many organizations use an NAD to prohibit employees from sharing proprietary data while they are employed, or after they leave the organization.
+				
+			viii. Exit Interview
+				§ It is conducted with departing employees just before they leave an organization.
+				§ Happens when employee leaves voluntarily and also when he is removed
+				§ Overall purpose is to gain information from departing employee and in some cases to remind them about NDA.
+				§ It is important to ensure other things occur before  or during the exit interview like disabling employee accounts, credentials, taking token cards, access cards, collect equipment like laptops etc.
+				
+			ix. Onboarding
+				§ It is a process of granting individuals access to an organization's computing resources after being hired.
+				§ Includes providing employee with the user account, granting access to appropriate resources.
+				§ Principle pf least privilege should be maintained 
+				§ Offboarding is the process of removing the access when employees leave the company
+				
+			x. Policy Violations and Adverse Actions
+				§ Although it’s possible to document specific adverse actions within a security policy, this is rarely recommended. Actual policy violations aren’t always the same and if the policy requires a specific action in response to a policy violation, it doesn’t always allow supervisors or managers to respond appropriately to a violation. 
+				
+			xi. Other General Security Policies
+				§ An organization may implement personnel management policies that affect other areas of an employee's life. e.g. behavior on social media networks.
+				§ Sometimes, improper use of social media sites can result in inadvertent information disclosure. Attacker might use it to attack.
+				§ Training helps users to understand this
+				§ Data leakage occurs when users install P2P software and unintentionally share files. Organizations often block P@P software at the firewall.
+				
+			xii. Things to remember while writing policies
+				1) Due Diligence
+					§ Ensuring that IT infrastructure risks are known and managed properly
+					§ To achieve this, need to conduct proper risk assessments and conduct risk management activities to keep running smoothly over time
+				2) Due Care
+					§ Mitigation action that an organization takes to defend against the risks that have been uncovered during due diligence
+					§ e.g. current system is running on obsolete windows XP, due care will be to upgrade system to latest OS, failing to do so organization will be liable in case of any damage
+				3) Due Process
+					§ A legal term that refers to how an organization must respect and safeguard personnel's rights
+					§ e.g. law and order can get warrant to search/listen on calls in case they are suspecting someone of let's say terrorist attack
+					§ It protects citizen from their government and companies from frivolous lawsuits
+				
+			xiii. Agreement Types
+				1) Interconnection Security Agreement (ISA)
+					§ Specifies technical and security requirements for planning, establishing, maintaining, and disconnecting a secure connection between 2 or more entities.
+					§ NIST SP 800-47
+					
+				2) Service level Agreement (SLA)
+					§ It is an agreement between a company and vendor that stipulates performance expectations
+					§ Expectations such as minimum uptime and maximum downtime levels.
+					§ May include monetary penalties if vendor is unable to meet the agreed-upon expectations
+					
+				3) Memorandum of Understanding/agreement (MOU/MOA)
+					§ Expresses an understanding between 2 or more parties indicating their intention to work together
+					§ It is often used to support an ISA by defining the purpose of the OSA and the responsibilities of both parties.
+					§ It doesn't include any technical details, also it doesn't include monetary penalties
+					
+				4) Business Partners Agreement (BPA)
+					§ It is written agreement that details the relationship between business partners, including their obligations toward the partnership.
+					§ It identifies the shares of profits or losses each partner will take, responsibilities to each other, and what to do if a partner chooses to leave the partnership.
+					§ It helps settle the conflicts
+					
+	2. Protecting Data
+		a. Information Classification
+			i. Public data
+				§ It is available to anyone. It might be available on brochures, press releases or on web
+			ii. Confidential data
+				§ It is information that an organization intends to keep secret among a certain group of people
+				§ e.g. salary data
+			iii. Proprietary data
+				§ It is data that is related to ownership.
+				§ e.g. patents or trade secrets
+			iv. Private data
+				§ It is information about an individual that should remain private.
+				§ e.g. PII, PHI
+				
+		b. Data Sensitivity Labeling and Handling
+			§ Data labeling ensures that users know what data they are handling and processing.
+			i. Data Destruction and Media Sanitization
+				§ It is common for organizations to have  checklist to ensure that personnel sanitize a system prior to disposing it i.e. remove all usable data from system.
+				§ Hard disks represents the greatest risk because they hold most information. Simply deleting files or formatting disk won't suffice as data can be recovered. 
+				§ Sanitize entire hard drive e.g. DBAN
+				§ Sanitize individual files or folders e.g. Microsoft Sdelete
+				§ Purging - general sanitization term indicating all data removed and can't be recovered.
+				§ File Shredding
+				§ Wiping - completely removing remnants of data on a disk. May write different patterns of 0 and 1s multiple times.
+				§ Erasing and Overwriting - SSDs requires special process of sanitizing as they use flash memory. Some needs personnel to physically destroy these disks
+				§ Burning -  burn material in incinerator
+				§ Paper Shredding - can use cross shredding
+				§ Pulping -  after shredding reduce paper to mash or puree
+				§ Degaussing - use very powerful electronic magnet to make magnetic disk unreadable.
+				§ Pulverizing / destruction -  process of physically destroying media to sanitize it like sledge hammer. Optical media is immune to deguassing and shredders can't handle the size, so they are physically destroyed.
+				
+			ii. Data Retention Policies
+				§ Identifies how long data is retained and sometimes specified where it is stored.
+				§ Some laws mandate the retention of data for specific time frames like 3 years or longer
+				
+			iii. PII and PHI
+				1) PII
+					§ Personally Identifiable Information is personal information that can be used to personally identify an individual
+				2) PHI
+					§ Personal health Information is PII that includes health information.
+					§ Each PII and PHI theft  incident resulted in identity theft and the loss of goodwill and public trust of the company.
+					
+			iv. Protecting PII and PHI
+				§ Organizations have obligation to protect the PII including international laws, federal laws, and local regulations.
+				§ Organizations often develop policies to identify how they handle, retain, and distribute PII and these help ensure they are complying with relevant regulations
+				§ Many laws require a company to report data losses due to security breaches.
+				§ Most common reason data falls into wrong hands is that employees don't understand the risk involved.
+				§ Employee training helps, additionally need to ensure data is encrypted before transmitted over network
+				§ MIST SP 800-122 Guide to Protecting the Confidentiality of Personally Identifiable Information
+				
+			v. Legal and Compliance Issues
+				1) Health Insurance Portability and Accountability (HIPAA)
+					§ Mandates that organizations protect PHI which includes directly or indirectly related health information.
+					
+				2) Gramm-Leach Bliley Act (GLBA)
+					§ It is known as Financial Services Modernization Act and includes Financial Privacy Rule.
+					§ This Rule requires financial institutions to provide consumers with privacy notice explaining what information they collect and how it is used.
+					
+				3) Sarbanes-Oxley Act (SOX )
+					§ Requires executives within an organization take individual responsibility for the accuracy of financial reports.
+					§ It also includes specifics related to auditing, and identifies penalties to individuals for noncompliance
+					
+				4) General Data Protection Regulation (GDPR)
+					§ This European union directive supersedes the Data Protection Directive
+					§ Both mandate the protection of privacy data for individuals within the EU.
+					
+			vi. IT security Frameworks
+				1) SABSA (Sherwood Applied Business Security Architecture)
+					§ Risk driven architecture
+					§ Seeks security problem by what, where, when, why, who, and how have a problem, and intersects with 6 different layers the operational, component, physical, logical, conceptual and contextual layers
+					
+				2) COBIT  (Control Objectives for Information and Related Technology)
+					§ Divides IT security develpoment frameworks into 4 domains
+						◊ Plan and Organize
+						◊ Acquire and Implement
+						◊ Deliver and Support
+						◊ Monitor and Evaluate
+						
+				3) NIST SP 800-53
+					§ NIST SP 800-53 is a security control framework developed by the Dept. of Commerce
+					§ Each control placed into 3 domains :
+						◊ Technical
+						◊ Operational
+						◊ Management
+					§ Generally used in government agencies
+					
+				4) ISO 27000
+					§ Very similar to NIST SP 800-53
+					
+				5) ITIL (Information Technology Infrastructure Library)
+					§ De facto standard for IT service management
+					§ Very comprehensive- for anyone who has own server, our just hosting something on anyone's server
+				
+			vii. Data Roles and Responsibilities
+				1) Owner
+					§ Data owner is the individual with overall responsibility for the data
+					§ It is often high-level position like CEO or department head.
+					§ He is responsible for identifying data classification, ensuring data is labeled to match classification and ensuring security controls are implemented.
+					
+				2) Steward/Custodian
+					§ He handles the routing tasks to protect data like ensure data backup is in accordance with data backup policy.
+					§ Data owners typically delegates tasks to data custodian.
+					
+				3) Privacy Officer
+					§ He is an executive position within an organization. 
+					§ This person is primarily responsible for ensuring that the organization is complying with relevant laws like SOX,HIPAA
+				
+		c. 
+				
+		
+	3. Responding to incidents
+		§ Incident response policies help personnel identify and respond to incidents
+		§ Security incident is an adverse event or series of events that can negatively affects the CIA of data systems.
+		§ NIST SP 800-61 Computer Incident Handling Guide
+		
+		a. Incident Response Plan (IRP)
+			§ IRP provides more detail than incident response policy.
+			§ It provides organizations with formal, coordinated plan personnel can use 
+			i. Definition of incident types
+				§ Helps identify difference between event and actual incident
+				§ May group incident types using specific category definitions like attacks, malware infection or data breach
+			ii. Cyber-incident response teams (CIRT)
+				§ It is comprised of employees with expertise in different areas.
+				§ Often referred as Cyber-incident response team (CIRT) or security incident response team
+				§ They have knowledge and skills to respond to an incident
+			iii. Roles and responsibilities
+				§ Many incident response plans identify specific roles for an incident response team along with their responsibilities e.g. network admin, security expert
+			iv. Escalation
+				§ After identifying an incident, personnel often need to escalate it.
+				§ Can require a technician to inform his supervisor 
+			v. Reporting requirements
+				§ Depending on the severity of the incident, outlines who needs to be notified and when
+			vi. Exercises
+				§ One method of preparing for incident response is to perform exercises.
+				§ NIST SP 800-84 "Guide to Test, Training, and Exercise Programs for IT Plans and Capabilities."
+			
+		b. Incident Response Process
+			§ Common phases of incident response are:
+			i. Preparation
+				§ Occurs before incident and provides guidance to personnel on how to respond to an incident
+				§ Involves establishing and maintaining an incident response plan and incident response procedures, and also procedures to prevent incidents.
+			ii. Identification
+				§ All events aren't security incidents
+				§ Identify whether an event is incident or not
+				§ e.g. false positive in IDS
+			iii. Containment
+				§ After identifying an incident, security personnel attempt to isolate or contain it. 
+				§ This might include quarantining a device or removing it from the network.
+				§ The goal is to prevent the problem from spreading to other areas or other computers in network.
+			iv. Eradication
+				§ After containing the incident, it's often necessary to remove components form the attack.
+				§ e.g. disabling or deleting compromised accounts
+			v. Recovery
+				§ During the recovery process, administrator return all affected systems to normal operation and verify they are operating normally.
+				§ This includes rebuilding from images, restoring from data backup, and installing updates, also if admin identified a vulnerability then remove it
+			vi. Lessons Learned
+				§ After personnel handle an incident, security personnel perform a lessons learned review.
+				§ A review might indicate a need to provide additional training to users, or indicate a need to update response policy.
+				§ Goal is to prevent future reoccurrence.
+				
+		c. Implementing Basic Forensic Procedures
+			i. Order of Volatility
+				§ Refers to the order in which you should collect evidence
+				§ Cache memory (CPU and hard drive) > RAM > Swap file >Local disk > logs on remote disk drive > Archive media
+				§ Collect form most volatile to least volatile.
+				
+			ii. Data Acquisition and Preservation of Evidence
+				§ Capture System Image
+					§ Disk capture, may be bit-by-bit
+					§ dd command in linux
+					§ Takes entire contents of the disk including system files, user files, and files marked for deletion but not overwritten.
+					§ After capturing an image, experts create a copy and analyze the copy, keeping original copy safe and not modify it.
+				§ Take Hashes
+					§ Hashing provides integrity for captured images of both memory and disk drives
+					§ Can take hash before and after capturing image to verify that the imaging process did not modify the drive contents.
+				§ Network Traffic and Logs
+					§ Investigation includes analysis of network traffic and available logs which might help investigators re-create events leading up to and during an incident.
+				§ Capture Video
+					§ Used as detective control during an investigation
+					§ Provides reliable proof of person's location and activity.
+				§ Record Time offset
+					§ Identifies times on tape recordings rather than actual time
+					§ When analyzing, it's important to understand these times are often based on an offset.
+				§ Screenshots
+					§ Pictures of what you can see displayed on a computer screen.
+				§ Witness Interviews
+					§ Provide first hand reports of what happened and when it happened
+					§ Right questions should be asked as they might not know if information is valuable
+					
+			iii. Chain of custody
+				§ It is a process that provides assurance that evidence has been controlled and handled properly after collection.
+				§ Some uses chain of custody form which provides a record of every person who was in possession of a physical asset collected as evidence.
+				§ Proper chain of custody process ensures that evidence presented in a court of law is the same evidence that security professionals collected.
+				§ If evidence is not controlled, if someone modify, temper, then it won’t be admissible in court.
+				
+			iv. Legal Hold
+				§ Refers to a court order to maintain different types of data as evidence.
+				§ It should be clear what to store and for how long.
+				§ Data retention policies apply here.
+				
+			v. Recovery of data
+				§ Refers to restoring lost data like restoring a corrupt file form backup
+				§ Formatted data can also be recovered by using some tools
+				
+			vi. Active Logging for Intelligence Gathering
+				§ Organizations often engage in strategic intelligence or counterintelligence gathering by increasing the amount of data that they collect.
+				§ When in attack, admin might increase logging capabilities.
+				§ Active logging strategy increases the amount of logged data collected on routine basis
+				
+			vii. Track Man-Hours and Expense
+				§ Including this data improves the accuracy of the cost values used in the quantitative risk assessment.
+				
+	4. Providing Training
+		a. Role-Based Awareness Training
+			§ It is targeted to personnel based on their roles.
+			§ Data owner
+				§ Needs to understand responsibilities related to data that they own, including data is correctly classified and labeled. 
+				§ They often delegate day-to-day task to custodians
+			§ System administrator
+				§ Responsible for overall security of system.
+				§ Often need technical training to understand s/w capabilities and vulnerabilities.
+			§ System owner
+				§ High-level executive and has overall responsibility for the system
+				§ Owner is responsible for ensuring system admin have skills and knowledge to maintain them
+			§ User
+				§ Regula users
+			§ Privileged user
+				§ Any user with more rights and permissions than regular user
+				§ Often require 2 accounts
+				§ Need training on classification and labeling of data they handle
+			§ Executive user
+				§ Needs high-level briefings related to risks that organization faces along with information on organization's overall information security awareness program
+				§ Additionally trained for whaling attacks
+			§ Incident response team
+				§ Needs detailed training on how to respond to incidents
+		
+		
+		
+		b. Continuing Education
+			§ Can takes in many forms  like in-person, virtual classes, one-on-one or in classroom
+		c. Training and Compliance Issues
+			§ Often training is required to maintain compliance with existing laws, best practices and standards
+			§ Often prevent wide range of incidents
+			§ PCI DSS Payment Card Industry Data Security Standard
+			
+		d. Troubleshooting Personnel Issues
+			§ The way to detect an insider threat depends on the activity
+			§ DLP provides best method to detect these activities
+			§ Audits and reviews can often detect insider threats too
+			§ Training program reminds users of the policies can minimize incidents
+			§ If policy violations are detected, management can take appropriate actions ranging from verbal counseling to termination
+			§ Security personnel can take additional steps to raise the awareness of these incidents through training and awareness programs.

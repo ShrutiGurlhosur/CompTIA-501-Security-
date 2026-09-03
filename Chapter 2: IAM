@@ -1,0 +1,323 @@
+	1. Exploring Authentication Concepts
+		Authentication is very important step, as without authentication everyone is anonymous then everyone has the same access to all resources. It's not just limited to users. Services, processes, workstations, network devices all use authentication to prove their identities. Many computers use mutual authentication where both parties authenticate each other.
+		a. Comparing Identification and AAA
+			§ Authentication, authorization, and accounting work together with identification to provide a comprehensive access management system.
+			§ Identity = user claim of who they are by username or email id
+			§ Authentication = with password user proves identity is real
+			§ Authorization = users are granted access to resources based on their proven identity
+			§ Accounting = these methods track user activity and record it in logs to create audit trail
+		b. Comparing Authentication Factors
+			§ Often simplified as types or factors of authentication. Authentication is often simplified as types, or factors, of authentication. A use case of supporting authentication may require administrators to implement one factor of authentication for basic authentication, two factors for more secure authentication, or more factors for higher security. As an introduction, the factors are:
+			i. Something You Know / Type I
+				This authentication factor refers to a shared secret, such as password or even a pin. It's the least secure form of authentication but complexity can be added up.
+				□ Password complexity
+					® A strong password is of sufficient length, doesn't include words found in dictionary or any part of user's name and combines upper case, lower case, numbers and special characters.
+					® A small complex password is also not strong, it should be long enough as well.
+					® Too complex passwords are also less secure passwords as people tend to write them down somewhere
+					® Instead of passwords users are encouraged to use passphrases.
+				□ Training users about password behaviors
+					Organize should train their employees about secure passwords if they use passwords in organization. This includes both creation of strong passwords and the importance of never giving out their passwords and not using common guessable passwords
+				□ Password expiration
+					Use should change their passwords regularly in 45  or 90 days. Some systems force users to change passwords technically(no login until they change passwords)
+				□ Password recovery
+					® Before password reset in case of someone forgot their password, user's identity has to be verified (else it will just give hacker access to user's account).
+					® In some cases, help desk manually changes user's password and let user know, but this causes another problem as 2 people know the password now. Instead of this, help desk should generate a temporary password which user can change after he logs in.
+					® Some systems asks you different questions for identity proofing and then only lets user reset the password and some system sends PIN to user's mobile phone, if only correct code is entered then only user can change the password.
+				□ Password history and password reuse
+					Password history system remembers past passwords and prevents users from reusing passwords.
+				□ Group policy
+					® Windows group policy  allows administrator to configure a setting once in a GPO and apply this setting to many users and computers in a domain.
+					® ADDS = Active Directory Domain Services, is directory service microsoft developed for windows domain networks.
+					® The policy only needs to be set once to apply all systems in the domain.
+					® Group Policy is implemented on a domain controller within a domain. Administrators use it to create password policies, implement security settings, configure host-based firewalls, and much more.
+				□ Using a password policy
+					® Enforce password history
+						To avoid password reuse
+					® Maximum password age
+						Shouldn't use same password for long period
+					® Minimum password age
+						Frequent password changes may lead back to reuse original password
+					® Minimum password length
+						To add complexity
+					® Password must meet complexity requirements
+						Combine different kinds of characters
+					® Store passwords using reversible encryption
+						It saves passwords in a way that original password can be discovered. It is rarely enabled.
+				□ Implementing account lockout policies
+					® Prevents users from guessing the password.
+					® Account lockout threshold = maximum number of times a user can enter the wrong password
+					® Account lockout duration = indicates how long an account remains locked.
+				□ Changing default passwords
+					® You should change default passwords(like 'admin') before putting it to use else anyone can log into the system can gain access.
+					® It also includes changing default account name if possible.
+					® Some administrator add a dummy user account named 'administrator' which has no permissions. If someone tried to guess the password for this account, it will lock user out and alert the administrators about the illicit activity.
+			ii. Something You Have / Type II
+				Refers to something you can physically hold.
+				1) Smart cards
+					® Stores details from certificate which provides certificate based authentication. Embedded certificate allows use of complex encryption key and provides much more secure authentication
+					® Provides confidentiality, integrity, authentication and non-repudiation.
+					® Smart requires Embedded certificate [holds user's private key and matches with public key] and Public Key Infrastructure(PKI)
+					® Often used as another factor of authentication. e.g. also be needed to enter password or PIN.
+				2) CACs and PIVs
+					® CAC = Common Access Card  is specialized smart card used by U.S.Dept. of Defense.  Is also includes picture of user required for as a part of photo identification to gain access to secure facility.
+					® PIV = Personal Identity Verification. Special type of smart card used by U.S. federal agencies. It also includes photo identification and provides confidentiality, integrity, authentication, and non- repudiation for the users, just as a CAC does.
+					® CAC and PIV both support dual-factor authentication.
+				3) Tokens or Key Fobs
+					® Token/fob is an electronics device about the size of car key with small lcd displaying a numbers which keeps getting refreshed after 60 seconds.
+					® The token is synced with server that knows what the number is at each moment.
+					® This number Is one time use rolling passwords and is not useful for attackers for very long time as it gets refreshed within 60 seconds.
+					® Used for dual factor authentication along with passwords  and authenticate via website.
+				4) HOTP (HMAC based OTP) and TOTP (Time based OTP)
+					® HMAC(hash based authentication code) based one-time password (HOTP) is an open standard used for creating onetime passwords.
+					® The algorithm combines a secret key and an incrementing counter, and uses HMAC to create a hash of the result. It then converts result into an HOTP value of six to eight digits.
+					® A password created with HOTP remains valid until it’s used. Suppose Bart requested the HOTP number but then got distracted and never used it. What happens now? Theoretically, it remains usable forever. This presents a risk related to HOTP because other people can use the password if they discover it.
+					® A Time-based One-Time Password (TOTP) is similar to HOTP, but it uses a timestamp instead of a counter. One-time passwords created with TOTP typically expire after 30 seconds.
+					® One significant benefit of HOTP and TOTP is price. Hardware tokens that use these open source standards are significantly less expensive than tokens that use proprietary algorithms.
+			iii. Something You Are / Type III
+				Uses biometric for authentication. Stronger as comparison to passwords.
+				Aka third factor authentication
+				Biometric Methods
+					® Fingerprint scanner, retina scanner, iris scanner, voice recognition, facial recognition
+					® Some manufacturer can take shortcuts in device manufacturing resulting into fallowing errors
+					® False acceptance device incorrectly identifies unauthorized user as authorized one
+					® False rejection device incorrectly rejects an authorized user.
+					® After each error, you can adjust the sensitivity of system. By increasing sensitivity, it decreases number of false matches and increases number of false rejections.
+					® In contrast, decreasing sensitivity  increases false matches and decreases false rejections.
+					® 
+					
+					
+					® CER (Crossover error rate), a low CER == more accurate system
+			iv. Somewhere You Are
+				□ Identifies user's location. Many authentication systems use the IP address for geolocation as IP address provides information in the country, region, state, city and sometimes zip
+				□ IP address for geolocation isn't foolproof, as VPN can change IP
+			v. Something You Do
+				□ Refers to  actions you can take such as gestures on touch screen. e.g. windows 10 supports picture passwords, user has to select a picture and then they can add three gestures as their  picture password.
+				□ Another example is keystroke dynamics measure the pattern and rhythm as a user types on a keyboard.
+				□ Many professionals refer to this as behavioral biometrics.
+			vi. Dual-Factor and Multifactor Authentication
+				□ Uses 2 different factors of authentication such as something you have and something you know.
+				□ Multifactor authentication uses more than 2 factors of authentication
+				□ Using 2 methods of authentication in the same factor is NOT dual factor authentication.
+		c. Summarizing Identification Methods
+			Different identification methods are username, photo identification, and biometrics
+			Most commonly used identification method is username. 
+			CAC and PIVs include a picture and other information about the owner-something you have factor
+			Something you are factor is based on biometrics for authentication.
+		d. Troubleshooting Authentication Issues
+			Most common authentication issues are
+			§ Weak passwords
+			§ Forgotten passwords
+			§ Biometric errors
+	2. Comparing Authentication Services
+		The goal is to ensure that unencrypted credentials are not sent across a network.
+		a. Kerberos
+			§ It is a network authentication protocol within a Microsoft Windows Active directory domain or Unix realm.it uses a database of objects such as Active directory and a KDC (or TGT server) to issue timestamped tickets that expire after a certain time period.
+			§ It provides mutual authentication that can help prevent man-in-the middle attacks and uses tickets to prevent replay attacks.
+			§ Kerberos includes several requirements for it to work properly. They are:
+				□ A method of issuing tickets used for authentication. 
+					The key distribution center (KDC) uses complex process of issuing ticket-granting tickets (TGT) and other tickets.
+					Tickets/Tokens(logical) provide authentication for users when they access resources. 
+				□ Time synchronization.
+					Kerberos version 5 requires all system to be synchronized and within 5 minutes of each other.
+					The clock which provides time synchronization is used to provide timestamp tickets to ensure they expire correctly.
+					This prevents replay attacks - a third party attempts to impersonate the client after intercepting the data in a session. However, intercepted ticket won't be useful for long by attacker as it is stamped.
+				□ A database of subjects or users.
+					In Microsoft environment this is active directory but it could be any database of users.
+				When a user logs on with Kerberos, the KDC issues the user a ticket granting ticket, which typically has a lifetime of 10 hours to be useful for a single workday. When the user tries to access a resource, the ticket-granting ticket is presented as authentication, and the user is issued a ticket for the resource. However, the ticket expires if users stay logged on for an extended period, such as longer than 10 hours. This prevents them from accessing network resources. In this case, users may be prompted to provide a password to renew the ticket-granting ticket, or they might need to log off and back on to generate a new ticket-granting ticket. Additionally, Kerberos uses symmetric-key cryptography to prevent unauthorized disclosure and to ensure  confidentiality.
+		b. NTLM (New Technology LAN Manager)
+			§ It is suit of protocols that provide authentication, integrity, and confidentiality within windows systems.
+			§ At their very basic they use Message Digest hashing algorithms to challenge users and check their credentials. 3versions of NTLM are:
+			§ NTLM: is a simple MD4 hash of a user's password. As MD4 has been cracked, NTLM and MD4 are NOT Used today.
+			NTLMv2: is a challenge-reponse authentication protocol. When a user attempts to log on, NTMLv2 creates an HMAC-MD5 hash composed of a combination of the username, the logon domain name (or computer name), the user’s password, the current time, and more. To create an HMAC-MD5 message, authentication code starts as the MD5 hash of a user’s password, which is then encrypted.
+			§ NTLM2 :  Session improves NTLMv2 by adding in mutual authentication. In other words, the client authenticates with the server, and the server also authenticates with the client.
+			§ Microsoft specifically recommends that developers don’t select one of these protocols. Instead, developers should use the Negotiate security package within their applications. This security package selects the most secure security protocols available between the systems. It first tries to use Kerberos if it is available. If not, it uses either NTLMv2 or NLTM2 Session depending on the capabilities of the systems involved in the session.
+		c. LDAP (Lightweight Directory access protocol)and LDAPS (LDAP Secure)
+			§ LDAP specifies formats and methods to query directories(db of objects that provides central access point to manage users, computers, and other directory objects)
+			§ It is an extension of X.500 standard Windows domains use Active Directory, which is based on LDAP. Active Directory is a directory of objects (such as users, computers, and groups), and it provides a single location for object management. Queries to Active Directory use the LDAP format. Similarly, Unix realms use LDAP to identify objects.
+			§ e.g. LDAP://CN=Homer,CN=Users,DC=GetCertifiedGetAhead,DC=com 
+			• CN=Homer. CN is short for common name.
+			• CN=Users. CN is sometimes referred to as container in this context.
+			• DC=GetCertifiedGetAhead. DC is short for domain component.
+			• DC=com. This is the second domain component in the domain name
+			§ LDAP Secure (LDAPS) uses encryption to protect LDAP transmissions.
+			
+		d. Single Sign-On
+			§ Refers to the ability of a user  to log or access multiple systems by providing credentials only once.
+			§ Increases security as user only needs remember one set of credentials and is less likely to write down, also it is more convenient for users
+			§ The success of the method depends on how strong the password is, else if an attacker gets access to one account, he can get access to others accounts as well.
+			i. SSO and Transitive Trusts
+				□ Transitive trust creates indirect trust relationship. e.g. a trusts b, b trusts c hence a trusts c.
+				□ It reduces administration in a domain.
+				□ 
+					
+				□ In this example, there is a two-way trust between the parent domain (GetCertifiedGetAhead.com) and the child domain (Training.GetCertifiedGetAhead.com). The parent trusts the child, and the child trusts the parent. Similarly, there is a two-way trust between the parent domain and the Blogs child domain. There isn’t a direct trust between the two child domains. However, the transitive relationship creates a two-way trust between them.
+				□ Without a trust relationship, you’d have to create another account for each domain
+			ii. SSO and SAML (Security Assertion Markup Language)
+				□ It is an XML based data format used for SSO on web browsers.
+				□ e.g. 2 websites hosted by different organizations. If organizations trust each other, they can use the SAML as federated identity management system. Users only required to authenticate to one web site.
+				□ Many web based portals use SAML for SSO. The user logs on to the
+				□ portal once, and the portal then passes proof of the user’s authentication to back-end systems. As long as one organization has authenticated users, they are not required to authenticate again to access other sites within the portal.
+			iii. SAML and Authorization
+				□ Primary purpose of SSO is for identification and authentication of users.
+				□ SSO doesn't provide authorization
+				□ However, many federation SSO systems, including SAML, include the ability to transfer authorization data between their systems. In other  words, it’s possible to use SAML for single sign-on authentication and for authorization.
+				□ Doesn't work with mobile devices
+			iv. SSO and Federation
+				□ Most common method for SSO to work from different environment is with federated identity management.
+				□ Federated database provides central authentication in nonhomogeneous environment.
+				□ Federation requires federated identity management system that members of the federation use. Members of the federation agree on a standard for federated identities and then exchange the information based on the standard. A federated identity links a user’s credentials from different networks or operating systems, but the federation treats it as one identity.
+				□ e.g. Shibboleth is one of the open source  federated identity solutions which is freely available and it includes open SAML libraries written in C++ and java making it easy for developer to use.
+				□ In windows, Kerberos is used for SSO
+				
+			v. Oauth and OpenID Connect
+				□ OAuth is an open standard for authorization many companies provide secure access to protected resources. Created by Google, Twitter, and many other
+				□ With OAuth, Instead of creating different account for each website, you can use the same account that you've created with Google, Facebook, Paypal etc
+				□ As an example, imagine that the Try-N-Save Department Store decides to sell some of its products online and management has decided to  allow customers to make purchases through PayPal. Developers configure their web site to exchange application programming interface (API) calls between it and PayPal servers. Now, when customers make a purchase, they log on with their PayPal account and make their purchase through PayPal. OAuth transfers data between PayPal and the Try-N-Save site so that the department store receives the money and knows what to ship to the customer.
+				□ OpenID Connect works with OAuth 2.0 and it allows clients to verify the identity of end users without managing their credentials. In this context, the client is typically a web site or application that needs to authenticate users. OpenID Connect provides identification services, without requiring the application to handle the credentials. It also streamlines the user experience for users. For example, Skyscanner is an application for finding flights, hotels, and car rentals. It allows users to sign in using their Facebook credentials. After doing so, Skyscanner provides a more personalized experience for the users.
+				§ OpenID connects handles the SSO authentication
+				§ Oauth provides authorization between applications
+	3. Managing Accounts
+		It is concerned with the creation , management, disablement and termination of accounts. When account is active, access control methods are used to control what user can do, additionally, administrators use access controls to control when and where users can log on.
+		a. Least Privilege
+			§ Primary goal of this is to reduce risk, and this method is an example of "technical control" implemented with access controls.
+			§ In this method, only bare minimum permissions required to complete the task is given. e.g. if developer wants to access the database, only read permissions are given
+			§ It specifies that individuals or processes are granted only those rights and permissions needed to perform their assigned tasks or functions.
+		b. Need to Know
+			§ is similar to the principle of least privilege in that users are granted access only to the data and information that they need to know for their job.
+			§ need to know is focused on data and information, which is typically protected with permissions. In contrast, the principle of least privilege includes both rights and permissions.
+			§ Rights refer to actions and include actions such as the right to change system time, the right install an application. Permissions typically refer to permissions on files, such as read, write, modify, read and write and execute and full control.
+		c. Account Types
+			§ End user account : for regular users created by admin
+			§ Privileged accounts : has additional privileges and rights than regular user
+			§ Guest accounts: limited access to computer or network without creating user account.
+			§ Service accounts: similar to regular end-user account but used for applications and services.
+		d. Require Administrators to Use Two Accounts
+			§ One as regular end-user account with limited privileges and other with elevated privileges to perform administrative work.
+			§ The main benefit is, it reduces the exposure of administrative account to an attack.
+			§ This also reduces risk to the administrative account for daily work.
+		e. Standard Naming Convention
+			§ Use standard naming convention for user account names and email addresses e.g. firstname.lastname, bart.simpson, bart.simpson2
+		f. Prohibiting Shared and Generic Accounts
+			§ Each user should have minimum one account.
+			§ Shared accounts should be prohibited in order to implement authorization controls
+			§ Having a single , temporary user log on with guest account does not support identification, authentication, authorization and accounting.
+		g. Disablement Policies
+			§ Some content of disablement policy include - terminated employee(disable), leave of absence(disable), delete account(no activity for longer period of time) etc.
+			§ An account disablement policy identifies what to do with accounts for employees who leave permanently or on a leave of absence.
+			§ Most policies require administrators to disable the account as soon as possible
+			§ Disabling the account ensures that data associated with it will remain available.
+			§ Security keys associated with account remain available when account is disabled, but are no longer accessible if the account is deleted. e.g. an employee encrypted files with his account. The operating system uses cryptography keys to encrypt and decrypt these files. If administrators deleted this account, these files may remain encrypted forever unless the organization has a key escrow or recovery agent that can access the files.
+		h. Recovering Accounts
+			§ Enable a disabled account: admin can reset the user account and take control of the account, similarly, they can pass control to someone else. Admin can reset the user's password, set it to expire on first use and give it to other user.
+			§ Recover a deleted account: it is also possible to recover the deleted account by following detailed procedures to recover the account.
+		i. Time-of-Day Restrictions
+			§ Specify when users can log on to a computer.
+			§ If a user tries to log on to the network outside the restricted time, the system denies access to the user
+			§ If user is already logged in and exceed the work time, system won't throw user out. But it, won't allow any new user connection.
+		j. Location-Based Policies
+			§ These policies restrict access based on the location of the user.
+			§ Based on IP, location can be found out and can be restricted.
+			§ It is also possible to identify a set of IP addresses  as the only addresses that are acceptable. This is called whitelisting the IP addresses.
+			§ Within the network, it's also possible to restrict based on the MAC addresses.
+		k. Expiring Accounts and Recertification
+			§ It's possible to set user accounts to expire automatically. When the account expires, the system disables it and user no longer will be able to log on to the same account.
+			§ It's common to configure temporary accounts to expire e.g. contractor for 90 days job. Even if job extends the decided time period, it's simple matter to rectify the account.
+		l. Account Maintenance
+			§ Administrators routinely perform account maintenance which is generally done with scripts to automate the process.
+			§ e.g. in case of disabling the accounts of employees who no longer work in the organization, even though account disablement policy takes care of it, account maintenance script just ensures it's done.
+			§ Additionally, it also includes deleting the accounts that are no longer needed. e.g. if an organization has a policy of disabling accounts when employees leave, but deleting them 60 days later, account maintenance procedures ensure the accounts are deleted.
+			§ Account maintenance
+				§ Account creation
+					§ Initial provisioning
+					§ Password management
+					§ Group and permissions
+				§ Periodic updates
+					§ Passwords/forced updates
+					§ Permission audits
+				§ Deprovisioning
+					§ Disable account
+					§ Archive user docs and encrypted keys
+			
+		m. Credential Management
+			§ Credential is a collection of information that provides an identity and proves that identity. Overtime users have to remember many credentials for different websites.
+			§ Credential management helps with storing these credentials securely while ensuring that unauthorized personnel do not have access to the user's credentials.
+			§ In windows 10, credential manager is present in control panel which stores credentials in special folders called "vaults"
+			§ e.g. in google chrome asks user if he wants chrome to remember password for the website and auto-enters it next time.
+			§ Prof M:
+				§ Passwords must not be embedded in the application
+				§ Communication across the network should be encrypted.
+				
+	4. Comparing Access Control Models
+		○ It ensure that only authenticated and authorized entities can access resources.
+		a. Role-Based Access Control (role-BAC)
+			This access control method uses roles to manage rights and permissions for users.
+			This is useful for users within a specific department who perform the same job functions. Administrator creates the roles and assign specific rights and permissions to the roles.
+			i. Using Roles Based on Jobs and Functions
+				□ In this you create roles for different departments e.g. accounting, sales, IT etc. and assign these roles based on where they work.  Next you'd grant these roles access to the appropriate servers.
+				□ e.g. Microsoft Project Server can host multiple projects managed by different project managers and includes roles like administrators, executives, project manager, team members etc.
+			ii. Documenting Roles with a Matrix
+				□ It’s common to document role-based permissions with a matrix listing all of the job titles and the privileges for each role
+				□ 
+					
+				□ Role-BAC is also called as hierarchy-based or job based
+					® Hierarchy-based - In the Project Server example, you can see how top-level roles, such as the Administrators role, have significantly more permissions than lower-level roles, such as the Team Members role. Roles may mimic the hierarchy of an organization
+					® Job-, task-, or function-based - The project server example also shows hoe the roles are centered on jobs or functions that users need to perform.
+				□ A role-BAC model uses roles based on jobs and functions. A matrix is a planning document that matches the roles with the required privileges.
+			iii. Establishing Access with Group-Based Privilege
+				□ While granting access in the role-BAC, administrators often implement roles as groups. In windows these are called security groups
+				□ They assign rights and permissions to groups  and then add user accounts to appropriate group. This is group-based access control, where access is based on roles or groups, simplifies user administration
+				□ e.g. administrators group on local computer includes all of the rights and permissions on that computer. If you want to grant someone full and complete control to a computer, you should add that person to the administrators group on that computer.
+				□ Although built-in  groups are very useful, they don't meet all the requirements I most organizations so you can create customized group as per requirements.
+				□ In windows domains, administrators often create groups that correspond to the departments of an organization.
+				□ e.g.
+						
+				□ Groups provide another security benefit. Imagine that a user is promoted out of the Sales department and now works in Marketing. If you have a Marketing group, you can place this user account into the Marketing group and remove the account from the Sales group. Removing the user from the Sales group instantly removes all the user rights and permissions applied from that group. However, if you’re not using groups and assign permissions to users directly, you probably won’t remember which resources were assigned to the user as a member of the Sales department. Instead, the user will continue to have access to this sales data, violating the principle of least privilege.
+				□ Group-based privileges reduce the administrative workload of access management. Administrators put user accounts into security groups, and assign privileges to the groups. Users within a group automatically inherit the privileges assigned to the group.
+		b. Rule-Based Access Control (rule-BAC)
+			§ The most common example is rules in firewalls (ACL). These rules define the traffic that the devices allow into the network like HTTP and rules are pretty static-stay same unless administrator changes them  again.
+			§ Some dynamic rules examples are IPS to detect attacks and modify rules to block traffic from an attacker. In this case the attack triggers the change in the rules
+			§ Rule-BAC is based on a set of approved instructions, such as an access control list. Some rule-BAC systems use rules that trigger in response to an event, such as modify ACL after detecting an attack or granting additional permissions to a user in certain situations.
+		c. Discretionary Access Control (DAC)
+			§ In DAC model, every object(like files, folder) has an owner and owner establishes access for the objects. Many Oss like windows and most unix based systems use DAC model.
+			§ e.g. New Technology File System (NTFS) provides security by allowing users and administrators to restrict access to files and folders with permissions.
+			§ The DAC model specifies that every object has an owner, and the owner has full, explicit control of the object. Microsoft NTFS uses the DAC model.
+			
+			i. SIDs (Security Identifiers) and DACLs(Discretionary Access Control List)
+				□ Microsoft systems identify users with security identifiers(SID), though you will rarely see a SID(looks like long string of characters) as system will look up the name associated with it and display the name instead.
+				□ Every object (such as a file or folder) includes a discretionary access control list (DACL) that identifies who can access it in a system using the DAC model. The DACL is a list of Access Control Entries (ACEs). Each ACE is composed of a SID and the permission(s) granted to the SID. As an example, a folder named Study Notes might have the following permissions assigned:
+					• Lisa: Full Control
+					• Bart: Read
+					• Maggie: Modify
+				Each of these entries is an ACE and combined they are a DACL.
+			ii. The Owner Establishes Access
+				□ If users create a file, they are designated as the owner and have explicit control over the file and can modify permissions on the object by adding a user group accounts to DACL. 
+				□ DACL is more flexible than MAC model as MAC has predefined access privileges and the administrator is required to make changes.
+				□ An inherent flaw associated with DAC model is susceptibility to Trojan Horses.
+			iii. Beware of Trojans
+				□ Trojan horses are executable files, they masquerade as something useful but they include malware.
+				□ If user was logged in with administrator privileges, the Trojan horse is able to run with these administrative privileges. Hence many organizations require administrators to have 2 accounts to mitigate the risk and administrators log on with regular user account.
+		d. Mandatory Access Control (MAC)
+			§ The MAC model uses labels referred as sensitivity labels to determine access. Security administrators assign labels to both subject and objects, when label match, the system can grant subject access to an object else blocks the access.
+			§ Military unites makes wide use of this model to protect the data e.g. "top secret" label. Person with top secret clearance only can access the data.
+			§ Security-enhanced Linux(SELinux) is one of the few operating systems using MAC.
+			§ The MAC model uses sensitivity labels for users and data. It is commonly used when access needs to be restricted based on a need to know. Sensitivity labels often reflect classification levels of data and clearances granted to individuals.
+			i. Labels and Lattice
+				□ The MAC model uses different levels of security to classify both the users and data. These levels are defined in a lattice. These labels define the boundaries for the security levels.
+				□ 
+						
+				□ The MAC model uses a lattice to divide access into separate compartments based in a need to know. Within these levels, the lattice defines specific security compartments. e.g. Top secret level includes compartments labeled Nuclear power plant, 007, Happy Sumo.
+				□ Higher-level clearances include lower-level clearances. 
+				□ example, imagine that Lisa has a Secret level clearance. Administrators can grant her access to data on the Secret level and lower levels, based on her need to know. For example, they might grant her access to the Research data by assigning the Research label to her, but not necessarily grant her access to Three-eyed Fish or Legal Issues data. However, they cannot grant her access to any data on the Top Secret level.
+			ii. Establishing Access
+				□ An administrator is responsible for establishing the access, but only someone at a higher authority can define the access for subjects and objects.
+				□ Typically a security professional identifies the specific access individuals are authorized to access. This person can also upgrade or downgrade access when necessary via paperwork. Only Admin can assign the rights based on the direction of the security professional.
+				□ Multiple approval levels are usually involved in the decision making process to determine what a user can access.
+				□ Once an individual is formally granted access, a network admin would be responsible for establishing access based on the clearances identified by the security professional. From IT admin's point of view, all the permissions and access privileges are predefined.
+				□ If someone needed different access, the administrator would forward the request to the security professional, who may approve or disapprove the request. On the other hand, the security professional may forward the request to higher entities based on established procedures. This process takes time and results in limited flexibility.
+		e. Attribute-Based Access Control (ABAC)
+			§ An attribute-BAC evaluates attributes and grants access based on the value of these attributes(can be characteristic of user, environment, resource). 
+			§ ABAC uses policies to evaluate attributes and grant access when the system detects a match in the policy.
+			§ Many software defined networks(SDNs) use ABAC models. Instead of rules on physical routers, policies in the ABAC system control the traffic. These policies typically use plain language statements. e.g. “Allow logged-on researchers to access research sites via the main network.”
+			§ ABAC systems has a lot of flexibility and can enforce both a DAC ad MAC model. There are many similarities between ABAC models and DAC and MAC models.
+			§ In the DAC model, owners have control over the access and in an ABAC model, owners can create policies to grant access.
+The MAC model uses labels assigned to both subjects and objects and grants access when the labels match. The ABAC model uses attributes that identify both subjects and objects, and grants access when a policy identifies a match.

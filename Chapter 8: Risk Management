@@ -1,0 +1,265 @@
+	1. Understanding Risk Management
+		§ Risk is probability of threat will exploit a vulnerability.
+		a. Threats and Threat Assessments
+			i. Threat
+				§ A threat is a potential danger
+				1) Malicious human threat
+					§ Human with malicious intent
+				2) Accidental Human threat
+					§ Like users accidentally deleting data, or causing outage
+				3) Environmental threat
+					§ Long term power cuts causing harm, natural disasters 
+			ii. Threat Assessment 
+				§ Help identify and categorize threats
+				§ Attempts to predict threat against assets and impact
+				1) Environmental
+					§ Evaluates likelihood of environmental threat
+				2) Manmade
+					§ Evaluates all threats from humans, both malicious and accidental
+				3) Internal
+					§ Evaluate threat from with the organization like malicious code by employee or accidental threats.
+				4) External
+					§ Evaluates threat from outside the organization.
+					
+		b. Vulnerabilities
+			§ Vulnerability is a flaw or weakness in the system that could be exploited.
+			i. Lack of updates
+				§ Not up to date with patches, service packs
+			ii. Default configurations
+				§ If systems are not hardened, they can be vulnerable
+			iii. Lack of malware protection or update definition
+				§ Not up to date anti-virus or anti-spyware are vulnerable. 
+			iv. Lack of firewalls
+				§ If personal and network firewalls not configured properly, systems can be vulnerable.
+			v. Lack of organizational policies
+				§ If jobs separation, job rotation not done properly, systems can be vulnerable.
+			§ Not all vulnerabilities are exploited (e.g. personal wi-fi with not up to date firewall and antivirus), but not exploited doesn't mean it's safe.
+			
+		c. Risk Management 
+			§ Risk management is practice of identifying, monitoring, and limiting the risk to a manageable level.
+			§ It doesn’t eliminate the risk, but mitigates it and brings it to acceptable level.
+			§ There are multiple risk response techniques :
+				§ Avoid
+					§ Can avoid a risk by not providing a service e.g. not opening extra ports
+				§ Transfer
+					§ Transfer the risk to another entity e.g. purchasing insurance 
+				§ Mitigate
+					§ Implements control to reduce risks
+				§ Accept
+					§ The cost outweighs the risk impact, so organization will accept the risk.
+					
+			i. Risk Assessment
+				§ Risk assessment quantifies, or qualifies risk based on different values or judgements.
+				§ Asset includes any product, system, resource, or process that an organization values. The asset value, is worth of the asset. It can be monetary or subjective value like low, medium, or high.
+				§ Risk assessment attempts to identify potential of threat and impact. Risk assessment is  point-in-time assessment.
+				1) Quantitative
+					§ Quantitative assessment measures the risk using a specific monetary amount.
+					§ Single Loss Expectancy (SLE) -  cost of single loss
+					§ Annual Rate of Occurrence (ARO) - how many times instance occur in a year
+					§ Annual Loss Expectancy (ALE) = SLE x ARO
+				2) Qualitative
+					§ A qualitative risk assessment uses judgement to categorize likelihood of occurrence and impact.
+					§ It is common to assign numbers like 1-> low, 5-> medium, 10->high resp.
+					§ e.g. high probability and high impact = 10*10 = 100 
+					§ e.g. low probability and high impact = 1*10  = 10 
+					
+			ii. Risk Registers
+				§ Some risk assessments use a risk register. There are different definitions for a risk register, depending on which standard you’re following. For example, ISO 73:2009 defines it as a “record of information about identified risks.” Projects IN Controlled Environments (PRINCE2), a detailed project management method, defines a risk register as a “repository for all risks identified and includes additional information about each risk.”
+				§ An easy way to create a risk register is in a table format.
+				
+			iii. Supply Assessment
+				§ A supply chain assessment evaluates these elements—the raw materials supply sources and all the processes required to create, sell, and distribute the product. In some cases, the assessment focuses on identifying risks.
+				§ Many organizations have mature supply chains. In other words, they have multiple sources in place for all raw materials. The failure of any single supply source will not affect the organization’s ability to create and sell its products. Similarly, they have built-in redundancies in their processes. If any internal processes fail, they have alternative methods ready to implement and keep the organization operating.
+				§ The goal of these assessments is to look for methods to improve the supply chain.
+				
+	2. Comparing Scanning and Testing Tools
+		a. Checking for vulnerabilities
+			§ Tools : Nessus, Qualisguard, and AlienVault are used for vulnerability assessments
+			§ A vulnerability assessment typically includes the following high-level steps:
+			• Identify assets and capabilities.
+			• Prioritize assets based on value.
+			• Identify vulnerabilities and prioritize them.
+			• Recommend controls to mitigate serious vulnerabilities.
+			i. Password Crackers
+				§ A password cracker attempts to discover a password.
+				§ There are two categories of password crackers—offline( large db or file containing passwords) and online(by guessing or brute force)
+				§ e.g. Cain and Abel, John the ripper
+			ii. Network Scanners
+				§ A network scanner uses various techniques to gather information about hosts within a network.
+				§ Ping Scan - ping to victim, if host responds it confirms operational
+				§ ARP ping scan - if any host responds to ARP requests on its IP, attacker knows it's operational host
+				§ SYN stealth scan - A syn stealth scan sends a single SYN packet to each IP address in the scan range. If a host responds, the scanner knows that a host is operational with that IP address. However, instead of responding with an ACK packet, a scanner typically sends an RST(reset) response to close the connection.
+				§ Port scan - A port scan checks for open ports on a system. Each open port indicates the underlying protocol is running on the system.
+				§ Service scan - A service scan is like a port scan, but it goes a step further. A port scan identifies open ports and gives hints about what protocols or services might be running.
+				§ OS detection - Operating system (OS) detection techniques analyze packets from an IP address to identify the OS. This is often referred to as TCP/IP fingerprinting.
+				
+				§ Wireless scanners can detect rogue access points on a network and sometimes crack passwords used by access points.
+				
+			iii. Banner Grabbing
+				§ Banner grabbing is a technique used to gain information about remote systems and many network scanners use it. It is often used to identify the operating system along with information about some applications.
+				§ The command-line tool Netcat can be used for banner grabbing,
+				
+			iv. Vulnerability Scanning
+				§ Security administrators often use a vulnerability scanner to identify which systems are susceptible to attacks. Vulnerability scanners identify a wide range of weaknesses and known security issues that attackers can exploit.
+					• Identify vulnerabilities
+					• Identify misconfigurations
+					• Passively test security controls
+					• Identify lack of security controls
+				§ Identifying Vulnerabilities and Misconfigurations
+					§ Vulnerability scanners utilize a database or dictionary of known vulnerabilities and test systems against this database.
+					§ Other standards used by vulnerability scanners include the Security Content Automation Protocol (SCAP). SCAP utilizes the National Vulnerability Database (NVD), which includes lists of common misconfigurations, security-related software flaws, and impact ratings or risk Common Vulnerabilities and Exposures (CVE) list, which is a dictionary of publicly known security vulnerabilities and exposures. This is similar to how antivirus software detects malware using virus signatures.
+				§ Identify misconfiguration
+					§ attackers often look for systems that are misconfigured and vulnerability scanners can detect some common misconfiguration settings. Some of the vulnerabilities and common misconfigurations discovered by a vulnerability scanner include open ports, weak passwords, default passwords, sensitive data, security and configuration errors
+					
+				§ Passively test security control
+					§ it does not attempt to exploit any vulnerabilities. Instead, a vulnerability scan is a passive attempt to identify weaknesses. This ensures that the testing does not interfere with normal operations. Security administrators then assess the vulnerabilities to determine which ones to mitigate. In contrast, a penetration test (covered later in this chapter) is an active test that attempts to exploit vulnerabilities.
+					
+				§ Identify lack of security control
+					§ Vulnerability scanners can also identify missing security controls, such as the lack of up-to- date patches or the lack of antivirus software. Although many patch management tools include the ability to verify systems are up to date with current patches, vulnerability scanners provide an additional check to detect unpatched systems.
+					
+			v. Credentialed versus non-credentialed 
+				§ Vulnerability scanners can run as a credentialed scan using the credentials of an account, or as non-credentialed without any user credentials.
+				§ Attackers typically do not have credentials of an internal account, so when they run scans against systems, they run non-credentialed scans.
+				§ Security administrators often run credentialed scans with the privileges of an administrator account. This allows the scan to check security issues at a much deeper level than a non- credentialed scan.
+				
+			vi. Configuration Compliance Scanner
+				§ A configuration compliance scanner verifies that systems are configured correctly. They will often use a file that identifies the proper configuration for systems. When running the scan, the scanner will verify that systems have the same configuration defined in the configuration file. This is also known as configuration validation.
+				
+		b. Obtaining Authorization
+			§ It’s important to obtain vulnerability testing authorization and penetration testing authorization before performing any vulnerability testing or penetration testing.
+			§ A penetration test without consent is an attack.
+			
+		c. Penetrations Testing
+			§ Simulate an attack.
+			§ It is intrusive/invasive i.e. can hamper services to user.
+			§ Perform regular scans, keep systems up to date.
+			§ Tools :  Metasploit and CANVAS
+			i. Passive Reconnaissance
+				§ Information gathering from public domain like social websites, corporate website, social engineer, dumpster diving
+			ii. Active Reconnaissance
+				§ Vulnerability scans (pings, port/OS/Services/domain scan, checking for default password).
+			iii. Initial Exploitation
+				§ Get into the network which is hardest part by exploiting any vulnerability found in earlier stages.
+			iv. Escalation Privilege
+				§ Get more access/privilege of the system
+			v. Pivot
+				§ By Using the first exploited system in network, get access to other system or exploit other systems
+				§ Foothold point and move inside the network.
+			vi. Persistence
+				§ Once initial system is exploited, attacker tries to stay inside as much time as possible.
+			vii. White, Grey, and Black box Testing
+				§ White box
+					§ tester knows the internals of the system/network like what kind of OS, what services are running.
+				§ Black box
+					§ Tester doesn't know anything about the system. He has same amount of knowledge about the system as an any attacker.
+				§ Gray box
+					§ Intermediate level of knowledge about the system.
+		d. Intrusive versus Non-Intrusive Testing
+			§ Intrusive
+				§ Can disrupt regular operations/services
+				§ Just gather information.
+			§ Non-intrusive
+				§ Doesn't disrupt regular operations/services.
+		e. Passive versus Active Tools
+			§ Passive tools
+				§ Watch packets go by and learn from them
+				§ Top talkers, servers, clients, applications, OS, services
+			§ Active tools
+				§ Send traffic to a device, watch the results
+				§ Query a login page
+				§ Try a known vulnerability
+				§ Check account access
+		f. Exploitation Frameworks
+			§ Many exploitation frameworks stores well known exploits which can be used by tester in vulnerability scanning and also by attackers to check what attack to launch against the system.
+			
+	3. Using Security tools
+		a. Sniffing with a Protocol Analyzer
+			§ Protocol analyzers capture all the network traffic with promiscuous mode and can be analyzed.
+			§ Software developer can use it to check if application is correctly sending data
+			§ Network admin can use to check if any system using cleartext data over network and also flags set in the packets to resolve connectivity issue.
+			§ Attackers use it find cleartext data, or try to filter out sensitive information.
+		b. Command-Line Tools
+			i. Tcpdump
+				§ Command-line tool to capture network traffic which later can be analyzed with any graphical tool like wireshark
+			ii. Nmap
+				§ Network map is tool to identify all the devices present over the network. Zenmap is graphical version of Nmap
+			iii. Netcat
+				§ Remote administrative tool which is used by system admin. It is also used by attackers and can be used in banner grabbing.
+		c. Monitoring Logs for Event Anomalies
+			i. Operating Systems Event Logs
+				§ OS logs have many event logs like logs created by HIDS, Firewall, Av
+				§ Many can do integrity check e.g windows scf
+				§ Removable media control 
+				§ Windows has DEP logs
+			ii. Firewall and Router access Logs
+				§ Identifies source and destination of traffic
+				§ Firewalls create centralized logs
+				§ Can maintain application whitelist and hash i.e. only selected apps allowed to run
+				
+			iii. Linux Logs
+				§ var/log/messages. This log contains a wide variety of general system messages. It includes some messages logged during startup, some messages related to mail, the kernel, and messages related to authentication. It stores general system activity log entries.
+				§ var/log/boot.log. Log entries created when the system boots are contained here.
+				§ var/log/auth.log. The authentication log contains information related to successful and unsuccessful logins.
+				§ var/log/faillog. This log contains information on failed login attempts. It can be viewed using the faillog command.
+				§ /var/log/kern.log. The kernel log contains information logged by the system kernel, which is the central part of the Linux operating system.
+				§ /var/log/httpd/. If the system is configured as an Apache web server, you can view access and error logs with this directory.
+				§ /var/log/btmp  log like /var/log/auth also contains information on user failed login attempts
+				
+			iv. Other Logs
+				§ Antivirus logs
+				§ Applications logs
+				§ Performance logs
+				§ Security logs
+					§ Track logon and logoff activity on systems
+				§ System logs
+					§ Identify when services start and stop
+				
+		d. SIEM (Security Information and Event Management)
+			§ Centralized logging details from different security devices.
+			§ Sends Security alerts depending on events
+			§ Stores lots of data for longer period of time
+			§ Uses Data correlation i.e. making sense of data across different devices.
+			§ Time synchronization is important in this as different devices use different clocks. NTP can help with this
+			§ Syslog
+				§ Use syslog as it is standard for message logging. It usually has central receiver which is integrated into SIEM.
+				§ It uses WORM technology Write Once Read Many
+			§ Event de-duplication
+				§ Instead of filling logs with same kind of issues from multiple devices, SIEM makes sense of it and logs baseline issue. e.g. network disconnected from 50 computers vs subnet down
+				§ Logs event that really matters
+				§ Instead of writing same event 100 times, written once saying happened 100 times
+			§ Can view data on dashboard in graphical form
+			§ Can generate alerts and alarms
+			§ It performs
+				§ Aggregation of data
+				§ Correlation o data
+				§ Automated triggers
+				§ Automated alerts
+				§ Time synchronization
+				§ Event deduplication
+				§ Logs/WORM
+				
+		e. Continuous Monitoring
+			§ Continuous security monitoring includes monitoring all relevant security controls, with the goal of ensuring that they help an organization maintain a strong security posture. There are many methods of monitoring, including performing periodic threat assessments, vulnerability assessments, and risk assessments. Many organizations perform routine vulnerability scans, such as once a week, and infrequent penetration tests. Additionally, organizations perform routine audits and reviews, such as usage auditing reviews and permission auditing reviews
+			
+		f. Usage Auditing and Reviews
+			§ Usage auditing refers to logging information on what users do
+			§ It can also include when a user logs on, accesses a network share, reads a file, modifies a file, creates a file, prints a file, accesses a web site via a proxy server, and much more
+			
+		g. Permission Auditing and Review
+			§ Permission Auditing
+				§ Ensure that everyone have the correct permissions
+				§ Scheduled recertification
+				§ Some doesn't need admin
+			§ Usage auditing
+				§ How are your resources used?
+				§ Are your systems and applications secure?
+				§ Time of the day restrictions
+			§ s
+		h. OVAL (Open Vulnerability and assessment Language)
+			§ A standard designed for regulate the transfer of secure public information across networks and Internet utilizing any security tools and services available
+			§ Has 2 parts
+				§ OVAL Language
+					§ An XML schema used to define and describe the information being created by OVAL to be shared among the various programs and tools
+				§ OVAL Interpreter
+					§ A reference model developed to ensure the information passed around by these programs complies with the OVAL schemas and definitions used by the OVAL language
+			§ d

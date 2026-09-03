@@ -1,0 +1,352 @@
+	1. Implementing Secure Systems
+		○ Hardening - practice of making an OS or application more secure from its default installation. Eliminates vulnerabilities from default config, misconfig and weak configs
+		○ Least functionality - system should be deployed with only applications, services and protocols they need to meet their purpose
+		○ In addition to disabling unnecessary services, it's important to uninstall unneeded software.
+		○ Disable unnecessary accounts
+		○ Backdoors generally used by developers must not be present in final product.
+		○ Default account with default password should be changed.
+		
+		a. Operating Systems
+			§ Primarily 3 types of computer Oss - Windows, Apple's OS, Linux-Unix based systems
+			§ OSs are available to desktops as well as to mobile devices. e.g. android from linux
+			§ Apart from desktop and mobile devices many other devices also uses OS like Kiosk, Network (switches, routers etc), appliances (UTMs)
+			§ It's also possible to use live media to create a non-persistent OS (it disappears when users turn off the computer) like Bootable Media (BootMe) to run an OS on almost any computer.
+			
+		b. Secure Operating System Configurations
+			§ A trusted OS meets a set predetermined requirements, such as those identified in the Common Criteria.
+			§ It uses Mandatory Access Control (MAC) model.
+			§ A most common method of deploying secure systems is to deploy master image to multiple systems
+			
+			i. Using Master Images
+				□ An image is a snapshot of a single system that administrators deploy to multiple other systems.
+				□ 
+								
+				□ Administrators will take significant amount of time to configure and test the source systems. They follow the system hardening practices and often use security and configuration baselines. 
+				□ Imaging provides 2 major benefits - Secure starting point, Reduced costs(total cost of ownership TCO).
+				□ Imaging is not limited to only desktop computers, it is available for virtualization as well as for servers.
+				□ In case of servers, it is much quicker to deploy an image to rebuild a failed server than it is to rebuild a server from scratch in case of disaster recovery.
+				□ SCCM Microsoft’s System Center Configuration Management manages safe base lining 
+				
+			ii. Resiliency and Automation Strategies
+				□ Strategies include automation, scripting and templates, they can help deploy systems securely and keep them in secure state.
+				□ e.g. Microsoft has created several security templates with various levels of security. Administrators can modify these templates to fit their needs, import them into a Group Policy Object (GPO), and then apply them to systems within the domain. Some organizations deploy a master image to all systems, and then use the security templates to automatically apply different security settings to different groups of systems based on their security needs.
+				
+			iii. Secure Baseline and Integrity Measurements
+				□ A master image provides a secure starting point for systems. Administrators sometimes create templates or with other tools to create a secure baseline. 
+				□ Then they use integrity measurements to discover when a system deviates from the baseline.
+				□ The use of baseline works in 3 steps:
+					® Initial baseline configuration
+						◊ Administrators uses various tools to deploy systems consistently in secure state
+					® Integrity measurements for baseline deviation
+						◊ Automated tools monitor the systems for any baseline changes.
+					® Remediation
+						◊ methods can detect some changes to baseline settings and automatically isolate or quarantine systems in a remediation network. Typically, Administrators need to correct the problems in these systems manually.
+					
+			iv. Patch Management
+				□ Patch management ensures that systems and applications stay up-to-date with current patches. 
+				□ This protects systems against known vulnerabilities.
+				□ It includes a group of the methodologies and includes the process of identifying, downloading, testing, deploying, and verifying patches.
+				□ After testing the patches, administrators deploy the patches with systems management tools like Microsoft Systems Center Configuration Manager(SCCM).
+				□ In addition to deploying patches, systems management tools also include a verification component that verifies patch deployment.
+				□ e.g. 2017 attack of "WannaCry" happened because many people did not keep their systems up-to-date with windows patches released 2 months before the attack.
+				□ Process of
+					® Planning
+						◊ Identify and verify patch and plan how will you test and deploy it
+						◊ Microsoft Baseline Security analyzer MS BSA
+					® Testing
+						◊ Test patch before deployment to avoid further issues
+					® Implementing
+						◊ Manually or automatically.e.g. Ms sccm
+					® Auditing
+						◊ Audit client status to confirm there are no issues.
+				
+			v. Change Management Policy
+				□ Change management defines the process and accounting structure for handling modifications and upgrades.
+				□ The goals are to reduce risks related to unintended outages and provide documentation for all changes.
+				
+			vi. Unauthorized Software and Compliance Violations
+				□ Many unlicensed software have malwares in them, so by installing these unlicensed software, they are also installing malwares on the systems.
+				□ Another main issue is when someone uses authorized software even though he doesn't require it, making it unavailable for the person it was intended for. So when administrator finally activates the same license on person's machine, organization is basically in violation of license requirements by software company.
+				
+			vii. Application Whitelisting and Blacklisting
+				□ Application Whitelisting - list of authorized software and it prevents users from installing or running software that isn’t on the list.
+				□ Application Blacklisting - list of unauthorized software and prevents users from installing or running software on the list
+				
+		c. Secure Staging and Deployment
+			i. Sandboxing with VMs
+				□ Sandboxing is the use of an isolated area on a system and it is often used for testing.
+				□ Sandboxing with VM is very popular and easy to manage and revert back if something goes back.
+				□ Malwares can be tested in VM to check if antivirus can block it or not. If antivirus software fails to block the virus it won't hamper the main live network.
+				□ Similarly developers use VM to test multiple software updates and patches. They turn on a VM, take snapshot and apply the patch. If patch fails, they can easily revert back to original snapshot of the system.
+				
+			ii. Sandboxing with Chroot
+				□ Another method of sandboxing is linux-bsed command "chroot".
+				□ It is used to change the root directory for an application, effectively isolating it.
+				□ If someone wants to test an application, they can create a directory in their home folder like /home/lisa/testing. Then all the dependent files like /bin /lib should be copied at the same location. And then use chroot to create the isolated sandbox in the testing directory. Any commands user enters can only access files within the testing directory and if application is infected or buggy, it can't access the system files.
+				
+			iii. Secure Staging Environment
+				□ A secure staging includes multiple environments and typically includes different systems used for each stage.
+				□ Development - developer use environment with version control and change management to track application development.
+				□ Test - testers environment generally consists of enough hardware and software but doesn't simulate complete production environment.
+				□ Staging - it simulates complete production environment and used for last stage testing. Provides complete but independent copy of the production environment.
+				□ Production -  it is the final product which includes everything needed to support the application and allow users to use it.
+				
+		d. Peripherals
+			§ Wireless keyboards and wireless mice - wired devices are more secure as wireless data can be intercepted
+			§ Displays - view of sensitive data must be blocked
+			§ External storage devices - external storage devices like USB, smartphones should be blocked as they can infect the machine also can be easily misplaced and result into sensitive data in rogue hands
+			§ Digitial cameras - cameras with built-in storage has same risks as external storage devices.
+			§ Wi-Fi-enabled MicroSD cards - as with the wireless devices, the risk is that wireless transmissions can be intercepted.
+			§ Printers and other multi-function devices(MFDs) - many multi-function devices have extra features like wireless connectivity or external storage that carries same risks as mentioned above.
+			
+		e. Hardware and Firmware Security
+			i. EMI and EMP
+				□ A secure systems design considers electromagnetic interference(EMI) and Electromagnetic Pulse(EMP).
+				□ EMI comes from sources like motors, power lines and fluorescent lights and can be prevented with shielding.
+				□ Systems can be protected from mild forms of EMP like electrostatic discharge and lightning.
+				
+			ii. FDE and SED
+				□ Full Disk Encryption (FDE) encrypts an entire disk.
+				□ Self -Encrypting Drives (SED) includes the hardware and software to encrypt all data on the drive and securely store the encrypted keys. These typically allow users to enter credentials when they set up the drive. When users power up the system, they enter their credentials again to decrypt the drive and boot the system.
+				□ Built-in OS FED
+					® Microsoft BitLocker, Apple FileVault, Linux Unified Key Setup(LUKS)
+				
+			iii. UEFI and BIOS
+				□ The Basic Input/Output System (BIOS) includes software that provides a computer with basic instructions on how to start, runs some basic checks, locate the OS and starts. It is often referred as firmware = hardware + software (it is a physical chip which has software on it that executes code on the computer)
+				□ Newer systems has Unified Extensible Firmware Interface(UEFI) which performs same functions as BIOS but provides some enhancements like it can boot from larger disks and it is designed to e CPU-independent
+				□ Both BIOS and UEFI can be upgraded using a process called flashing which overwrites the software within the chip with newer software.
+				□ Securing BIOS
+					® Flash BIOS for updates -to ensure it has most up to date software as it is firmware it has to be flashed
+					® Use secure and strong BIOS password to avoid anyone changing boot order
+					® Configure the BIOS boot order
+					® Disable external ports and devices which are not needed
+					® Enable the secure boot which uses TPM
+				
+			iv. Trusted Platform Module (TPM)
+				□ A Trusted Platform Module (TPM) is a hardware chip included on many laptops and mobile devices.
+				□ It provides full disk encryption and supports a secure boot process and remote attestation.
+				□ A TPM includes a unique RSA asymmetric key burned into the chip that provides a hardware root of trust.
+				□ When the TPM is configures, It captures signatures of key files used to boot computer and stores a report of the signatures securely within TPM. Then the system boots, the secure boot process checks the files against the stored signatures to ensure they haven't changed and block the boot process if there is any change.
+				□ A remote Attestation works similar to secure boot process just instead of storing signatures within TPM, it stores on remote system and during boot process checks with remote system.
+				□ The TPM ships with a RSA private key burned into it. During asymmetric encryption, this private key is matched with the public key and provides a Hardware root of trust, or Secure Starting Point.
+				□ OSs generally have an application to manage TPM e.g. BitLocker in windows. When enabled, drive remains locked until the platform verification and user authentication processes are complete.
+				□ If a thief steals the system, the drive remains locked and protected. If attacker tries to modify system to bypass security controls, the TPM detects the tempering and keeps drive locked. If thief moves the drive to another system, the drive remains locked because the TPM isn't available.
+				
+			v. Hardware Security Module (HSM)
+				□ A hardware security Module(HSM) is a removable or external device that can generate, store, and manage RSA keys used in asymmetric encryption.
+				□ Many server based applications use an HSM to protect keys.
+				□ High-performance HSMs come as external devices connected to network using TC/IP. Smaller HSMs come as expansion cards you can install within a server or as devices you plug into computer ports
+				□ HSMs are removable in contrast to embedded TPM. You can easily add HSM to a system, but if a system didn't ship with TPM, it's not feasible to add it later.
+				□ HSM supports hardware root of trust, secure boot, and can be configures for remote attestation.
+				
+	2. Summarizing Cloud Concepts
+		○ Cloud computing refers to accessing computing resources via a different location than your local computer, in most common scenario through internet.
+		○ On-premise - all resources are owned, operated, and maintained within the organization's building or buildings
+		○ Hosted - Organizations can rent access to resources from a specific organization.
+		○ As everything is on cloud and can be accessed by connecting to internet, it is really important to use very strong encryption wile handling the data.
+		
+		a. Software as a Service (SaaS)
+			§ SaaS includes any software or application provided to users over a network such as the internet.
+			§ Internet accesses the SaaS applications with a web browser.
+			§ e.g. gmail, google sheets, google docs etc.
+			§ One risk is if third party network gets hacked, like google providing service, your data will be at risk.
+			
+		b. Platform as a Service (PaaS)
+			§ PaaS provides customers with preconfigured platform they can use as needed. It provides users with easy-to-configure operating systems, combined with appropriate applications and on-demand computing.
+			§ In this case, users only need to worry about the content/website/software they themselves are hosting and not about the platform itself.
+			
+		c. Infrastructure as a Service or Hardware as Service
+			§ IaaS provides customer an infrastructure they can use according to their need. It's mostly hardware and customer has to do lots of work of maintaining and securing the infrastructure provided like OS, security, etc
+			
+		d. Security Responsibilities with Cloud Models
+			§ Automation and scripting
+				§ Plan for change - implement automatically
+				§ Automated courses of action
+				§ Continuous monitoring - check for particular event and react
+				§ Configuration validation
+			§ Template
+				§ Basic structure as master image.
+				§ Still need changes as things change, security patches, test those
+			§ d
+		e. Security as a Service
+			§ Instead of having own firewall, IPS and UTM can move them to cloud
+			§ Easy to manage AV update, and patches.
+		f. Cloud Access Security Broker (CASB)
+			§ Sits between cloud and organization intranet and can enforce encryption, monitor data between two, threat prevention by only allowing authorized access, and protect transfer of PII with DLP
+			
+	3. Deploying Mobile Devices Securely
+		§ Centralized management of the mobile devices and push software policies.
+		§ Set policies on apps, data, camera etc. like control remote device, the entire device or partition.
+		§ Force security measure on device like data should be encrypted at rest or in transit. Part of device stores data should be separate from rest of the personal use and also encrypted.
+		§ Use storage segmentation i.e. on what part of mobile device company data should be stored and on what part personal information and also how it should be stored I.e. what kind of encryption etc.
+		
+		a. Deployment Models
+			i. Corporate Owned
+				§ Company owns device and personal use is not allowed.
+			ii. COPE (Company Owned Personally Enabled)
+				§ Company owns the device and employee can use for personal use.
+				§ As owned by company, easier to implement security measure and enforce security policy
+				§ Company manages it similar to any computer in network
+			iii. BYOD (Bring Your Own Device)
+				§ Employee owns the device.
+				§ As employee can chose any device, it's difficult for admin to maintain baseline template for all the models and check if each device is compatible with organization's security policy
+				§ Has to meet minimum security requirements
+			iv. CYOD (Chose Your Own Device)
+				§ Organization gives the list of acceptable mobile devices and employee can buy any of them.
+				§ It's middle ground between above both methods where employee has some choice also admin now just has to maintain few more patches for selected devices.
+			v. VDI/VMI virtual desktop/Mobile Infrastructure
+				§ Apps separated from device and stored on cloud.
+				§ Devices just use these apps
+				§ Centralized location helps with management of apps
+			
+		b. Connection Methods
+			i. Cellular
+				§ Regular cellular communication
+			ii. Wireless
+				§ Mobile devices like cell phones and tablets can also connect with Wi-Fi
+			iii. Satellite
+				§ Mobile devices can make use of SATCOM
+			iv. ANT/ANT+
+				§ It is wireless sensor network protocol
+				§ Used mostly in fitness devices, heart rate monitors.
+				§ Also used in IoT devices as ultra-low-power protocol
+				§ Susceptible to MITM and jamming
+			v. NFC Near Field Communication
+				§ Used in proximity cards, or phones, etc.
+				§ Is susceptible to MITM, and jamming attacks
+			vi. IR Infrared
+				§ Included in many smartphones remote controls, smart watch
+				§ Can be used to file transfer
+			vii. USB
+				§ More secure
+				§ Removable storage device hence admin have to be more careful about data exfiltration.
+		c. Mobile Device Management
+			i. Application management
+				§ Application white list
+					® Only apps in list are allowed to install while rest of the apps are blocked
+				§ Application black list
+					® Apps on list are blocked while rest of the apps are allowed to install
+			ii. Mobile Content Management (MCM)
+				§ Secure access to data
+				§ Protect data from outsiders
+			iii. File Sharing and Viewing
+				§ on-site and cloud based content
+				§ Certain part of device can be encrypted and only on that part of the device can organization's encrypted data be stored.
+			iv. Remote wipe
+				§ Remote all data on mobile data if it's lost  or user leaving organization to avoid data leak
+			v. Geolocation
+				§ GPS can be used to track the device in case it's lost. 
+				§ It mostly enabled by default
+				§ Can be a bad this if attacker gets the access
+			vi. Geofencing
+				§ Depending on location certain service or apps can be blocked or allowed.
+				§ e.g. camera might disabled if its inside organization. Or remote access disable for certain geolocation.
+			vii. Screen Lock
+				§ Keep people out of your data
+				§ Can use strong passcode consisting of alpha-numeric characters
+				§ If wring passcode after 3 times can do remote wipe
+			viii. Push Notification
+				§ Info appears on mobile device screen
+			ix. Passwords and pin
+				§ In case user loses access to device or forgets the passcode
+			x. Biometrics
+				§ Using fingerprints or retina or facial features to give access
+			xi. Context aware authentication
+				§ Authentication can be contextual like ip and password
+				§ Depending on user context like certain Bluetooth device associated with certain employee at certain location.
+			xii. Containerization
+				§ When device is BYOD, it's difficult to separate personal form business.
+				§ Create virtual container for company data.
+				§ Storage segmentation keeps data separate
+				§ Easier to manage off boarding
+			xiii. FDE Full Device Encryption
+				§ Full device is encrypted
+				§ Each OS handles differently
+				§ Shouldn't lose encryption key
+				
+		d. Mobile Device Enforcement and Monitoring
+			§ Apps should be downloaded and installed from vendor apps stores like Apple App Store, Google Play Store etc. and not third party app store.
+			§ Third party app stores don't test apps as rigorously as vendor app store does  for security
+			§ Rooting/ jailbreaking
+				§ On Android device removing software restriction to get root access to Rooting
+				§ Removing software restriction on apple devices is called jailbreaking.
+			i. Unauthorized Software
+				§ Side-loading
+					§ Instead of installing app from app store, when download the app in apk format and using it is called side-loading. It bypasses security measures.  
+			ii. Hardware Control
+				§ Carrier unlocking
+				§ Firmware OTA(over the air) update may not be good thing as not went through change management/patch management
+				§ External media control
+				§ USB OTG blocking to avoid exfiltration
+				§ Restriction on microphone or camera
+				§ SMS/MMS enable/disable  depending on location or time of day
+			iii. Unauthorized Connections
+				§ Avoid WiFi Direct/ ad hoc mode
+				§ Avoid Hotspot/tethering
+				§ Without proper security above both connection can cause breach
+				
+			iv. Ways to ensure mobile device safety
+				1) Update
+				2) Install antivirus
+				3) Train users on security
+				4) Install apps from proper App Store
+				5) Don’t root or jailbreak devices
+				6) Only use v2 SIM cards with devices
+				7) Turn off all unnecessary services
+				8) Turn on encryption for voice or data
+				9) Use strong password and screen lock
+				10) Don’t allow BYOD
+				
+		e. Exploring Embedded Systems
+			§ Uses computing to perform a single specific function
+			§ Main issue with these is maintaining these up to date.
+			§ Other devices like digital camera, smart watches, digital diaries can easily move data around and also easy to compromise firmware.
+			§ Smart devices
+				§ Smart watch, digital diary
+			§ HVAC
+				§ Heating cooling air conditioning
+			§ SoC (system on chips)
+				§ All the embedded system on a single chip
+			§ RTOS (Real Time OS)
+				§ Replies/actions in certain amount of time. e.g. in car break system.
+			§ MFDs Multi-function devices
+				§ MFD - multifunctional devices like printer-scanner, HVAC system.
+				§ MFDs like printers have scans which can be used for passive reconnaissance
+			§ Special Purposes - Medical devices, UAVs, central camera system 
+			
+		f. Security Implications and Vulnerabilities
+		g. Comparing Embedded Systems
+		h. Protecting Data
+			i. Protecting Confidentiality with Encryption
+			ii. Database Security
+				§ Can use full database encryption or column based encryption to encrypt single column
+				§ Also database can have own access control with username, passwords, permissions
+				§ Some provide data integrity option as well
+			iii. File System Security
+				§ File systems can also have their own ACL, and depending on their permissions file system can allow or deny access to users.
+				§ Apart from simple access control, encrypting a file system add another level of security.
+				§ Microsoft EFS (encrypted file system)
+				§ Entire file system can be encrypted. 
+		i. Data Loss Prevention
+			§ Avoid data exfiltration
+			§ Can happens at many  places e.g. on devices, over network, data at rest, data on move
+			§ Track emails from coming in and going out. In-bound email DLP, out--bound email DLP.
+			i. Removable Media
+				§ Block removable devices like USB
+			ii. Data Exfiltration
+				§ Important/proprietary data leaving network without authorization
+				
+			iii. Endpoint DLP system
+				§ On individual devices and monitor inflow and outflow of data
+				§ Alerts admin about suscpicious activities
+			iv. Network based DLP
+				§ h/w or s/w On network perimeter and monitors data entering and leaving the perimeter
+				§ Alerts about suspicious activities
+			v. Storage based DLP
+				§ S/w installed on servers in the data center to inspects the data at rest
+			vi. Cloud based DLP
+				§ Located between users and internet, watches every byte of data network traffic
+				§ Block custom defined data strings like secret, important etc.
+				§ Manage URLS to prevent file transfers to cloud storage
+				§ Block viruses and malware
+				

@@ -1,0 +1,240 @@
+	1. Implementing Defense in Depth
+		§ Layering the defense
+		§ Physical control
+			§ Door locks, cable locks, cameras, fences, gollards, security guard, etc.
+		§ Technical Control
+			§ Firewall, DMZ, active directory authentication, disk encryption, IDS
+		§ Administrative control
+			§ Policies, procedures, on boarding and off boarding, backup media handling
+	2. Comparing Physical Security Controls
+		a. Using Signs
+			§ Clear specific instructions e.g. stop
+		b. Comparing Door Lock Types
+			i. Securing Door Access with Cipher Locks
+				§ Number lock
+				§ Doesn't provide authentication on own
+			ii. Securing Door Access with Cards
+				§ With access card
+				§ Doesn’t provide authentication on own.
+				§ provides authentication with cipher locks
+			iii. Securing Door Access with Biometrics
+				§ More secure, more expensive
+				§ Stores mathematical expressions of biometric feature
+				§ Not fullproof but works very good with other measures
+		c. Tailgating
+		d. Preventing Tailgating with Mantraps
+			§ Area between secure and unsecure area, on checking only person can enter to secure area.
+			§ Only one person at a time can pass.
+		e. Increasing Physical Security with Guards
+			§ Guards knows employees and check IDs
+		f. Monitoring Areas with Cameras
+			§ In data centers, entry or exits, at secure locations.
+		g. Fencing, Lighting, and Alarms
+			§ Proper lighting If using cameras, no shadow on face
+			§ Fence provide perimeter
+			§ Alarms alert about trespassing, can detect motion, on door opening
+		h. Securing Access with Barricades, bollards
+			§ Prevent access
+			§ Stronger than fences.
+			§ Bollards can prevent forceful vehicle entry and take large piece of equipment
+		i. Using Hardware Locks
+			i. Securing Mobile Computers with Cable Locks
+				§ Physically securing device like laptops with cable ties, locks, etc.
+				§ Temporary locks.
+			ii. Securing Servers with Locking Cabinets
+				§ Used in racks in data centers to avoid physical access
+			iii. Securing small Devices with a Safe
+				§ Smaller devices can be locked in cabinets with lock
+				§ Keys should be maintained properly and should have backups if it gets lost.
+		j. Asset Management
+			§ The higher the assets the more precautions have to be taken
+			§ The asset management controls the process of procuring , managing, and maintaining all of the assets in the organization.
+			§ No asset should be left neglected if no one is using it anymore. All the assets in network must be accounted for.
+			§ Protect against vulnerabilities related to architecture and design weakness, system sprawl, and undocumented assets.
+		k. Implementing Environmental Controls
+			i. Heating, Venting, and Air Conditioning
+				§ At optimum temperature and humidity.
+				§ Extra humidity can cause water damage, low humidity can cause static charge build up
+				§ Hot temperature can cause chips to melt and cause outage
+			ii. Hot and cold Aisles
+				§ aisle are managed so that adjacent aisles servers are facing in opposite directions causing cold and hot aisles
+			iii. HVAC and fire
+				§ In case of fire, HVAC should stop pushing oxygen as it will help spread fire but it also should take care that no human being present before it stope oxygen flow
+			iv. Fire suppression
+				§ Shouldn't use water with electronics
+				§ Use water where appropriate
+				§ Suppress fire at electronics with chemicals.
+				§ In class C, Halon is no longer used as it is bad for environment, instead FM-200 or CO2 is used
+				§ 
+				§ Fire suppression Methods with water
+					§ Wet pipe
+						◊ Pipes are already filled with water and when fire breaks the bulb, water comes out
+					§ Dry Pipe
+						◊ In extreme weather areas to avoid freezing of the water, pipes are air pressure maintained, when fire breaks the bulb, water filled in pipe and then distributed
+					§ Pre-action
+						◊ By only sensing the heat and smoke water is dispersed and not waited till fire breaks the bulb
+					§ Deluge
+						◊ A large amount of water is used to extinguish the fire
+				§ s
+			v. Environmental Monitoring
+				§ Sensors should be present to monitor the environment and adjust according to the environment
+		l. Shielding
+			i. Protected Cabling
+				§ Insulated cables to avoid EMI.
+				§ This avoids external EMI from damaging the internal data and also EMI from leaking and weakening the strength or worse being read.
+			ii. Protected Distribution of cabling
+				§ Insulated cable cover acts as the EMI shielding
+			iii. Faraday Cage
+				§ Stops EMI/EMP charge from escaping the cage
+				
+	3. Adding Redundancy and Fault tolerance
+		a. Single Point of Failure
+			§ If the failure of the single system component causes whole system to shut down or causes it to crash, that component is single point of failure
+			§ Single point of failure should be avoided as it decreases the  availability of the system.
+			§ Clustering and load balancers are ways to mitigate server as single pint of failure and RAID is for data/disk redundancy
+				
+		b. Disk Redundancies
+			i. RAID-0
+				§ Striping without parity
+				§ High performance, no fault tolerance
+			ii. RAID-1
+				§ Mirroring
+				§ Duplicates data for fault tolerance but requires twice the disk space
+			iii. RAID-5
+				§ Striping with parity
+				§ Fault tolerance, only requires an additional disk for redundancy
+				§ Minimum 3 disk, can tolerate 1 disk failure.
+			iv. RAID-6
+				§ Striping with parity
+				§ Fault tolerance, only requires an additional disk for redundancy
+				§ Minimum 4 disk, can tolerate 2 disk failure.
+			v. RAID-10
+				§ Combine RAID -1 and RAID-0 i.e. striping and mirroring
+				§ Minimum 4 disk required and can tolerate 2 disk failure
+			
+			§ NAS (Network Access Storage)
+				§ In addition to using external storage devices connected directly to organization network and act as file servers, we can also use NAS which looks like servers but are storage devices
+				§ Are often implemented in conjunction with RAID to provide HA
+				§ Use proper encryption, authentication and log access
+				
+			§ SAN (Storage Area Network)
+				§ Collection of different NAS 
+				§ Designed specifically to perform block storage functions that may consists of NAS devices.
+				
+		c. Server Redundancy and High Availability
+			§ Distributive allocations increases availability hardware, s/w and network
+			§ HA ensure component is always available  even if one fails.
+			
+			i. Failover clusters for High Availability
+				§ The failover clusters provide availability.
+				§ If the component fails, the backup system takes over and the flow of the process fails back on backup system.
+				§ The backup system keeps monitoring main system's heartbeat to check its availability
+			ii. Clustering versus Load balancing
+				1) Cluster
+					§ Logical group of servers acting as one server
+				2) Load balancer
+					§ Manage load across multiple devices.
+					§ Servers can be added and removed based on utilization
+					§ Performs constant health checks.
+					§ System has many servers, and when load on the system is more, load balancers helps to distribute the load amongst the servers to provide better efficiency
+					§ The configuration can be active-passive (at least one system is passive and backup and checking up on other system) or active-active (all systems are actively participating)
+					§ Load balancers use scheduling round-robin, source ip affinity mapping techniques to distribute the load
+					§ In round-robin technique, the nest request is sent to next server
+					§ In source ip affinity mapping, the ip of the source is mapped to a server and all the requests by that user are sent to same server for that session.
+					
+		d. Power Redundancies
+			§ Multiple poser backups e.g UPS, different power lines, generators
+			
+	4. Protecting Data with Backups
+		a. Comparing Backup types
+			§ Backup utilities
+				□ Protect from unexpected downtime
+					® Malware infection, ransomware, server defacement
+				□ Real-time file sync
+					® rsync
+				□ Regular partial backups - incremental, differential
+				□ Complete coverage, fast recovery
+			i. Full Backups
+				§ Takes entire /whole backup
+				§ Requires large amount of time and resources
+				§ The most efficient way to restore the data
+			ii. Restoring a Full Backup
+				§ As it has whole backup, only one backup has to be applied.
+				§ It takes the least amount of time to restore the backup
+			iii. Differential Backups
+				§ Takes backup till last full backup
+				§ Time to take differential backup is between full backup and incremental backup 
+				§ While restoring, it is more efficient than incremental but least efficient than full backup
+				§ 
+			iv. Order of Restoration for a Full/Differential Backup Set
+				§ While system recovery, only 2 backups need to be applied ----> full backup and latest differential backup
+			v. Incremental Backups
+				§ Takes backup till last incremental backup or full backup
+				§ Takes least amount of time while taking backup
+				§ Takes most amount of time while restoring backup
+			vi. Order or Restoration for a Full/Incremental Backup Set
+				§ While system recovery, after applying full backup, all the incremental backups should be applied in chronological order they have taken.
+			vii. Choosing Full/Incremental or Full/Differential'
+				§ Should be chosen based on how much time can be allotted to taking backup and restoration.
+				§ Differential will be better option when restoration should be faster
+				§ Incremental should better option when you need time to take backup should be low.
+			viii. Snapshot Backups
+				§ Virtual systems, allows to take snapshot of the whole system and use it.
+		b. Tape Rotation
+			How long tape is going to be kept and when to replace it
+			i. 10 tape rotation
+				§ Each tape is used one per day for 2 weeks and then the entire set is reused.
+			ii. Grandfather-Father-Son
+				§ 3 sets of backup tapes are defined as the son(Daily), the father(weekly), and the grandfather(monthly)
+			iii. Tower of Hanoi
+				§ 3 sets of backup tapes (like grandfather-father-son) that are rotated in a more complex system
+				§ 1st tape is used every 2nd day, 2nd tape used every 4th day, and 3rd tape is used every 8th day
+		c. Testing Backups
+			§ The phenomenon of testing the integrity and efficiency of backups.
+			§ It ensures that backups taken actually works and all data can be recovered.
+		d. Protecting Backups
+			§ Backups should be protected and available easily when needed
+			§ Some organizations keep backups far away from primary facility in case of natural disaster happens, other copy should be safe
+			§ organizations also encrypts backups and maintain their hash to provide data confidentiality and integrity
+			§ Some organizations use third party help to maintain the data.
+		e. Backups and Geographic Considerations
+			§ It is most important to consider the geometric location of backup, as laws regarding PII and PHI should be followed based on the region it is stored in
+			§ Data sovereignty should be maintained
+	5. Comparing Business Continuity Elements
+		§ A Business impact analysis (BIA) is part of business continuity planning(BCP) and it identifies mission-essential functions, critical systems, and vulnerable business processes that are essential to the organization's success
+		a. Business Impact Analysis Concepts (BIA)
+			i. Impact
+				§ The BIA identifies maximum downtimes for these systems and components, and the impact to life, property, safety, finance, and reputation form an incident
+			ii. Privacy Impact and Threshold Assessments (PIA and PTA)
+				§ Privacy threshold assessment (PTA) identifies if a system processes data that exceeds the threshold for PII.
+				§ If the system processes PII, a privacy impact assessment helps identify and reduce risks related to potential loss of the PII.
+			iii. Recovery Time Objective (RTO)
+				§ It identifies the maximum amount of time it should take to restore a system after an outage.
+			iv. Recovery Point Objective (RPO)
+				§ It refers to the amount of data you can afford to lose.
+			v. Comparing MTBF and MTTR
+				§ Mean time between failures (MTBF) identifies the average time between failures
+				§ Mean Time to recover identifies the average time it takes to restore a failed system.
+		b. Continuity of Operations Planning (COOP)
+			§ Continuity of operations planning identifies alternate processing sites and alternate business practices.
+			i. Recovery Sites
+				§ Recovery sites provide alternate locations for business functions after a major disaster.
+				§ Hot site
+					® Includes everything needed to be operational within 60 minutes.
+					® It is most effective recovery solution and the most expensive
+				§ Cold Site
+					® It has power and connectivity requirements and little else.
+					® It is the least expensive to maintain
+				§ Warm Site
+					® These are compromise between hot sites and cold sites,
+			ii. Order of Restoration
+				§ Based on the BIA, the mission critical services are to be brought up as soon as possible with maximum priority and then rest follows based on their priorities defined in BIA
+		c. Disaster Recovery
+			§ 
+		d. Testing Plans with Exercises
+			§ Periodic testing validates continuity of operations plans
+			§ Exercises validate the steps to restore individual systems, activate alternate sites, and document other actions within a plan
+			§ Tabletop exercises
+				§ These are discussion based only
+			§ Functional exercises
+				§ These are hands-on exercises

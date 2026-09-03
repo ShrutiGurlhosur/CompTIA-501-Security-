@@ -1,0 +1,401 @@
+	1. Introducing Cryptography Concepts
+		§ Integrity provides assurance that data has not been modified. Hashing ensures data integrity.
+			§ A hash is a number derived from performing a calculation on data
+			§ Hash creates fixed-size string of bits or hexadecimal chars, which can't be reversed to recreate to original data.
+			§ Common hashing algorithms are MD5 and SHA
+		§ Confidentiality ensures data is only visible to authorized users. Encryption ensure data confidentiality.
+			§ Encryption scrambles/ciphers, data to make it unreadable if intercepted. Encryption normally includes an algorithm and a key.
+			§ Symmetric encryption uses the same key to encrypt and decrypt data.
+			§ Asymmetric encryption uses 2 keys (public and private) to create matching pair.
+			§ Anything encrypted with private key is decrypted with matching public key.
+			§ Anything encrypted with public key is decrypted with matching private key.
+		§ Stream ciphers encrypts data 1 bit at a time. Block ciphers encrypt data in blocks
+		§ Steganography hides data within other files and hence add level of confidentiality.
+		§ A digital signature provides authentication, non-repudiation, and integrity.
+			i. Users sign email with digital signature, which is a hash of an email message encrypted with the sender's private key
+			ii. Only sender's public key can decrypt the hash, providing verification it was with encrypted with the sender's private key.
+			
+	2. Providing Integrity with Hashing
+		§ Hashing verifies integrity of the data like mail, downloaded files, and files stored in disk. 
+		§ A hash is a number created with a hashing algorithms and also called Checksum.
+		a. MD5 (Message Digest 5)
+			§ Common hashing algorithm which produces 128-bit hash
+			§ Even though it's cracked, it is still used to verify integrity of files.
+			§ Suffers from hash collision.
+			
+		b. SHA (Secure Hash Algorithm)
+			§ SHA grouped into 4 families - SHA-0, SHA-1, SHA-2, SHA-3.
+			§ SHA-0 not used
+			§ SHA-1 creates 160- bit hash. Similar to MD5 except creates 160 bit hash. Suffers from collision attacks.
+			§ SHA-2 includes, SHA-256,SHA-224, SHA-384, SHA-512 which create 256, 224, 384, and 512 bit hash resp.
+			
+		c. HMAC (Hash Message Authentication Code)
+			§ Fixed length string of bits Similar to MD5and SHA. However, this also uses shared secret to add some randomness to result and only sender and receiver know the secret key.
+			§ e.g. HMAC-MD5, starts with first creating hash of a message with MD5 and then uses a secret key to complete another calculation on the hash.
+			§ HMAC provides authentication and integrity of messages.
+			§ IPsec and TLS often use HMAC-MD5 and HMAC-SHA1.
+			
+		d. RIPEMD (RACE Integrity Primitives Evaluation Message Digest)
+			§ Another hash function but not widely used
+			§ it has RIPEMD-160 creating 160 bit hash, also 128, 256, and 320 bits
+			
+		e. Hashing Files
+			§ Many applications calculate and compute hashes automatically without any user intervention
+			§ The hash will always be same no matter how many times you calculate it.
+			§ Hashing verifies the file retained integrity
+			§ You can't look at the hash and identify the message. You can't guess if it's hash of single string or 4GB file.
+			
+		f. Hashing Passwords
+			§ Passwords are often stored as hashes.
+			§ When user creates a password, system calculates the hash and stores the hash. When user logs in, system calculates the entered password's hash and match with the one stored in system.
+			
+		g. Key Stretching
+			§ Key Stretching is a technique used to increase the strength of stored passwords and help thwart brute force and rainbow tale attacks.
+			§ Key stretching techniques salt the passwords with additional random bits to make them more complex. 2 common techniques are bcrypt and PBKDF2
+			§ Bcrypt 
+				□ It is based on blowfish block cipher and is used in many Unix distributions.
+				□ It salts password by adding additional random bits before encrypting it with Blowfish.
+				□ It can go through process multiple times to further protect.
+				□ Results in 60 character string
+				□ As an additional measure you can add pepper to the salt.
+			§ PBKDF2 (Password based Key Derivation Function 2)
+				□ Uses salts of at least 64 bits and uses pseudo-random function like HMAC to protect passwords
+				□ The size of resulting hash varies with PBKDF2 depending on how it is implemented, bit sizes of 128, 256, and 512 bits are most common.
+				
+		h. Hashing Messages
+			§ Hashing provides message integrity.
+			§ The sender has hash calculated, and he sends message. Even if attacker changes the message, the hash won't be same. Hence receiver won't trust the message if hash is different.
+			
+		i. Using HMAC
+			§ It is useful to thwart attacker from swindling the receiver by changing the hash along with message.
+			§ As HMAC is based on shared secret between sender and receiver, even when attacker captures, manipulates the data along with hash, as he doesn’t know the shared secret, the hash won't match up.
+	Algorithm	Type	Comments
+	MD5	Hashing/Integrity	Creates 128 bit hashes
+	SHA-1	Hashing/Integrity	Creates 160 bit hashes
+	SHA-2	Hashing/Integrity	Creates 224, 256, 384,512 bit hashes
+	SHA-3	Hashing/Integrity	Creates 224, 256, 384, 512 bit hashes
+	HMAC-MD5	Hashing/Authenticity	Creates 128 bit hashes
+	HMAC-SHA	Hashing/Authenticity	Creates 128 bit hashes
+	
+
+	3. Providing Confidentiality with Encryption
+		§ Encryption Provides confidentiality and helps ensure that data is viewable only by  authorized users. This applies to data-rest or data-in-transit
+		a. Encryption Terms
+			§ Random and Pseudo-random numbers
+				□ Random number is number picked completely by chance
+				□ Pseudo-random number appears to be random but is created by deterministic algorithms i.e. given same input, a pseudo-random number generator will produce same output
+			§ IV (Initialization Vector)
+				□ Provides a starting value for a cryptographic algorithm.
+				□ It is a fixed size random or pseudo-random number that helps create random encryption keys.
+				□ Ideally IV should be large enough so it won't be reused.
+			§ Nonce
+				□ It is a number used once. e.g. IV
+			§ XOR
+				□ Logical operation. Same input then true(1), different inputs then false(0)
+			§ Confusion
+				□ It means cipher text is significantly different than plaintext.
+			§ Diffusion
+				□ Effective diffusion techniques ensure that small changes in plaintext result in large ciphertext.
+			§ Secret Algorithm
+				□ It is a algorithm that is kept private.
+				□ It is not recommended as it won't be rigorously tested for flaws or vulnerabilities.
+			§ Weak/Deprecated algorithm
+				□ Weak algorithm can be cracked and attacker can easily convert ciphertext into plaintext.
+			§ High resiliency
+				□ It is a common use case for encryption algorithms.
+				
+		b. Block Versus Stream Ciphers
+			§ Both are Symmetric so both use same key to encrypt and decrypt messages
+			§ Block cipher encrypts data in specific sized blocks e.g. 64 bit or 128 bit blocks. Block cipher divides large files into these blocks and then encrypts each individual block separately.
+			§ A stream cipher encrypts data as a stream of bits or bytes rather than dividing it into blocks.
+			§ Generally, stream ciphers are more efficient than block ciphers when data size is unknown.
+			§ Block ciphers are more efficient when size of data is known.
+			
+		c. Cipher Modes
+			§ ECB (The Electronic codebook)
+				□ Algorithms that use ECB divide plaintext into blocks and then encrypt each block using the same key.
+				□ If plaintext blocks are same, resulting cipher text would also be same, making it easier to crack. Hence ECB is not recommended today.
+			§ CBC (Cipher Block Chaining)
+				□ It is mode used by symmetric block ciphers.
+				□ It uses IV for randomization when encrypting first block. It then combines each subsequent block with previous block using XOR operation.
+				□ As encryption of each block is dependent on previous block, CBC suffers from pipeline delays, making it less efficient.
+			§ CTM (Counter Mode) or CTR or CM
+				□ It effectively converts block cipher into a stream cipher.
+				□ It combines IV with a counter and uses the result to encrypt each plaintext.
+				□ Each block uses same IV but CTM combines it with the counter value, resulting in a different encryption key for each block.
+				□ Multiprocessor systems can encrypt or decrypt multiple blocks at the same time, allowing algorithms to be quicker on multiprocessor to multicore systems.
+			§ GCM (Galois/Counter mode)
+				□ It combines counter mode of operation with Galois mode of authentication.
+				□ It provides data authenticity and not authenticate users or systems,
+				□ It is efficient in encrypting and decrypting.
+				
+		d. Symmetric Encryption
+			§ Uses same key to encrypt and decrypt data.
+			§ Substitution algorithms like ROT13 are obfuscation methods.
+			§ Symmetric key encryption frequently changes key in order to avoid from it getting cracked.
+			§ If the key is shared, then anyone can decrypt the data.
+			
+			i. AES (Advanced Encryption Standard)
+				§ It is a strong symmetric block cipher that encrypts data in 128 bit blocks
+				§ AES can use key size of 128, 192, 256 bits. It is sometimes referred as AES-128, AES-192, AES-256 to identify how many bits are used in the key. In general, key length directly corresponds to key strength.
+				§ AES is fast, efficient, and strong.
+				
+			ii. DES (Data Encryption Standard)
+				§ It is symmetric block cipher.
+				§ Encrypts data in 64 bit blocks.
+				§ Uses small key of 56 bits and can be broken with brute force attacks, hence not recommended to use today.
+				
+			iii. 3DES (triple DES)
+				§ It is symmetric Cipher Block designed as an improvement over DES.
+				§ Encrypts data in 64 bits blocks
+				§ Uses key sizes of 56, 112, 168 bits
+				§ It is stronger than DES but not as strong as AES
+				
+			iv. RC4 (Rivest Cipher or Ron's Code)
+				§ Symmetric Stream Cipher and can use between 40 and 2048 bits.
+				§ It is speculated NSA can break RC4 are hence not recommended for use anymore.
+				
+			v. Blowfish and Twofish
+				§ Blowfish is strong symmetric block cipher and is still widely used today
+				§ It encrypts data in 64 bits block and supports key sizes between 32 and 448 bits.
+				§ Sometimes, Blowfish is faster than AES, as blowfish encrypts data in smaller 64 bit blocks, whereas AES encrypts data in 128 bit blocks
+				§ Twofish is related to Blowfish, but it encrypts data in 128 bit blocks and supports 128, 192, or 256 bit keys.
+				
+			vi. Symmetric Encryption Summary
+				Algorithm 	Type	Method	Key Size
+				AES	Symmetric Encryption	128 bit Block cipher	128, 192,  or 256 bit key
+				3DES	Symmetric Encryption	64 bit Block cipher	56, 112, or 168 bit key
+				Blowfish	Symmetric Encryption	64 bit Block cipher	32 to 448 bit key
+				Twofish	Symmetric Encryption	128 bit Block cipher	128, 192, 256 bit key
+				RC4	Symmetric Encryption	Stream Cipher	40 to 2048 bit key
+				DES	Symmetric Encryption	64 bit Block cipher	56 bit key
+		
+		e. Asymmetric Encryption
+			§ It uses 2 keys in matched pair to encrypt and decrypt data - public and private key.
+			§ Private keys are always kept private and never shared
+			§ Public keys are freely shared by embedding them in a shared certificate.
+			§ Although asymmetric encryption is very strong, it is very resource intensive. Hence, most cryptographic protocols uses asymmetric encryption just to share symmetric Key. And rest of the encryption is done with shared symmetric key.
+			i. The Shrutul Box
+				§ An imaginary lockbox one pair of keys. 1st key is private, single copy and another one is public with multiple copies of it.
+			ii. The Shrutul Box Used to Send Secrets
+				§ Sender sends empty box with copy of public key to receiver, receiver now has sender's public key, puts data in box, lock it with sender's public key and send it back. Even though multiple copies of public key exists, it can only be decrypted by sender's private key. Hence no one else can unlock the box
+			iii. The Shrutul Box used for Authentication
+				§ To give assurance that original sender sent the data, sender can just encrypt the data with his private key. Hence, data can be decrypted only with matching public of sender. Hence proving that data is sent by original sender only.
+			
+		f. Certificates
+			§ It is digital document that typically includes public key, and information on owner of the certificate.
+			§ Certificate Authority (CA) manage certificate.
+			§ Apart from asymmetric encryption, certificates are also used for authentication and digital signature.
+			§ Certificates have serial number, Issuer, Validity dates, Subject, Public Key, Usage
+			
+		g. RSA (Rivest, Shamir, Adleman)
+			§ RSA algorithm in email application uses the recipients public key to encrypt a symmetric key, and the recipient's private key decrypts it.
+			§ RSA algorithms uses the mathematical properties of  prime numbers to generate secure public and private keys.
+			§ It widely used to protect data such as email and other transmitted over internet.
+			
+		h. Static Versus Ephemeral Keys
+			§ Two primary categories of asymmetric keys are static and ephemeral.
+			§ In general, static key is semi-permanent and stays same over long period of time.
+			§ In contrast, ephemeral key has a very short lifetime and is re-created for each session.
+			§ RSA uses Static keys. e.g. certificates
+			§ Some versions of Diffie-Hellman use static keys and some versions use ephemeral keys.
+			§ Perfect forward secrecy is an important characteristic that ephemeral keys comply with in asymmetric encryption. Perfect forward secrecy indicates that a cryptographic system generates random public keys for each session and it doesn’t use a deterministic algorithm to do so. In other words, given the same input, the algorithm will create a different public key. This helps ensure that systems do not reuse keys. The result is that the compromise of a long-term key does not compromise any past keys
+			
+		i. Elliptic Curve Cryptography
+			§ Elliptic curve cryptography (ECC) doesn’t take as much processing power as other cryptographic methods
+			§ Because of this, ECC is often considered with common use cases of low-power devices. e.g. with small wireless devices.
+			§ It uses mathematical equations to formulate an elliptical curve. It then graphs points on the curve to create keys. This is mathematically easier and requires less processing power, while also being more difficult to crack
+			
+		j. Diffie-Hellman
+			§ Diffie-Hellman (DH) is a key exchange algorithm used to privately share a symmetric key between two parties. Once the two parties know the symmetric key, they use symmetric encryption to encrypt the data.
+			§ Diffie-Hellman methods support both static keys and ephemeral keys.
+			§ RSA is based on the Diffie-Hellman key exchange concepts using static keys.
+			§ Two Diffie-Hellman methods that use ephemeral keys are:
+				§ DHE. Diffie-Hellman Ephemeral (DHE) uses ephemeral keys, generating different keys for each session. Some documents list this as Ephemeral Diffie-Hellman (EDH). 
+				§ ECDHE. Elliptic Curve Diffie-Hellman Ephemeral (ECDHE) uses ephemeral keys generated using ECC. Another version, Elliptic Curve Diffie-Hellman (ECDH), uses static keys.
+			§ When Diffie-Hellman is used, the two parties negotiate the strongest group that both parties support. There are currently more than 25 DH (Diffie Hellman) groups in use and they are defined as DH Group 1, DH Group 2, and so on. Higher group numbers indicate the group is more secure.
+			
+		k. Steganography
+			§ Steganography hides data inside other data, or, as some people have said, it hides data in plain sight. The goal is to hide the data in such a way that no one suspects there is a hidden message
+			§ Some common examples of steganography are:
+				§ Hide data by manipulating bits
+				§ Hide data in the white space of a file
+				
+	4. Using Cryptographic Protocols
+		a. Protecting Email
+			§ 2 primary methods you can use with email: digital signature and encryption
+			i. Signing email with digital Signatures
+				§ Digital Signature Algorithm or DSA uses an encrypted hash of a message. The hash is encrypted with sender's private key. If the recipient of a digitally signed email can decrypt the hash, it provides authentication, non-repudiation, integrity.
+				§ When using digital sign with email:
+					® The sender's private key encrypts (or sign)
+					® The sender's public key decrypts
+				§ A digital sign provides authentication(verified identification) of the sender, non-repudiation and integrity of the message
+					® Sender creates digital sign by hashing a message and encrypting the hash with the sender's private key
+					® Recipients decrypt the digital signature with the sender's matching public key
+					
+			ii. Encrypting Email
+				§ The recipient's public key encrypts
+				§ The recipient's private key decrypts
+				§ Using symmetric and asymmetric encryption in mail:
+					® Sender comes up with symmetric key for encryption using something like AES 
+					® Sender encrypts the message with this symmetric key
+					® Sender retrieves the recipient's certificate which has his public key
+					® Sender encrypts the symmetric key with recipients public key
+					® sender sends the encrypted email and encrypted symmetric key to recipient
+					® Recipient decrypts the symmetric key with his private key
+					® Recipient decrypts message with symmetric key.
+					
+			iii. S/MIME (Secure Multipurpose Internet Mail Extensions)
+				§ Public key encryption and digital signing of mail content
+				§ Requires PKI to distribute and manage the keys
+				§ Uses AES for symmetric encryption and RSA for asymmetric encryption
+				
+			iv. PGP/GPG Pretty Good Privacy or Gnu Privacy Guard
+				§ Secure email with encryption and digital signatures. 
+				§ Needs PKI
+				§ Can encrypt email at rest (stored on a drive) and in transit (sent over network)
+				§ Uses both symmetric and asymmetric encryption
+				
+		b. HTTPS Transport Encryption
+			i. SSL versus TLS
+				§ TLS is replacement for SSL. SSL is deprecated and should not be used.
+				§ Both provides certificate based authentication
+				§ They use asymmetric encryption to key exchange and symmetric encryption to encrypt the data displayed on webpage
+				§ SSL susceptible to POODLE attack which is a downgrade attack.
+				
+			ii. Encrypting HTTPS Traffic with TLS
+				§ The web site's public key encrypts a symmetric key
+				§ The web site's private key decrypts the symmetric key
+				§ The symmetric key encrypts data in the session
+				
+			iii. Cipher Suites
+				§ Cipher suites are a combination of cryptographic algorithm that provide several layers of security for TLS and SSL
+				§ Cipher suits involve combination of different algorithms for different things
+				§ Weak cipher suites (like those supporting SSL) should not disabled to prevent downgrade attacks.
+				§ There are over 200 named cipher suites, and systems identify them with a cipher identifier as a string of hexadecimal characters and a code name.
+				§ e.g.0x00C031. TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256
+e.g. 0x00003C. TLS_RSA_WITH_AES_128_CBC_SHA256
+					® Protocol : both uses TLS
+					® Key exchange: 1st uses ECDH while second uses RSA
+					® Authentication: both uses RSA. In 2nd instead of listing RSA twice for authentication and key exchange, it's listed only once
+					® Encryption: both uses AES-128 bit but in different modes of operation. First uses GCM while second uses CBC
+					® Integrity: both uses SHA-256 hashing algorithm.
+					
+			iv. Downgrade Attacks on Weak Implementations
+				§ A downgrade attack is a type of attack that forces a system to downgrade its security. The attacker then exploits the lesser security control.
+				§ e.g. POODLE attack on SSL
+				§ The best way to prevent this attack is avoid weak cipher suites and weak protocols on servers.
+				§ When server has both strong and weak cipher suites, attackers can launch downgrade attacks bypassing the strong cipher suites and exploiting the weak cipher suites.
+				
+	5. Exploring PKI Components
+		§ A Public Key Infrastructure(PKI) is a group of technologies used to request, create, manage, store, distribute, and revoke digital certificates.
+		§ A PKI allows 2 entities to privately share symmetric keys without any prior communication.
+		
+		a. Certificate Authority (CA)
+			§ It issues, manages, validates, and revokes certificates.
+			§ CAs can be very large like public CA or very small like single service running on a single server within a private network.
+			§ Public CAs make money by selling certificates
+			
+		b. Certificate Chaining and Trust Models
+			§ CAs are trusted by placing a copy of their root certificate into trusted root CA store.
+			§ Root Certificate is the first certificate created by a CA that identifies it, and the store is just a collection of these root certificates.
+			§ If CA's root certificate is placed in this store, all certificates issued by this CA are trusted.
+			§ hierarchical trust model, also known as centralized trust model. 
+				§ In this public CA creates the first root CA and if organization is large, it can create intermediate and child CAs. Root CAs issue certificate to intermediate CAs and intermediate CAs issue certificate to child CAs. And child CAs issue certificates to devices or end users.
+				§ Certificate chaining combines all the certificates from the root CA down to the certificate issued to the end user.
+			§ Web of Trust or decentralized trust model
+				§ Used with PGP and GPG
+				§ It uses self-signed certificates and third party vouches for these certificates.
+				§ If third party doesn't adequately verify certificates, it can result in the use of certificates that shouldn't be trusted.
+				
+		c. Registration and CSRs
+			§ Users and systems request certificates from a CA using a registration process. In some cases, a user enters information manually into a web site form. In other cases, a user sends a specifically formatted file to the CA.
+			§ Many programs are available to automate this process. For example, OpenSSL is a command-line program included in many Linux distributions. It creates key pairs in one command and allows you to export the public key to a file in a second command. Technically, OpenSSL and similar applications create the private key first.
+			§ Certificate signing request (CSR) for the certificate, includes the purpose of the certificate and information about the web site, the public key, and me. Most CAs require CSRs to be formatted using the Public-Key Cryptography Standards (PKCS) #10 specification. The CSR includes the public key, but not the private key. A CA typically publishes a certificate template showing exactly how to format the CSR.
+			§ After receiving the CSR, the CA validates my identity and creates a certificate with the public key
+			§ Certificates use object identifiers (OIDs) to identify specific objects within the certificates and some CAs require OIDs within the CSR for certain items. The OID is a string of numbers separated by dots. OIDs can be used to name almost every object type in certificates.
+			§ In large organizations, a Registration Authority(RA) can assist the CA by collecting registration information. The RA never issues certificates. Instead, it only assists in the registration process
+			§ If the CA is online, meaning it is accessible over a network, it’s possible to submit the CSR using an automated process. However, an organization may choose to keep some CAs offline to protect them from attacks. Offline CAs can only accept CSRs manually
+			
+		d. Revoking Certificates
+			§ Normally, certificates expire based on the Valid From and Valid To dates. However, there are some instances when a CA will revoke a certificate before it expires
+			§ A CA can use any of the following reasons when revoking a certificate:
+				§ Key compromise
+				§ CA compromise
+				§ Change of affiliation
+				§ Superseded
+				§ Cease of operation
+				§ Certificate hold
+			§ CAs use certificate revocation lists (CRLs, pronounced “crill”) to revoke a certificate 
+			
+		e. Certificate Issues
+			§ Some of the common issues are:
+				§ Expired
+				§ Certificate not trusted
+				§ Improper certificate and key management
+			§ The following steps outline the process:
+				§ 1. The client initiates a session requiring a certificate, such as an HTTPS session.
+				§ 2. The server responds with a copy of the certificate that includes the public key.
+				§ 3. The client queries the CA for a copy of the CRL.
+				§ 4. The CA responds with a copy of the CRL.
+			§ CRLs are typically cached after being downloaded the first time. Instead of requesting another copy of the CRL, clients use the cached copy. This generates a lot of traffic between clients and the CA.
+			§ Online Certificate Status Protocol (OCSP). OCSP allows the client to query the CA with the serial number of the certificate. The CA then responds with an answer of “good,” “revoked,” or “unknown.” A response of “unknown” could indicate the certificate is a forgery.
+			§ Because OCSP provides a real-time response, it is an excellent example of supporting a common use case of low latency. If a CA revokes a certificate, clients using OCSP will know immediately. In contrast, if clients are using a cached CRL, they will be unaware of the revoked certificate until another copy of the CRL is downloaded.
+			§ OCSP was generating a lot of real time traffic to the CA because it requires a CA to respond to every request. OCSP stapling solves this problem
+			§ The certificate presenter (such as the web server in Figure 10.12) obtains a timestamped OCSP response from the CA. Before sending it, the CA signs it with a digital signature. The certificate presenter then appends (or metaphorically staples) a timestamped OCSP response to the certificate during the TLS handshake process. This eliminates the need for clients to query the CA.
+			
+		f. Public Key Pinning
+			§ Public key pinning is a security mechanism designed to prevent attackers from impersonating a web site using fraudulent certificates.
+			§ The web server sends a list of public key hashes that clients can use to validate certificates sent to clients in subsequent sessions.
+			
+		g. Key Escrow
+			§ Key escrow is the process of placing a copy of a private key in a safe environment.
+			§ This is useful for recovery. If the original is lost, the organization retrieves the copy of the key to access the data 
+			§ In some cases, an organization provides a copy of the key to a third party. Another method is to designate employees within the organization who will be responsible for key escrow
+			
+		h. Recovery Agent
+			§ A key recovery agent is a designated individual who can recover or restore cryptographic keys.
+			§ In the context of a PKI, a recovery agent can recover private keys to access encrypted data. The recovery agent may be a security professional, administrator, or anyone designated by the company
+			§ For example, Microsoft BitLocker
+			
+		i. Comparing Certificate Types
+			§ The following bullets describe some common certificate types:
+				§ Machine/computer
+					§ Certificates issued to a device or a computer are commonly called machine certificates or computer certificates. The certificate is typically used to identify the computer within a domain.
+				§ User
+					§ Certificates can also be issued to users. They can be used for encryption, authentication, smart cards, and more
+				§ Email
+					§ The two uses of email certificates are for encryption of emails and digital signatures 
+				§ Code signing
+					§ Developers often use code signing certificates to validate the authentication of executable applications or scripts 
+				§ Self-signed
+					§ A self-signed certificate is not issued by a trusted CA. Private CAs within an enterprise often create self-signed certificates. They aren’t trusted by default. However, administrators can use automated means to place copies of the self-signed certificate into the trusted root CA store for enterprise computers. Self-signed certificates from private CAs eliminate the cost of purchasing certificates from public CAs 
+				§ Wildcard
+					§ A wildcard certificate starts with an asterisk (*) and can be used for multiple domains, but each domain name must have the same root domain. For example, Google uses a wildcard certificate issued to *.google.com
+				§ SAN
+					§ A Subject Alternative Name (SAN) is used for multiple domains that have different names, but are owned by the same organization. For example, Google uses SANs of *.google.com, *.android.com, *.cloud.google.com, and more
+				§ Domain validation
+					§ A domain-validated certificate indicates that the certificate requestor has some control over a DNS domain
+				§ Extended validation
+					§ Extended validation certificates use additional steps beyond domain validation. If you visit a domain with an extended validation certificate, the address bar includes the name of the company before the actual URL. This helps prevent impersonation from phishing attacks. For example, PayPal
+					
+		j. Certificate Formats
+			§ Most certificates use one of the X.509 v3 formats
+			
+			
+			
+			§ PEM
+				§ PEM is derived from the Privacy Enhanced Mail format
+				§ They can be formatted as CER (binary files) or DER (ASCII files)
+				§ They can also be used to share public keys within a certificate, request certificates from a CA as a CSR, install a private key on a server, publish a CRL, or share the full certificate chain.
+				§ typically uses the.cer or.crt extension. A PEM file holding just the private key typically uses the. key extension.
+				
+			§ P7B
+				§ P7B certificates use the PKCS version 7 (PKCS#7) format and they are DER-based (ASCII)
+				§ They are commonly used to share public keys with proof of identity of the certificate holder. Recipients use the public keys to encrypt or decrypt data. For example, a web server might use a P7B certificate to share its public key. P7B certificates can also contain a certificate chain or a CRL. However, they never include the private key 
+				
+			§ P12
+				§ P12 certificates use the PKCS version 12 (PKCS#12) format and  They are CER-based (binary)
+				§ They are commonly used to hold certificates with the private key. For example, when installing a certificate on a server to supports HTTPS sessions, you might install a P12 certificate with the private key. Because it holds the private key, it’s common to encrypt P12 certificates. It’s also possible to include the full certificate chain in a P12 certificate.
+			§ PFX
+				§ Personal Information Exchange (PFX) is a predecessor to the P12 certificate and it has the same usage. Administrators often use this format on Windows systems to import and export certificates

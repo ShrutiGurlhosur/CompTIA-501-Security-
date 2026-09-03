@@ -1,0 +1,363 @@
+
+	1. Comparing Common Attacks
+		a. Dos vs DDoS
+			§ Dos - one attacker against one target
+			§ DDoS  - multiple attackers against one target
+			§ DDoS typically include sustained, abnormally high network traffic.
+			§ Ddos can be mitigated with 
+				□ Sinkhole/black hole
+					® Identifying the IP sending traffic and routing them to a non-existent server but as attacker can change their IP, it is just a temporary solution.
+				□ IPS
+				□ Specialized Cloud services providers like acamai 
+				
+			§ Mitigation
+				□ Cloud based
+					® Internet provider or reverse proxy service
+				□ On-site tools
+			
+		b. Privilege Escalation
+			§ Use various techniques to gain more and more privileges/access to system or network.
+			
+		c. Spoofing
+			§ Typically change data to impersonate another system or person.
+			§ MAC Spoofing - attack changes source MAC address 
+			§ IP spoofing - changes source IP address
+			
+		d. SYN Flood Attack
+			§ Common against servers on the internet
+			§ Attacker sends many SYN packets, leaving server with multiple half-open connections.
+			§ Some servers limit the number of half-open connections. Once limit is reached, the server won't accept any new connections, blocking legitimate users. e.g. linux iptables can set threshold on SYN packets
+			
+		e. Main-in-the-Middle attack (MITM)
+			§ It is form of active interception or active eavesdropping.
+			§ ARP Poisoning is one way to launch MITM attack
+			§ Kerberos helps prevent MITM attacks with mutual authentication and doesn't allow malicious systems to insert in the middle of the conversation without knowledge of the other two systems.
+			§ Bad guy has to be in your local area for arp poisoning.
+			§ For bad guy outside your network, he has to perform man in the browser attack.
+			
+		f. ARP  poisoning Attacks
+			§ ARP poisoning attacks misleads computers or switches about the actual MAC address of a system.
+			§ Attackers can create ARP Reply Packet with spoofed or bogus address, and poison the ARP cache on systems in the network.
+			§ 2 possible attacks from ARP Poisoning are MITM attack and DoS attack.
+			§ ARP in MITM attack
+				
+					
+			
+			§ ARP DoS attacks
+				□ An attacker can also use ARP poisoning in a DoS attack. For example, an attacker can send an ARP reply with a bogus MAC address for the default gateway. The default gateway is the IP address of a router connection that provides a path out of the network. If all the computers cache a bogus MAC address for the default gateway, none of them can reach it, and it stops all traffic out of the network.
+				
+		g. DNS Attacks
+			i. DNS Poisoning Attacks
+				§ It attempts to modify or corrupt DNS results
+				§ DNSSEC (Domain Name Systems Security Extensions) protect the DNS records and prevent the DNS poisoning attacks.
+			ii. Pharming Attacks
+				§ It is another type of attack that manipulates the DNS name resolution process.
+				§ It either tries to corrupt the DNS server or DNS client
+				§ Just like  DNS Poisoning, successful pharming attack redirects user to different web sites.
+				§ Pharming attacks in client, changes host file mappings
+			iii. DDoS DNS Attacks
+				§ By creating botnets and multiple DNS queries, attackers were successful in taking many websites down.
+		h. Amplification Attacks
+			§ It is type of DDoS attacks, it typically uses a method that significantly increases the amount of traffic sent to, or requested from, a victim.
+			§ As an example, a smurf attack spoofs the source address of a directed broadcast ping packet to flood a victim with ping replies
+			§ DNS Amplification attacks
+				§ Sends DNS requests to DNS servers spoofing IP address of the victim
+			§ Can be done against individual hosts, DNS servers, and NTP servers.
+			
+		i. Password Attacks
+			§ Attempts to discover or bypass passwords used for authentication on systems and network, and different types of files.
+			
+			i. Brute Force Attacks
+				§ It attempts to guess all possible character combinations. These can be online and offline.
+				§ Online attack attempts to discover password from an online system. e.g. free tools like ncrack. Can be prevented with setting limit on how many unsuccessful attempts are allowed.
+				§ Offline password attacks to discover passwords from a captured database or captured packet scan. Use of complex passwords and to store passwords in encrypted or hashed format, use of longer passwords can prevent it.
+			ii. Dictionary Attacks
+				§ It uses a dictionary of words and attempts every word in it.
+				§ A complex password can thwart this attack.
+			iii. Password hashes
+				§ Most system store passwords in encrypted or hashed format or sent across the network like this.
+				§ MD5 and SHA-3 are most used hashing algorithms.
+				§ Unfortunately many tools are available to discover hashed passwords.
+			iv. Pass the Hash Attacks
+				§ It discovers the hash of the user's passwords and then uses to log on to the systems as the user. 
+				§ Any authentication protocol which passes hash over network in unencrypted format is susceptible to this attack. e.g. Microsoft LAN Manager and NTLM. The newer NTLMv2 or kerberos helps prevent it.
+			v. Birthday Attacks
+				§ In a birthday attack, an attacker is able to create a password that produces the same hash as the user’s actual password. This is also known as a hash collision.
+				§ A hash collision occurs when the hashing algorithm creates the same hash from different passwords.
+				§ Birthday attacks on hashes are thwarted by increasing the number of bits used in the hash to increase the number of possible hashes
+				§ For example, the MD5 algorithm uses 128 bits and is susceptible to birthday attacks. SHA-3 can use as many as 512 bits and it is not susceptible to birthday attacks
+				§ Birthday attacks exploit collisions in hashing algorithms.
+				
+			vi. Rainbow Table Attacks
+				§ Rainbow table attacks are a type of attack that attempts to discover the password from the hash. A rainbow table is a huge database of precomputed hashes. It helps to look at the process of how some password cracker applications discover passwords without a rainbow table.
+				§ In a rainbow table attack, the application simply compares the hash of the original password against hashes stored in the rainbow table. When the application finds a match, it identifies the password used to create the hash
+				§ Salting passwords is a common method of preventing rainbow table attacks, along with other password attacks such as dictionary attacks. A salt is a set of random data such as two additional characters. Password salting adds these additional characters to a password before hashing it. These additional characters add complexity to the password, and also result in a different hash than the system would create using only the original password. This causes password attacks that compare hashes to fail.
+				§ 
+		j. Replay Attacks
+			§ A replay attack is one where an attacker replays data that was already part of a communication session. In a replay attack, a third party attempts to impersonate a client that is involved in the original session. Replay attacks can occur on both wired and wireless networks.
+			§ Many protocols use timestamps and sequence numbers to thwart replay attacks. For example, Kerberos
+			§ Salting and also strong hashing algorithm can mitigate
+			§ It is different from MITM, as attacker doesn't need to be present in the middle. Attacker just stores the copy data sent by original user to server, and then replays it later. As it has all the user data with hashes and all, server won’t realize the difference.
+			
+		k. Known Plaintext Attacks
+			§ An attacker can launch a known plaintext attack if he has samples of both the plaintext and the cipher text. If successful, he can use the same decryption method on other cipher text
+			§ A chosen plaintext attack is similar, but the attacker doesn’t have access to all the plaintext.
+			§ In a cipher text only attack, the attacker doesn’t have any information on the plaintext. Known plaintext and chosen plaintext attacks are almost always successful if an attacker has the resources and time. However, cipher text only attacks are typically only successful on weak encryption algorithms. They can be thwarted by not using legacy and deprecated encryption algorithms.
+			
+		l. Hijacking and Related Attacks
+			§ Typo squatting (also called URL hijacking) occurs when someone buys a domain name that is close to a legitimate domain name.
+			§ Clickjacking tricks users into clicking something other than what they think they’re clicking.
+			§ Session hijacking takes advantage of session IDs stored in cookies. 
+			§ In a session hijacking attack, the attacker utilizes the user’s session ID to impersonate the user. The web server doesn’t know the difference between the original user and the attacker because it is only identifying the user based on the session ID.
+			§ Session hijacking can be avoided with end to end encryption.
+			
+		m. Domain Hijacking
+			§ In a domain hijacking attack, an attacker changes the registration of a domain name without permission from the owner. Attackers often do so with social engineering techniques to gain unauthorized access to the domain owner’s email account.
+			
+		n. Main-in-the-middle-Browser
+			§ A man-in-the-browser is a type of proxy Trojan horse that infects vulnerable web browsers. Successful man-in-the-browser attacks can capture browser session data. This includes keyloggers to capture keystrokes, along with all data sent to and from the web browser
+			
+		o. Driver Manipulation
+			§ Shimming provides the solution that makes it appear that the older drivers are compatible.  A driver shim is additional code that can be run instead of the original driver.
+			§ Refactoring code (metamorphic malware) is the process of rewriting the internal processing of the code, without changing its external behavior. It is usually done to correct problems related to software design. As code is completely different, AV doesn't have its signature present. 
+			§ Attackers with strong programming skills can use their knowledge to manipulate drivers by either creating shims, or by rewriting the internal code.
+			§ If the attackers can fool the operating system into using a manipulated driver, they can cause it to run malicious code contained within the manipulated driver.
+			
+		p. Zero-day Attacks
+			§ A zero-day vulnerability is a weakness or bug that is unknown to trusted sources, such as operating system and antivirus vendors. A zero-day attack exploits an undocumented vulnerability. Many times, the vendor isn’t aware of the issue. At some point, the vendor learns of the vulnerability and begins to write and test a patch to eliminate it. However, until the vendor releases the patch, the vulnerability is still a zero-day vulnerability
+			
+		q. Directory Traversal Attacks
+			§ Method of accessing unauthorized directories by moving through the directory structure on a remote server
+			§ e.g. www.abc.com/menu?menu= /../../../../../etc/passwd. Here when in link "/../" is hint for the directory traversal attack.
+			
+		r. Arbitrary Code Execution
+			§ Occurs when an attacker is able to execute or run commands on a victim computer
+			§ e.g. someone walks by a workstation without an user and open terminal, so that person runs code on the terminal.
+			
+		s. Remote Code Execution (RCE)
+			§ Sub-type of arbitrary code execution except it's run remotely. 
+			
+		t. Memory Buffer Vulnerabilities
+			i. Memory Leak
+				§ A memory leak is a bug in a computer application that causes the application to consume more and more memory the longer it runs. In extreme cases, the application can consume so much memory that the operating system crashes.
+				
+			ii. Integer Overflow
+				§ An integer overflow attack attempts to use or create a numeric value that is too big for an application to handle.
+				
+			iii. Buffer Overflows and Buffer Overflow Attacks
+				§ A buffer overflow occurs when an application receives more input, or different input, than it expects. The result is an error that exposes system memory that would otherwise be protected and inaccessible.
+				§ A popular method that makes guessing easier is with no operation (NOP, pronounced as “no-op”) commands, written as a NOP slide or NOP sled. Many Intel processors use hexadecimal 90 (often written as x90) as a NOP command, so a string of x90 characters is a NOP sled. The attacker writes a long string of x90 instructions into memory, followed by malicious code. When a computer is executing code from memory and it comes to a NOP, it just goes to the next memory location. With a long string of NOPs, the computer simply slides through all of them until it gets to the last one and then executes the code in the next instruction. If the attacker can get the computer to execute code from a memory location anywhere in the NOP slide, the system will execute the attacker’s malicious code.
+				§ The attacker sends a single string of data to the application. The first part of the string causes the buffer overflow. The next part of the string is a long string of NOPs followed by the attacker’s malicious code, stored in the attacked system’s memory. Last, the malicious code goes to work.
+				§ Input validation helps prevent buffer overflow attacks. Check boundaries.
+				
+			iv. Pointer Dereference
+				§ To pass a reference to the data array, which is simply a pointer to it. This consumes very little memory and is the preferred method. This method uses a pointer dereference.
+				§ A failed dereference operation can cause an application to crash. In some programming languages, it can subtly corrupt memory, which can be even worse than a crash.
+				
+			v. DLL Injection
+				§ DLL injection is an attack that injects a DLL into a system’s memory and causes it to run.
+				§ In a successful DLL injection attack, the attacker attaches to a running process, allocates memory within the running process, connects the malicious DLL within the allocated memory, and then executes functions within the DLL.
+				
+	2. Summarizing Secure Coding Concepts
+		a. Least privilege
+			§ Try to make it run with minimum rights
+		b. Defense in depth
+			§ Different types to control types to make it more robust
+		c. Minimize attack surface
+			§ Remove unnecessary services
+		d. Create secure defaults
+			§ Secure default option be chosen rather than deploying s/w with unsecure default options
+		e. Authenticity and integrity
+			§ Code signing to assure that code has not been changed
+		f. Fail securely
+			§ Graceful termination on crash.
+		g. Compiled vs Runtime Code
+			§ Compiled code has been optimized by an application (called a compiler) and converted into an executable file.
+			§ Runtime code is code that is evaluated, interpreted, and executed when the code is run.
+		h. Proper Validation
+			§ Verifying proper character
+			§ Implementing boundary or range checking
+			§ Blocking HTML code
+			§ Preventing use of certain characters
+			§ Fuzzy Testing
+				§ A fuzzer is  a tool that automatically send random input to the application to validate it.
+			i. Client-side and Server-side Input Validation
+				§ Client-side input validation is quicker, but is vulnerable to attacks.
+				§ Server-side input validation takes longer, but is secure because it ensures the application doesn’t receive invalid data. Many applications use both.
+				§ Server-side input validation checks the inputted values when it reaches the server. This ensures that the user hasn’t bypassed the client-side checks.
+				§ Using both client-side and server-side validation provides speed and security. The client- side validation checks prevent round-trips to the server until the user has entered the correct data. The server-side validation is a final check before the server uses the data.
+				§ Server side validation is more secure than client side.  As client side validation can be bypassed.
+				
+			ii. Other Input Validation Techniques
+				§ Other input validation techniques attempt to sanitize HTML code before sending it to a web browser. These methods are sometimes referred to as escaping the HTML code or encoding the HTML code.
+				§ Most languages include libraries that developers can use to sanitize the HTML code. As an example, the Open Web Application Security Project (OWASP) Enterprise Security API (ESAPI) is a free, open source library available for many programming languages. It includes a rich set of security based tools, including many used for input validation.
+				
+		i. Avoiding Race Conditions
+			§ Occurs when multiple users try to access the same data at the same time.
+			§ To avoid this, data must be locked prior to the use by anyone.
+			§ Proper validation can mitigate this issue
+			
+		j. Proper Error Handling
+			§ If program runs into some unforeseen scenario, it might crashing locking many resources or causing data damage.
+			§ Error handling avoids these occurrences.
+			§ Don’t give too detailed info or attacker can use it.
+			§ SEH structured exception Handling
+			
+		k. Cryptographic Techniques
+			§ Source code must be encrypted as it's not visible then can't be updated by anyone.
+			§ Code authentication
+				§ Use of digital signature to maintain data authenticity
+				
+		l. Code Reuse and SDKs
+			§ Use old code to build new applications
+			§ As previous code is tested for longer periods of time it's recommended. But if there are any security issues in previous code then it will be carried forward.
+			§ Dead code- one code is calculating something but not using that calculations anywhere.
+			§ SDK
+				§ Third party libraries speed up coding but has to be tested rigorously as it is third party code
+			
+		m. Code Obfuscation
+			§ Making code harder to understand
+			§ Even though  it provides some security it's not recommended as due to its unreadability it's not tested much.
+			
+		n. Code Quality and Testing
+			§ Should think about data exposure at rest or in transit
+			§ Should best coding practices
+			§ Should be tested rigorously before any deployment
+			§ Automation can be used for testing like static test environment or fuzzy testing
+			§ Static Application Security Testing (SAST)
+				§ Help identify security flaws like buffer overflows, db injections.
+				§ Not everything can be found like authentication security
+			§ Dynamic analysis or Fuzzing
+				§ Send random input to an application
+				§ Check how it handles data
+				§ See if app crashes, see how it reacts
+			§ Stress Testing
+				§ Test s/w against one user vs 100 users
+				§ Increased load can cause unintended error messages, application details and versions displayed to user, kernel
+				§ Extensive automation options - Simulate large workstation
+			§ Sandboxing
+				§ After development, application is tested in sandbox environment which is very similar to production environment
+			§ Model Verification
+				§ Verification and validation against the set of requirements you started your application based on.
+				§ Did you meet high level requirement
+			§ Compiled vs Runtime code
+				§ Compiled code
+					® It evaluated and converted into executable 
+					® Checks errors/bugs during compilation
+				§ Runtime code
+					® It interpreted and executed at runtime
+					® Errors occur during runtime as no compilation present.
+					
+		o. Development Life-Cycle Models
+			§ Process of developing applications
+			§ There is no best way
+			i. Waterfall
+				§ Traditional way of building
+				§ Sequential design process
+				§ Requirements, design, s/w  architecture, coding, testing, rollout
+				§ Phases
+					® Planning and analysis
+					® Software/system design
+					® Implementation
+					® Testing
+					® Integration
+					® Deployment
+					® Maintenance
+			ii. Agile
+				§ Ready, shoot, repeat
+				§ All programmers sit together, constant communications
+				§ Customer collaboration
+				§ Co-location, pair programming
+				§ Get some code out there
+				§ Quick changes possible
+			iii. Secure DevOps
+				§ Create and deploy 
+				§ Emphasis on secure automation
+				§ Functional security test, vulnerability test, pen test, 
+				§ Code is constantly written
+				§ Catch problem in early stage.
+			iv. Immutable change
+				§ Once deployed can't be changed.
+				§ You couldn't rebuild if you have to.
+				§ To update an application, a new iteration is deployed. i.e. no minor update
+			v. Infrastructure as Code (IAC)
+				§ In cloud computing, relies on automation
+				§ Everything is virtual including all traditional h/w like firewall, switches etc.
+				
+		p. Version Control and Change Management
+			§ Manage the different versions during the development.
+			§ If something goes wrong, can go back to previous stable branch.
+			§ Can track all the changes and rebuild all the data.
+			§ Change management
+				§ A formal process of managing change
+				§ Avoid downtime, confusion and mistakes.
+				§ Nothing changes without the process
+				§ Have recovery plan if change doesn't work
+				§ Test before making the change make sure doesn't introduce new vulnerabilities.
+				§ Document all the approvals
+				
+		q. Provisioning and Deprovisioning
+			i. Provisioning
+				§ Deploying or making everything available to deploy an application.
+				§ For application -web server, db server, middleware server, user workstation configurations, certificate updates etc.
+				§ App s/w secuirty - OS, applications
+				§ n/w security - VLAN, internal access
+				§ Orchestration
+					® Automate provisioning i.e. availability of the app and other components required by it.
+			ii. Deprovisioning
+				§ Process of removing app and apps associated with it
+				§ Remove all the data, access associated with it
+				
+	3. Identifying Application Attacks
+		a. Web Servers
+		b. Database Concepts
+			i. Normalization
+			ii. Sql Queries
+				§ Queries SQL database
+				§ Client sends detailed request for data e.g. 'select * FROM wp_options WHERE option_id=1'
+				§ Attacker can use this for injection attack
+		c. Injection Attacks
+			§ Attacker tries to input/inject different data than expected and exploits the system vulnerability.
+			§ SQL Injection
+				§ Injects sql commands to access whole data base instead of only querying what's needed for a particular user.
+				§ e.g. attacker might inject sql command to get credit card information of all the users of the bank instead of just writing his own credit card information.
+				§ e.g. `OR 1=1
+				§ Can be mitigated with validation checks as well as with stored procedures. (modified queries e.g. 'Call get_options' where Call is stored procedure for 'select * ')
+				§ Can be mitigated by input validation, use of stored procedures, and least privileges
+				§ PCI-DSS is a standard for credit card security
+				
+			§ Script Injection
+				§ Injects script in website to display unauthorized data on website to other users and might fooling them into clicking it
+			§ LDAP Injection
+				§ Injecting LDAP commands to gain details about/access to internal system resources.
+			§ Can be avoided with client side and server side input validation.
+			
+		d. Cross-sire Scripting (XSS)
+			§ Takes the advantage of the trust user has for a site.
+			§ Victim is user
+			§ Can be avoided by code signing and stopping cookies
+			§ Attacker puts Javascript code in website, which tricks other users
+			§ Scripting XSS - Attacker can also put script containing session id, cookie or other info to get information on user without their knowledge.
+			§ Persistent/stored XSS attack
+				§ Bad guy posts message to s a social network(including payload). It's now persistent. Anyone who comes across this gets the payload(anyone who reads, shares).
+			§ Don't clicking unknown links, disable javascripts, update web browser, user input validation helps mitigate attack.
+			
+		e. Cross-site Request Forgery (XSRF or CSRF or One-click attack or Session Riding)
+			§ Takes advantage of trust that a web app has for user
+			§ Checking where exactly request generated (actual user or bad guy) helps avoid unauthorized transfers.
+			
+		f. General Security for Web browser
+			§ Implement good policies like an administrative or technical control
+			§ Train your users
+			§ Use proxy & content filtering
+			§ Prevent malicious code by preventing ActiveX control, flash, and other active content
+			
+		g. Securing Applications
+			§ d
+	4. Understanding Frameworks and Guides
+		§ Frameworks are references that provide a foundation. Cybersecurity frameworks typically use a structure of basic concepts and provide guidance on how to implement security
+		§ Regulatory frameworks are based on relevant law and regulations. A non-regulatory framework is not required by any law
+		§ Some of the frameworks are used within a single country while others are used internationally
+		§ Some frameworks only apply to certain industries. As an example, organizations that handle credit cards typically comply with the Payment Card Industry Data Security Standard (PCI DSS)
+		§ Vendor-specific guides should be used when configuring specific systems.
+		§ Exploitation framework  has many exploitation information stored. e.g. metasploit

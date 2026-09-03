@@ -1,0 +1,435 @@
+	1. Reviewing Basic Networking Concepts
+		a. Basic Networking Protocols
+			§ Some of the transmission control protocol/Internet Protocol(TCP/IP) protocols provide basic connectivity. Other protocols such as HTTP,SMTP support specific types of traffic.
+			§ TCP/IP is suite of protocols.
+			§ TCP/IP traffic is either connection oriented TCP traffic or connectionless UDP
+			§ TCP - Transmission Control Protocol
+				□ Connection oriented protocol (syn, syn-ack, ack)
+				□ Three way handshake needed for connection to establish
+				
+				
+				
+			§ UDP - User Datagram Protocol
+				□ Whole TCP provides guaranteed delivery, UDP makes best effort to deliver traffic without extra traffic to ensure delivery.
+				□ ICMP traffic like ping, audio, video streaming use UDP
+				□ Many Dos attacks use UDP.
+			§ IP - Internet Protocol
+				□ It identifies host on TCP/IP network and delivers traffic from one host to another based on IP
+			§ ICMP -  Internet Control Protocol
+				□ Used for testing basic connectivity and includes tools like ping, pathping, and tracert.
+				□ As it is commonly used in attacks on network to discover the devices, ping is generally disabled on firewalls and routers.
+			§ ARP - Address Resolution Protocol
+				□ Resolves IPv4 to media access control(MAC) addresses.
+				□ TCP/IP uses IP address to get a packet to a destination network, but once it arrives on the destination network, it uses MAC address to get it to correct host
+				□ ARP is required once packet reaches the destination subnet
+			§ NDP -  Neighbor Discovery Protocol
+				□ It performs several functions on IPv6.
+				□ It performs functions similar to  IPv4's ARP
+				□ It also performs auto configuration of IPv6 addresses and discovers other IPv6 devices on the network.
+		b. Implementing Protocols for Use Cases
+			Networks don't automatically support all the available protocols. Instead, IT professionals identify a need based on the organization goal and enable the best protocol to meet the need.
+			i. Voice and Video Use Case
+				□ The Real Time Transport Protocol (RTP) delivers audio and video over IP networks. This includes VoIP (Voice over Internet Protocol) communications, streaming media, video teleconferencing etc.
+				□ The Secure Real-Time Transport Protocol provides encryption, message authentication and integrity for RTP.
+				□ SRTP helps protect confidentiality of data from these attacks while also ensuring the integrity of the  data transmission. This provides protection against replay attacks. (in replay attack, an attacker captures data sent between two entities, modify it, and then attempts to impersonate one of the parties.)
+				□ Can be used in both unicast and multicast.
+			ii. File Transfer Use Case
+				□ Data-in-transit = data over network, data-at-rest = data stored on any type of medium.
+				□ Common use cases related to transferring are transmit data over network, ensure confidentiality, ensure administrators connect to server using secure connections
+				□ Following are basic protocols which are used to transfer data over network.
+					® FTP (File Transfer Protocol)
+						◊ Uploads and downloads large files to and from an FTP server.
+						◊ By default data transmission is in clear text
+						◊ FTP active mode uses TCP port 21 for control signals and TCP port 20 for data.
+						◊ FTP Passive mode (PASV) uses TCP port 21 for control signals and random TCP port for data
+						◊ If FTP traffic is going through firewall, random port is often blocked, so it is best to disable PASV in FTP clients.
+					® TFTP (Trivial File Transfer Protocol)
+						◊ It uses UDP port 69 and is used to transfer smaller amount of data
+						◊ As it has been used in many attacks, and it is not an essential protocol, it is commonly disabled.
+				□ The following list identifies several encryption protocols used to encrypt data-in-transit
+					® SSH (Secure Shell)
+						◊ It encrypts traffics in transit and can be used to encrypt other protocols such as FTP
+						◊ SSH is more secure as compared to telnet, as telnet sends clear text data over network.
+						◊ Secure Copy (SCP) is based on SSH and is used to copy encrypted files over a network.
+						◊ SSH can also encrypt TCP wrappers.
+						◊ When SSH encrypts traffic, it uses TCP port 22.
+					® SSL (Secure Socket Layer Protocol)
+						◊ It was primary method used to secure HTTP traffic as HTTPS
+						◊ It can also encrypt other traffic types like SMTP, LDAP
+						◊ As it has been compromised, it is not recommended for use anymore
+					® TLS (Transport Layer Security Protocol)
+						◊ It is the designated replacement for SSL and should be used instead of the SSL
+						◊ Many protocols  that support the TLS use STARTTLS
+					® IPsec (Internet Protocol Security)
+						◊ It is used to encrypt IP traffic.
+						◊ It is native to IPv6 but also work with IPv4
+						◊ It encapsulates and encrypts IP packet payloads and uses Tunnel mode to protect virtual private network (VPN) traffic
+						◊ It has 2 main components: Authentication Header(AH) identified by protocol ID number 51 and Encapsulating Header(ESP) identified by protocol ID number 50.
+						◊ It uses Internet Key Exchange (IKE) over UDP port 500 to create a security association for VPN
+					® SFTP (Secure File Transfer Protocol)
+						◊ It is secure implementation of FTP with SSH to transmit the file in encrypted format
+						◊ It transmits data using TCP port 22
+					® FTPS (File Transfer Protocol Secure)
+						◊ It is an extension of FTP and uses TLS to encrypt FTP traffic.
+						◊ Some implementations of FTPS use TCP ports 989 and 990. However, TLS can also encrypt the traffic over the ports used by FTP (20 and 21). Notice that the difference between SFTP and FTPS is that SFTP uses SSH and FTPS uses TLS.
+						
+					® Secure Shell (SSH) encrypts traffic over TCP port 22. Transport Layer Security (TLS) is a replacement for SSL and is used to encrypt many different protocols. Secure FTP (SFTP) uses SSH to encrypt traffic. FTP Secure (FTPS) uses TLS to encrypt traffic.
+					
+			iii. Email and Web Use Cases
+				□ Most common uses cases related to email are send and receive email/secure email, manage email folders
+				□ For web, common uses cases for internal employees are to provide access to the internet and provide secure access to the internet. Also many organization  has web servers, whose use cases include provide access to web servers by external clients
+				□ Many of these protocols use STARTTLS, which use same port for both clear text and ciphertext. Following are the common protocols used,
+				□ SMTP (Simple Mail Transfer Protocol)
+					® Simple Mail Transfer Protocol (SMTP) transfers email between clients and SMTP servers. SMTP uses TCP port 25. SMTP unofficially used port 465 with SSL and port 587 with TLS. However, it is now recommended that SMTP use STARTTLS to initialize a secure connection.
+				□ POP3 AND Secure POP (Post Office Protocol v3)
+					® Post Office Protocol v3 (POP3) transfers emails from servers down to clients. POP3 uses TCP port 110. Secure POP3 encrypts the transmission with SSL or TLS and can use TCP port 995. However, STARTTLS is now recommended to create a secure connection on port 110.
+				□ IMAP4 AND Secure IMAP ( Internet Message Access Protocol version 4)
+					® is used to store email on an email server. IMAP4 allows a user to organize and manage email in folders on the server. As an example, Google Mail uses IMAP4. IMAP4 uses TCP port 143.
+					® IMAP4 with SSL or TLS can use TCP port 993, but STARTTLS is recommended using the same TCP port 143.
+				□ HTTP (Hypertext Transfer Protocol)
+					® transmits web traffic on the Internet and in intranets. Web servers use HTTP to transmit web pages to clients’ web browsers. Hypertext Markup Language (HTML) is the common language used to display the web pages.
+					® HTTP uses TCP port 80.
+				□ HTTPS (Hypertext Transfer Protocol Secure)
+					® Encrypts web traffic to ensure it is secure while in transit. Web browsers commonly indicate that a secure session is using HTTPS by displaying a lock icon and by including HTTPS in the Uniform Resource Locator (URL) field. HTTPS is encrypted with either  SSL or TLS and it uses TCP port 443.
+				□ SMTP sends email on TCP port 25, POP3 receives email on port 110, and IMAP4 uses port 143. STARTTLS allows an encrypted version of the protocol to use the same port as the unencrypted version. HTTP and HTTPS use ports 80 and 443 and transmit data over the Internet in unencrypted and encrypted formats, respectively.
+			iv. Directory Services Use Case
+				□ Network OS commonly use a directory service to streamline management and implement security with common use case to provide secure access to network e.g. Microsoft Active Directory Services (AD SD)
+				□ AD SD provides means for administrators to create user and computer objects for authorized user and computer resp.
+				□ Kerberos authentication protocol in windows domains and some unix env. It uses UDP port 88
+				□ LDAP used to communicate with  directories such as AD SD. It TCP port 389, LDAPS uses TCP port 636
+				□ Group Policy administrators use it to configure settings and apply GPOs to users and computers within domain.
+			v. Remote Access Use Cases
+				□ Most common use cases are remotely administered systems and remotely access desktops.
+				□ Many linux administrators use Netcat when connecting to remote systems for administration and secure the Netcat transmission with SSH.
+				□ Administrators and clients often use Remote Desktop Protocol (RDP) to connect to other systems from remote locations.
+				□ RDP uses either TCP 3389 or UDAP 3389, though TCP 3389 is more common.
+				□ A common reason why user unable to connect to systems with RDP is port 3389 is blocked on host-based or network firewall.
+				□ Another method for supporting remote access use cases is with virtual private network (VPN).
+			vi. Time Synchronization Use Case
+				□ A common use case example is Kerberos requires all systems to be synchronized and be within five minutes of each other/
+				□ Within Microsoft domain, one domain controller periodically uses the windows Time service to locate a reliable Internet server running the Network Time Protocol (NTP)
+				□ TCP port 123
+				□ NTP is the most commonly used protocol for time synchronization
+				□ The Simple NTP (SNTP) protocol can also be used for synchronization but NTP is more accurate than SNTP due to complex algorithms NTP uses.
+				□ NTP susceptible to DDoS. Hence NTPSec
+				
+			vii. Network Address Allocation Use Case
+				□ It means allocating  IP addresses to hosts within your network. It can be done manually as well as automatically with Dynamic Host Configuration Protocol(DHCP).
+				□ DHCP also assigns other TCP/IP information like subnet masks, default gateways, DNS server addresses etc.
+				□ DHCP is not secure. In Windows environment it is required to be authenticated form active directory. DHCP is susceptible to rogue DHCP servers, starvation attacks , DHCP snooping
+				□ IPv4
+					® It uses 32 bit IP addresses e.g. 192.169.1.65
+					® All Internet IP addresses (allotted by ISP) are public addresses and internal networks use private IP addresses.
+					® Private address ranges are:
+						◊ 10.x.y.z. 10.0.0.0 through 10.255.255.255
+						◊ 172.16.y.z-172.31.y.z 172.16.0.0 through 172.31.255.255
+						◊ 192.168.y.z 192.168.0.0 through 192.168.255.255
+					® Private networks should only have private IP addresses.
+				□ IPv6
+					® It provides a significantly larger address space than IPv4
+					® It uses 128 bit IP addresses in hexadecimal format
+					® Instead of private IP addresses, IPv6 uses unique local addresses.
+					® Unique local addresses are allocated within private networks and not assigned to systems on internet. Unique local addresses start with prefix of "fc00"
+					
+			viii. Domain Name Resolution Use Case
+				□ Primary use case is domain name resolution, host to IP.
+				□ 
+					
+				□ It uses UDP port 53
+				□ Sometimes, the DNS server you query knows the answer and just gives you the answer, other times, it queries one or more other DNS servers to get the answer and then puts the answer into its own cache for next time use.
+				□ DNS servers host data in zones like databases. Zones include multiple records like
+					® A -also called host record which holds host name and IPv4 addresses. A DNS client queries DNS with name using a forward lookup request and DNS responds with IPv4 address from record.
+					® AAAA - it holds host name and IPv6 address and similar to A record.
+					® PTR - also called pointer record and I opposite of an A record. Instead of a DNS client querying DNS with the name, the DNS client queries DNS with the IP address. When configured to do so, the DNS server responds with the name. PTR records are optional, so these reverse lookups do not always work.
+					® MX - also called mail exchange or mail exchanger. An MX record identifies a mail server used for email. The MX record is linked to A or AAAA record of mail server.
+					® CNAME - A canonical name or alias, allows a single system to have multiple names associated with single IP address.
+					® SOA - Start of the Authority record includes information about the DNS zone and some its setting. e.g. TTL settings for DNS
+				□ Most DNS server on internet run Berkeley Internet Name Domain (BIND)software and run unix servers. But in Microsoft networks, DNS servers commonly use the Microsoft DNS software.
+				□ Occasionally, DNS servers share information with each other in a process known as a zone transfer. In most cases, a zone transfer only includes a small number of updated records. However, some transfers include all the records in the zone. DNS servers use TCP port 53 for zone transfers. In contrast, name resolution queries use UDP port 53.
+				□ DNSSEC
+					® Onw risk with DNS is DNS Poisoning, also known as DNS cache Poisoning
+					® When successful, attackers modify the DNS cache with bogus IP address.
+					® One of the primary methods of preventing DNS cache poisoning is with Domain Name System Security Extensions (DNSSEC).
+					® DNSSEC is a suite of extensions to DNS that provides validations for DNS responses.
+					® It adds digital signature to each record that provides data integrity.
+					® If server receives a DNSSEC-enabled response with digitally signed records, the DNS server knows that the response is valid
+				□ DNS zones include records such as A records for IPv4 addresses and AAAA records for IPv6 addresses. DNS uses TCP port 53 for zone transfers and UDP port 53 for DNS client queries. Most Internet-based DNS servers run BIND software on Unix or Linux servers, and it’s common to configure DNS servers to only use secure zone transfers. DNSSEC helps prevent DNS poisoning attacks. Nslookup and dig are two command-line tools used to test DNS. Microsoft systems include nslookup; Linux systems include dig.
+				□ Nslookup and dig
+					® It is used for troubleshooting problems related to DNS. e.g. to verify that DNS server can resolve specific host name or FQDN(fully qualifies domain name - myhost.example.com)
+					® The dig commanond-line tool has replaces the nslookup on linux systems. You can dig every DNS server to test if its reachable and can resolve names to IP addresses.
+					® Some versions of both commands support the @ symbol to  identify a specific DNS server you want to query. This is useful if you want to pull all the records from a DNS zone. When doing this, you would use the any switch (indicating all records) or the axfr switch (short for all transfer). However, most DNS servers are configured to block these queries.
+					
+			ix. Subscription Services Use Case
+				□ It refers to subscription based business model. e.g. instead of selling software to users, many vendors have moved to subscription model where users pay over time. This gives users most current version of software. e.g. Microsoft Office to Office 365
+				□ Protocols used for subscription services vary widely depending on the actual service. However. It's common for these to use HTTPS or TLS.
+				□ Certificates, AV, IDS signatures , IPS signatures use subscriptions
+				
+		c. Understanding and Identifying Ports
+			§ Ports are logical numbers used by TCP/IP to identify what services or application should handle data received by a system.
+			§ Both TCP and UDP use ports with total of 65,536 TCP ports and 65,536 UDP ports (In TCP segment header, dest/src port bit length)
+			§ The Internet Assigned Numbers Authority (IANA) divided the ports into three ranges, as follows:
+				□ Well-known ports: 0-1023 for commonly used protocols
+				□ Registered Ports: 1024-49,151for companies as convenience to IT community. Single company or multiple companies may use same port for specific purpose or can have proprietary
+				□ Dynamic and private ports: 49,152-65,535 available for use by any application. Commonly used to temporarily map an application to a port.
+				□ Well-known ports are at much higher risk of attacks and port scanner checks if well-known port is open.
+			i. Combining the IP Address and the Port
+				□ TCP/IP uses the IP address to get the packet to the computer. The computer then uses the port number to get the packet to the correct service, protocol, or application that can process it.
+			ii. IP Address Used to Locate Hosts
+				□ The server's IP address is used to get the requesting packet from your computer to the server. 
+				□ The server gets the response packets back to your computer using your IP address(or IP address of your NAT server)
+			iii. Server Ports
+				□ Different protocols are enables and running on a server and use well-known registered ports.
+				□ When system receives traffic with destination of port 80, system knows to send it to the service handling HTTP
+				□ Any web browser knows that the well-known port for HTTP is 80 and even though you don't see port 80 in URL, it is implied by default.
+				□ Popular web servers on the Internet include Apache and Internet Information Services (IIS). Apache is free and runs on Unix or Linux systems. Apache can also run on other platforms, such as Microsoft systems. IIS is included in Microsoft Server products. These web servers use port 80 for HTTP. When the server receives a packet with a destination port of 80, the server sends the packet to the web server application (Apache or IIS) that processes it and sends back a response.
+			iv. Client Ports
+				□ TCP/IP works with the client operating system to maintain a table of client-side ports. This table associates port numbers with different applications that are expecting return traffic. Client-side ports start at port 49,152 and increment up to 65,535. If the system uses all the ports between 49,152 and 65,535 before being rebooted, it’ll start over at 49,152.
+				□ When you use your web browser to request a page from a site, your system will record an unused client port number such as 49,152 in an internal table to handle the return traffic. When the web server returns the web page, it includes the client port as a destination port. When the client receives web page packets with a destination port of 49,152, it sends these packets to the web browser application. The browser processes the packets and displays the page.
+				
+			v. Putting It All Together
+				□ 
+						
+				□ Comparing Ports and Protocol Numbers 
+					® Ports and protocol numbers are not the same thing.
+					® e.g. IPSec, protocol number 50 indicates packet is an Encapsulating Security Payload (ESP) and protocol number 51 indicates it's an Authentication header (AH) packet.
+					® You can use protocol number to block or allow traffic on routers and firewalls.
+					® Note that it is not accurate to say that you can allow Ipsec ESP traffic by opening port 50 (as IANA lists port 50 as Remote Mail checking protocol). However, you can allow Ipsec traffic by allowing traffic using  protocol number 50.
+			vi. The Importance of Ports in Security
+				□ Different network devices filter out packets based on IP addresses, ports, and some protocols. As many protocols use well-known ports, you can control protocol traffic by allowing or blocking traffic based on the port.
+				□ Web-client-server example, client firewall must allow outgoing traffic on port 80. Firewalls automatically determines the client ports used for return traffic, and if the allow outgoing traffic, they allow return traffic. 
+				□ Client firewall doesn't need to allow traffic on port 80 for this work as client isn't hosting web server with HTTP. But, web-server firewall needs to allow incoming traffic on port 80.
+				□ Allow traffics on ports which are required.
+				
+	2. Understanding Basic Network Devices
+		○ Any deice on network with IP address is a host/client/node.
+		○ Switch connects hosts within a network. And router connects multiple networks together to create larger and larger networks.
+		○ Unicast - one-to-one
+		○ Multicast - one-to-many
+		○ Broadcast - one-to-all, switches pass broadcast traffic within their ports but routers do not pass broadcast traffic.
+		a. Switches
+			§ A switch can learn which computers are attached to each of its physical ports. It then uses this knowledge to create internal switched connections when two computers communicate with each other.
+			§ 
+							
+			§ When switch is turns on, it starts out without any knowledge other than knowing it has 4 physical ports.
+			§ When Lisa sends 1st packet to Homer, it includes MAC of destination computer. However, as switch doesn't know which port Homer's computer is connected to, it forwards this first packet to all the ports on the switch.
+			§ Included in the first packet is the MAC address of Lisa's computer. The switch logs this information into an internal table. It then directs any future traffic addressed to Lisa's MAC address to port 1 only.
+			§ When Homer's computer receives the packet, it responds. Embedded in this return packet is the MAC address of the Homer's computer. The switch captures Homer's MAC address and logs it with port 4 in the internal table. From here on. Any unicast traffic between Lisa and Homer's computer is internally switched between only ports 1 and 4.
+			§ Switches will internally switch unicast traffic. However pass broadcast to all ports.
+			
+			i. Security Benefit of a Switch
+				□ If attacker installed a protocol analyzer on a computer attached to another port e.g. 3, the protocol analyzer can't capture the traffic that doesn't reach the port.
+				□ In contrast, if the computers were connected with a simple hub, the attacker could capture it because unicast traffic goes to all ports in a hub.
+				□ Hence switch reduces the risk of an attacker capturing the data with a protocol analyzer and also it is efficient.
+			ii. Port Security
+				□ Port security limits to the computers that can connect to physical ports in a switch.
+				□ At basic level, administrator disables the unused ports.
+				□ MAC address filtering is the another kind of port security example. In this switch only remembers first1-2 MAC that connect to a port and discards the rest traffic. You can configure this manually to each port to accept traffic only from a specific MAC address. Though manual task labor intensive, it  provides more security.
+			iii. Physical Security of a Switch
+				□ Many switches has console port that administrators use to monitor the traffic as unlike rest of the switch ports, it can monitor all the traffic in or out of the switch.
+				□ If not properly protected, it can also be useful to an attacker.
+				□ Physical security ensures that attackers don't have physical access to the switch and other network devices by means of keeping it safe in locked wiring closet.
+			iv. Loop Prevention
+				□ Loop protection such as STP (Spanning Tree Protocol) and RSTP (Rapid STP) is necessary to protect against switching loop problems, such as those caused when two ports of switch are connected together.
+				□ If a user connects 2 of switch ports together with a cable, it creates a switching loop where the switch continuously sends and resends unicast transmissions through the switch. In addition to disabling the switch, it also degrades the overall network performance.
+			v. Flood Attacks and Flood Guards
+				□ A MAC flood attack attempts to overload a switch with different MAC addresses associated with each physical port. You typically have only one device connected to any physical port and switch 's internal table stores the MAC address associated with this devices and maps it to port.
+				□ At some point in MAC flood attack, the switch runs out of the  memory to store all the MAC addresses and enters fail-open state and starts acting like a simple hub and starts transmitting all the packets to all the ports. At this instance attacker can use protocol analyzer to capture all the packets.
+				□ Many switches use flood guard to protect against this attack which when enabled, switch will limit the amount if the memory used ti store MAC addresses.
+				□ Flood guard simply sends SNMP(Simple Network Management Protocol) trap or error message in response to alert and can disable the port or restrict the activity on the port.
+				□ Some switches  set maximum number of MACs supported by a port to 1. however, if a VM is running within a physical host and VM is set to bridged, it can access the network using the physical host's NIC, but with the MAC address of VM. Hence, in such scenario, maximum MAC setting should be set to 2.
+		b. Routers
+			§ Router connects multiple network segments together into a single network and routes traffic between segments. e.g. internet is effectively a single network hosting billions of computers. Routers route traffic from segment to segment.
+			§ As Routers don’t pass broadcast, they effectively reduce network traffic on segment.
+			§ Segments are separated by routers are also called broadcast domain.
+			§ Too many computers on a single network can result in excessive collisions. Hence moving computers to different segments  significantly improve overall performance. 
+			§ Subnetting networks creates separate broadcast domains.
+			
+			i. Routers and ACLs
+				□ ACL are rules implemented on router and on firewalls to allow/reject traffic
+				□ Router ACL provides basic packet filtering
+				□ It can filter based on IP, ports and some protocol numbers
+			ii. Implicit Deny
+				□ Implicit Deny indicates that all traffic that isn't explicitly allowed is implicitly denied.
+				□ The implicit deny rule is the last rule in an ACL. Some devices automatically apply the implicit deny rule as the last rule. Other devices require an administrator to place the rule at the end of the ACL manually.
+				□ Syntax of an implicit deny rule varies on different systems, but it might be something like DENY ANY ANY or DENY ALL ALL.
+				
+			iii. Antispoofing
+				□ Spoofing = to impersonate or masquerade as someone or something else. In this context, an attacker will spoof the source IP address by replacing the actual source IP address with different one to hide the actual source of the packet.
+				□ You can implement antispoofing  on a router by modifying the access list to allow or block IP addresses. e.g. private IP addresses traffic coming on internet is obviously an attempt to spoof the source IP.
+				• deny ip 10.0.0.0 0.255.255.255 any
+				• deny ip 172.16.0.0 0.15.255.255 any
+				• deny ip 192.168.0.0 0.0.255.255 any
+				
+				Antispoofing methods block traffic using the ACL rules.
+				
+		c. Bridge
+			§ A bridge connects multiple networks together and can be used instead of a router in some situations.
+			§ Bridge directs traffic based on the destination MAC address.
+			§ 
+					
+			§ The bridge sends traffic to the appropriate segment based on the MAC address.
+			§ Similar to switch, bridge learns MAC addresses in different bridge networks by analyzing traffic.
+			§ e.g. when Bart in  subnet A sends traffic to Lisa in subnet C, when bridge receives the traffic, it doesn't know if Lisa's MAC address is in segment 1 or segment 2, so it sends traffic to both the bridge networks. When Lisa's computer replies, the bridge identifies her MAC and stores this information in an internal table for next use and then next time sends traffic intended for her, only to her based on this internal table.
+			
+		d. Aggregation Switch
+			§ It connects multiple switches together in a network.
+			§ In previous example if we replace bridge with a switch, the switch is an aggregation switch.
+			§ Similarly you can connect multiple switches to aggregation switch instead of connecting those to the router, this reduces number of ports used in router.
+			§ It's common to place an aggregation switch in the same location as you'd place router using physical security.
+			
+		e. Firewalls
+			§ It filters incoming and outgoing traffic for a single host or between networks.
+			§ Firewalls start with a basic routing capability for packet filtering with implicit deny rule. More advanced firewalls go beyond filtering and include advanced content filtering.
+			i. Host-Based Firewalls
+				□ Host based firewalls provide protection for individual hosts, such as servers or workstations.
+				□ A host based firewall provides intrusions protection for the host.
+				□ Linux systems support xtables for firewall capabilities.
+				□ Network-based firewalls are often dedicated servers or appliances and provide protection for the network.
+				
+			ii. Application-Based Versus Network-Based Firewalls
+				□ It is typically a software running on a system. e.g. host-based firewall is commonly an application based and network-based firewall is usually a dedicated system with additional software installed monitor, filter, and log traffic.
+				□ Network-based firewall would have two or more network interfaces cards(NICs) and all traffic would go through firewall.
+				□ Most organizations include at least one network-based firewall at the border, between their intranet and internet.
+				
+			iii. Stateless Firewall Rules
+				□ Similar to router rules are implemented in ACL to identify allowed and blocked traffic.
+				□ e.g. general format of ACL is 
+					® Permission Protocol Source Destination Port
+					® ALLOW/DENY TCP/UDP SRC_IP DEST_IP 80
+				□ Syntax of these commands varies depending on the device. Some firewalls require you to include a subnet mask in the rule. Some support codes such as www for HTTP traffic, some support keywords like eq for equal, lt for less than etc.
+				
+			iv. Stateful Versus Stateless
+				□ A stateful firewall inspects traffic and makes decision based on the context, or state of the traffic. It also keeps track of established sessions and inspects traffic based on its state within a session. e.g. TCP traffic without handshake will be blocked.
+				□ A common security issue with stateless firewalls is misconfigured ACL also missed implicit deny rule.
+				
+			v. Web Application Firewall
+				□ A web application firewall is a firewall specifically designed to protect a web application which commonly hosted on web server.
+				□ It is located between server hosting web-application and a client.
+				□ It can be stand-alone appliance or software added to another device
+				□ e.g. an e-commerce web site would have its web server in DMZ, and it needs more protection. So you wouldn't use WAF in place of network-based firewall, instead, it provides additional layer of protection than only network-based firewall.
+				
+	3. Implementing a Secure Network
+		○ Intranet - internal network
+		○ Extranet - external network
+		a. Zones and Topologies
+			i. DMZ (Demilitarized zone) 
+				□ It is a buffered zone between  a private network and the internet.
+				□ It provides a layer of protection for internet-facing servers while also allowing clients to connect to them via internet
+				□ 
+						
+				□ The DMZ is the area between two firewalls and hosts several internet-facing servers.
+				□ Many DMZs have two firewalls, creating a buffer zone between the internet and the internal network as shown in figure.
+				□ In above configuration, fw1 separates DMZ from the internet and fw2 separates DMZ from the internal network.
+				□ DMZ provides access to the services hosted in the DMZ while segmenting access to the internal network.
+				□ in figure that the intranet includes a database server. The web server may use this to create web pages for an e-commerce site. It could hold product data, customer data, and much more. FW2 allows traffic between the web server (and only the web server) and the database server on port 1433. FW2 would block all other Internet traffic to the database server.
+				□ It’s also possible for the web server and the database server to be part of an extranet. For example, imagine that the web server hosts a site that business partners can use to place orders. The web server would first authenticate them before granting them full access. After users log on, the web site connects to the back-end database server, allowing them to browse the inventory and place orders. Because this site is only for authorized business partners, it is an extranet.
+				
+			ii. Understanding NAT and PAT
+				□ NAT - Network Address Translation
+				□ PAT - Port Address Translation
+				□ Benefits of NAT include:
+					® Public IP addressed don't need to be purchased for all clients
+					® NAT hides internal computers from the internet
+				□ Only drawback of NAT is that it is not compatible with Ipsec.
+				□ There are 2 types of  NAT
+					® Static NAT - it uses single public IP address in a one-to-one  mapping. It maps a private IP address with a single public IP address.
+					® Dynamic NAT - it uses multiple public IP addresses in one-to -many mapping. Dynamic NAT decides which public IP address to use based on load from public IP pool available. e.g. if several users are connected to the internet on one public IP address, NAT maps the next request to a less-used public IP address with their Port number.
+				□ A common form of NAT is Port address Translation.
+				□ Private Network Classes
+					® Class A -  10.0.0.0-10.255.255.255 subnet mask - 8 bits
+					® Class B - 172.16.0.0-172.31.0.0 subnet mask - 16 bits
+					® Class C - 192.168.0.0-192.168.255.255  subnet mask -24bits
+					
+		b. Network Separation
+			§ It is common security practice to use different components to provide network separation like segregation, segmentation, and isolation.
+			§ Segregation provides basic separation, segmentation refers to putting traffic on different segments, and isolation indicates the systems are completely separate. Virtualization for malware analyzation is also kind of isolation.
+			i. Physical Isolation and Airgaps
+				□ Physical isolation ensures that network isn't connected to any network.
+				□ e.g. SCADA (Supervisory Control and Data Acquisition) systems are typically industrial control systems within large facilities such as power plants or water treatment facilities. While these systems operate within their own network, it is ensured that they are isolated from any other network.
+				□ This physical separation significantly reduces the risk to SCADA systems as an attacker won't be able to reach the network from internet.
+				□ An airgap is metaphor for physical isolation indicating there is a gap of air between an isolated system and other systems.
+				
+			ii. Logical Separation and Segmentation
+				□ Routers and firewalls provide basic level of separation and segmentation.
+				□ Routers segment traffic between networks using rules in ACL. Administrators use subnetting to divide larger IP address ranges into smaller ranges and implement ACLs to allow or block traffic.
+				□ Firewalls separate network traffic using basic packet-filtering rules and can also use more sophisticated methods to block undesirable traffic.
+				□ It is possible to segment traffic between logical groups of users or computers with a VLAN (virtual local area network)
+				
+			iii. Comparing a Layer 2 Versus Layer 3 Switch
+				□ Traditional switches are layer 2 switches and use MAC addresses in packets to determine destination port and can forward broadcast traffic to all ports on switch.
+				□ Layer 3 switch mimics the behavior of a router and allows network administrators to create VLANs. As layer 3 switch forwards traffic based on destination IP instead of MAC address, it is not susceptible to ARP-based attacks.
+				
+			iv. Isolating Traffic with a VLAN
+				□ Virtual local area networks (VLANs) separate or segment traffic on physical networks and you can create multiple VLANs with a single Layer 3 switch.
+				□ VLAN tasks are
+					® Segment the network 
+					® Reduce collisions
+					® Organize the network
+					® Boost performance
+					® Increase security
+				□ Susceptible to VLAN hopping by switch spoofing, double  tagging.
+				□ A vlan can logically group several different computers together or logically separate computers without regard to their physical location.
+				□ Vlans are also used to separate traffic types, such as voice traffic on vlan and data traffic on separate vlan.
+				
+				
+		c. Media Gateway
+			§ It is a device that converts data from the format used on one network to the format used on another network.
+			§ e.g. VoIP gateway converts telephony traffic between traditional phone lines and an IP-based network which helps users to make and receive phone calls using VoIP device and the gateway translate traffic and transmit calls over traditional phone line.
+			§ Examine on-bound and out-bound traffic
+			§ Prevents unsolicited advertisements
+			§ Control phishing attempts
+			§ Blocks bad attachments
+			§ Sometimes have DLP installed on it
+			
+		d. Proxy Servers
+			§ Many networks use proxy servers to forward requests for services (such as HTTPs) from clients.
+			§ They can improve performance by caching content and some proxy servers can restrict users' access to inappropriate web sites by content filtering.
+			§ It is located on the edge of network bordering internet and intranet.
+			§ 
+					
+			§ Proxy servers can also proxy(apart from normal HTTP or HTTPS) for other internet protocols like FTP
+			
+			i. Caching Content for Performance
+				□ Proxy increases the performance of the internet requests by caching(by dedicated RAM area or high-performance disk) each result received from the internet.
+				□ It reduces the amount of internet bandwidth used for web browsing as page doesn't need to be retrieved again.
+				
+			ii. Transparent Proxy Versus Nontransparent Proxy
+				□ A transparent proxy will accept and forward requests without modifying them and it is simple to set up and use and also provides caching.
+				□ Non-transparent proxy server can modify or filter requests and they can also use URL filters for these purpose.
+				
+			iii. Reverse Proxy
+				□ It accepts requests from internet, typically for a single web server.
+				□ 
+						
+				□ It appears to clients as web server but is forwarding requests to web server and serving pages returned by the web server to protect the web server.
+				□ This configuration  (proxy in DMZ acting as web server) allows the web server to be located in the private network behind a second firewall.
+				□ Reverse proxy server can be used for a single server or a web farm of multiple servers. When used in the web farm, it can act as load balancer.
+				
+			iv. Application Proxy
+				□ Application proxy is used for specific applications.
+				□ It accepts requests, forwards the requests to appropriate server, and then sends the response to the original requestor.
+				□ A forward proxy used for HTTP is a basic application proxy.
+				
+		e. Unified Threat Management (UTM)
+			§ It is a single solution that combines multiple security controls.
+			§ Main goal of UTM is to provide better security while simplifying management as it will administrator's workload without compromising security.
+			§ UTM security appliances combine the features of multiple security solutions on to a single appliance e.g. a UTM appliance might include a firewall, antivirus protection, anti-spam protection, URL filtering, and content filtering.
+			§ UTM security appliances include multiple capabilities, including:
+				□ URL filtering - same job as proxy server, they block access to sites based on the URL.
+				□ Malware inspection - the malware inspection component of a UTM appliance screens incoming data (as malware often comes into network via spam or malicious web pages) for known malware and blocks it.
+				□ Content inspection - it includes a combination of different content filters, monitors incoming data streams and attempts to block any malicious content.it can also include spam filters.
+				□ DDoS mitigator - it attempts to detect DDoS and block them. It is similar to how IPSs block attacks.
+			§ A common issue with UTM is a misconfigured content filter.
+			§ It is common to place UTM appliances at the network border, between intranet and internet allowing it to intercept and analyze all the traffic to from the internet. However, the placement is dependent on how the UTM appliance is being used. e.g. can be placed inside DMZ  and used as proxy server.
+		f. Mail Gateways
+			§ A mail gateway is a server that examines all incoming and outgoing email and attempts to reduce risks associated with email.
+			§ They are located in between email server and the internet and configure it for their purposes.
+			§ All the mail goes to the gateway before it goes to the email server. Additionally, many vendors include a mail gateway within a UTM appliance as security feature.
+			§ Mail gateways often include data loss prevention (DLP) capabilities. They examine outgoing email looking for confidential or sensitive information and block them.
+			§ Many mail gateways also support encryption and can encrypt all outgoing email to ensure confidentiality for data-in-transit or only encrypt certain data based on policies.
+	4. Summarizing Routing and Switching Use Cases
+
+TACACS+ port TCP 49
+
+
+	
